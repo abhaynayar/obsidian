@@ -1,6 +1,7 @@
 # CTF
 
-## Android Reversing
+
+## ![](https://img.icons8.com/ios/50/000000/android-os.png) Android Reversing
 
 ### adb
 
@@ -35,7 +36,8 @@ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.
 
 Decompile an app ``` jadx-gui <apk-file> ```
 
-## Crypto
+
+## ![](https://img.icons8.com/wired/64/000000/lock-2.png) Crypto
 
 ### Try out Cryptopals
 
@@ -45,7 +47,8 @@ https://cryptopals.com/
 
 If ```n``` is given, try checking if it is already factored at http://factordb.com
 
-## Forensics
+
+## ![](https://img.icons8.com/ios/50/000000/google-web-search.png) Forensics
 ### Initial checks
 - [ ] file / trid
 - [ ] xxd / hexedit
@@ -72,3 +75,16 @@ If ```n``` is given, try checking if it is already factored at http://factordb.c
 
 - wireshark
 - packettotal
+
+
+## ![](https://img.icons8.com/ios/40/000000/binary-file.png) Binary Exploitation
+
+### Initial checks
+
+- [ ] strings <binary>
+- [ ] strace / ltrace
+- [ ] checksec <binary>
+
+### Format String Attacks
+
+Offset notation ``` %6$x ```
