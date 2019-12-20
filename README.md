@@ -8,9 +8,9 @@
 
 Connect your Android device in debug mode.
 
-Install an app ``` adb install asdf.apk ```
+Installing an app ``` adb install asdf.apk ```
 
-Uninstall an app ``` adb uninstall com.abhay.asdf ```
+Uninstalling an app ``` adb uninstall com.abhay.asdf ```
 
 View logs ``` adb logcat ```
 
@@ -51,6 +51,10 @@ Setting up ``` pwn template ./<binary> --host 127.0.0.1 --port 1337 ```
 Debug with gdb ``` io = gdb.debug('./<binary>', 'b main') ```
 
 ### Return Oriented Programming
+
+#### Finding gadgets
+
+``` ROPgadget --binary file_name > gadgets.txt ```
 
 #### Finding function addresses
 ``` nm <binary> | grep ' t ' ```
