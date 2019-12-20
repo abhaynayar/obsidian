@@ -44,3 +44,31 @@ https://cryptopals.com/
 ### RSA
 
 If ```n``` is given, try checking if it is already factored at http://factordb.com
+
+## Forensics
+### Initial checks
+- [ ] file / trid
+- [ ] xxd / hexedit
+- [ ] strings
+- [ ] binwalk
+- [ ] foremost
+- [ ] johntheripper
+- [ ] [cryptograms](https://quipqiup.com/)
+
+### Audio
+- audacity
+- deepsound
+- sonic visualizer
+- [morse code](https://morsecode.scphillips.com/translator.html)
+
+### Filesystems
+
+- mount
+- extundelete
+- testdisk
+- volatility
+
+### PCAP
+
+- wireshark
+- packettotal
