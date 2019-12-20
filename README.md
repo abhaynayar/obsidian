@@ -34,3 +34,13 @@ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.
 ### jadx
 
 Decompile an app ``` jadx-gui <apk-file> ```
+
+## Crypto
+
+### Try out Cryptopals
+
+https://cryptopals.com/
+
+### RSA
+
+If ```n``` is given, try checking if it is already factored at http://factordb.com
