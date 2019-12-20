@@ -2,10 +2,16 @@
 
 ### Android Reversing
 
-Connect your android phone in debug mode.
+Connect your Android device in debug mode.
 
-```adb install asdf.apk```
+Install an app ``` adb install asdf.apk ```
 
-``` adb uninstall com.abhay.asdf ```
+Uninstall an app ``` adb uninstall com.abhay.asdf ```
 
-``` adb logcat ```
+View logs ``` adb logcat ```
+
+Copy files to device ``` adb push /machine /mobile ```
+
+List all packages on device ``` adb shell pm list packages ```
+
+Copy files from device ``` adb pull /data/app/asdf.apk /machine ```
