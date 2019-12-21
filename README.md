@@ -13,6 +13,12 @@
   1. _64 bit_ : first four arguments rdi, rsi, rdx, rcx
   2. _32 bit_ : push arguments on to the stack (include them in the payload)
 
+### Finding function addresses
+
+``` nm <binary> | grep ' t ' ```
+
+``` (gdb) info functions ```
+
 ### pwntools
 
 Setting up ``` pwn template ./<binary> --host 127.0.0.1 --port 1337 ```
@@ -35,7 +41,8 @@ Debug with gdb ``` io = gdb.debug('./<binary>', 'b main') ```
 #### Getting a shell
 
 - use a call to system() by passing only one argument (something like "ls" or "cat flag.txt")
-- use syscall(59) to call to execve() by passing three arguments ('/bin/sh', NULL,NULL)
+- use syscall(x) to call to execve('/bin/sh', NULL,NULL)
+- find "x" from: https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
 
 #### Writing to memory
 
@@ -45,11 +52,14 @@ Debug with gdb ``` io = gdb.debug('./<binary>', 'b main') ```
 3. write the string to the address using the gadget found in step 1.
 4. call system() with address of the written string.
 
-#### Finding function addresses
+★ in case you have leaked it, libc might already have the string
 
-``` nm <binary> | grep ' t ' ```
+#### Leaking libc.so.6
 
-``` (gdb) info functions ```
+- using a format string vulnerability (https://srikavin.me/blog/posts/5d87dbe86e58ed23d8620868-nactf-2019-loopy-0-1#Loopy--0-1)
+- leaking the address of puts (https://sidsbits.com/Defeating-ASLR-with-a-Leak/)
+
+#### Leaking stack canaries (?)
 
 #### Lazy Binding: https://ropemporium.com/guide.html
 
@@ -110,15 +120,13 @@ python -c 'print "\xef\xbe\xad\xde%6$s"' | ./<binary>
 - tweakpng
 - lsb.py
 
-reverse image serach: http://www.tineye.com
-$ compare chall.png maxresdefault.jpg  -compose src diff.png
-$ pngcheck chall.png
+reverse image serach: http://www.tineye.com, then ```compare chall.png maxresdefault.jpg  -compose src diff.png```
 
-some string-fu
-$ binwalk -e chall.png
-$ strings chall.png
-$ strings -el chall.png
-$ strings chall.jpeg | awk 'length($0)>15' | sort -u
+some string-fu:
+
+- ```strings chall.png```
+- ```strings -el chall.png```
+- ```strings chall.jpeg | awk 'length($0)>15' | sort -u```
 
 
 ### Audio
