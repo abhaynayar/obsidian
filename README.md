@@ -7,9 +7,20 @@
 - checksec
 
 ### Things to keep in mind
+- byte (8 bits), word (16 bits) and double word (32 bits)
 - fgets() means you can use null bytes in your payload but not newlines
 - newline is required at the end of your payload to cause the binary to process your input
-- passing arguments
+- what does ```call``` do?:
+  1. pushes address of next instruction on to the stack
+  2. changes ```eip``` to given address
+- function prologue:
+  1. ```push ebp```
+  2. ```mov ebp, esp```
+- function epilogue:
+  1. ```mov esp, ebp```
+  2. ```pop ebp```
+  3. ```ret```
+- passing arguments:
   1. _64 bit_ : first four arguments rdi, rsi, rdx, rcx
   2. _32 bit_ : push arguments on to the stack (include them in the payload)
 
@@ -21,9 +32,11 @@
 
 ### pwntools
 
-Setting up ``` pwn template ./<binary> --host 127.0.0.1 --port 1337 ```
+Creating a template ``` pwn template ./<binary> --host 127.0.0.1 --port 1337 ```
 
-Debug with gdb ``` io = gdb.debug('./<binary>', 'b main') ```
+Debugging with gdb ``` io = gdb.debug('./<binary>', 'b main') ```
+
+Passing commandline arguments ```io = process(['./crackme','blah'])```
 
 ### Return Oriented Programming
 
