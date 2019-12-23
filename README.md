@@ -10,5 +10,5 @@ You can find my notes for various CTF categories over here.
 
 ### To-do
 
-1. Shift all notes into a separate directory.
-2. Create a new directory for write-ups.
+- [ ] Shift all notes into a separate directory.
+- [ ] Create a new directory for write-ups.
