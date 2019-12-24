@@ -1,32 +1,31 @@
 ##  ► pwn
+
+★ Some resources:
+- https://sidsbits.com/Path/
+- https://ropemporium.com/
+- https://overthewire.org/wargames/bandit/
+
 ### Initial checks
-- file
-- strings
-- checksec
+- ```file <binary>```
+- ```strings <binary>```
+- ```checksec <binary>```
+- ```./<binary>```
 
 ### Things to keep in mind
 - byte (8 bits), word (16 bits) and double word (32 bits)
 - fgets() means you can use null bytes in your payload but not newlines
 - newline is required at the end of your payload to cause the binary to process your input
-- what does ```call``` do?:
+- what does ```call``` do?
   1. pushes address of next instruction on to the stack
   2. changes ```eip``` to given address
-- function prologue:
-  1. ```push ebp```
-  2. ```mov ebp, esp```
-- function epilogue:
-  1. ```mov esp, ebp```
-  2. ```pop ebp```
-  3. ```ret```
-- passing arguments:
-  1. _64 bit_ : first four arguments rdi, rsi, rdx, rcx
-  2. _32 bit_ : push arguments on to the stack (include them in the payload)
+- passing arguments
+  - _64 bit_ : first four arguments rdi, rsi, rdx, rcx
+  - _32 bit_ : push arguments on to the stack (include them in the payload)
 
 ### Finding function addresses
 
-``` nm <binary> | grep ' t ' ```
-
-``` (gdb) info functions ```
+- ```nm <binary> | grep ' t '```
+- ```pwndbg> info functions```
 
 ### pwntools
 
@@ -36,23 +35,30 @@ Debugging with gdb ``` io = gdb.debug('./<binary>', 'b main') ```
 
 Passing commandline arguments ```io = process(['./crackme','blah'])```
 
-### Return Oriented Programming
+Shell code ``` shellcode = asm(shellcraft.sh()) ```
 
-#### Try out ROP Emporium: https://ropemporium.com/
+### Return Oriented Programming
 
 #### Finding gadgets
 
-``` ROPgadget --binary file_name > gadgets.txt ```
+- ``` ropper -f <binary>```
+- ``` ROPgadget --binary file_name > gadgets.txt ```
 
-``` ROPgadget --ropchain --binary file_name > exploit.py ```
+#### Rejecting bad characters
 
-- https://github.com/sashs/Ropper
+- ``` ropper -b <badbytes> ```
+- ``` ROPgadget --badbytes <byte> ```
+
+#### Automatic ROP generation
+
+- ``` ROPgadget --ropchain --binary <binary> ```
+- ``` ropper --chain "execve cmd=/bin/sh" -f <binary> ```
 - https://github.com/salls/angrop
 
 #### Getting a shell
 
-- use a call to system() by passing only one argument (something like "ls" or "cat flag.txt")
-- use syscall(x) to call to execve('/bin/sh', NULL,NULL)
+- use a call to system() by passing shell command as the only argument (★ make sure to ```call system``` not simply jump to it, i.e., the call to system should already be there in the binary)
+- use ```syscall(x)``` to call to ```execve('/bin/sh', NULL,NULL)```
 - find "x" from: https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
 
 #### Writing to memory
