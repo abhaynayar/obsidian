@@ -8,7 +8,8 @@
 - directory bruteforce
 
 ### Time wasters
-- ☆ https://overthewire.org/wargames/natas/
+- https://overthewire.org/wargames/natas/
+- http://www.itsecgames.com/
 - https://ctf.hacker101.com/
 - https://www.hackthissite.org/
 - http://www.dvwa.co.uk/
