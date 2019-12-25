@@ -23,36 +23,28 @@
   - _32 bit_ : push arguments on to the stack (include them in the payload)
 
 ### Finding function addresses
-
 - ```nm <binary> | grep ' t '```
 - ```pwndbg> info functions```
 
 ### pwntools
-
-Creating a template ``` pwn template ./<binary> --host 127.0.0.1 --port 1337 ```
-
-Debugging with gdb ``` io = gdb.debug('./<binary>', 'b main') ```
-
-Passing commandline arguments ```io = process(['./crackme','blah'])```
-
-Shell code ``` shellcode = asm(shellcraft.sh()) ```
-
+- Creating a template ``` pwn template ./<binary> --host 127.0.0.1 --port 1337 ```
+- Debugging with gdb ``` io = gdb.debug('./<binary>', 'b main') ```
+- Passing commandline arguments ```io = process(['./crackme','blah'])```
+- Shell code ``` shellcode = asm(shellcraft.sh()) ```
+- Cyclic padding ``` pwn cyclic 200```   ``` pwn cyclic -l 0xdeadbeef ```
 ### Return Oriented Programming
 
 #### Finding gadgets
-
 - ``` ropper -f <binary>```
 - ``` ROPgadget --binary file_name > gadgets.txt ```
 
 #### Rejecting bad characters
-
 - ``` ropper -b <badbytes> ```
 - ``` ROPgadget --badbytes <byte> ```
 
 #### Automatic ROP generation
-
-- ``` ROPgadget --ropchain --binary <binary> ```
 - ``` ropper --chain "execve cmd=/bin/sh" -f <binary> ```
+- ``` ROPgadget --ropchain --binary <binary> ```
 - https://github.com/salls/angrop
 
 #### Getting a shell
@@ -73,12 +65,14 @@ Shell code ``` shellcode = asm(shellcraft.sh()) ```
 
 #### Leaking libc.so.6
 
+- understand dynamic linking
+  - https://ropemporium.com/guide.html (appendix A)
+  - https://systemoverlord.com/2017/03/19/got-and-plt-for-pwning.html
 - using a format string vulnerability (https://srikavin.me/blog/posts/5d87dbe86e58ed23d8620868-nactf-2019-loopy-0-1#Loopy--0-1)
 - leaking the address of puts (https://sidsbits.com/Defeating-ASLR-with-a-Leak/)
 
-#### Leaking stack canaries (?)
-
-#### Lazy Binding: https://ropemporium.com/guide.html
+#### Leaking stack canaries
+#### Heap overflow
 
 ### Format String Attacks
 
