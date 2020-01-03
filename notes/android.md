@@ -4,7 +4,7 @@
 
 ### adb
 
-Connect your Android device in debug mode.
+Connect your Android device in debug mode (or use Genymotion).
 
 Installing an app ``` adb install asdf.apk ```
 
