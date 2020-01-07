@@ -11,9 +11,10 @@
 ## Writeups
 
 - [InCTF Nationals 2019](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md)
+- [NaCTF 2019](https://abhaynayar.com/blog/fmt.html)
 
-### To-do
+## To-do
 
 - [x] Shift all notes into a separate directory.
 - [x] Create a new directory for write-ups.
-- [ ] Add time-wasters
+- [ ] Add time-wasters (CryptoPals, pwnable.kr, websec.fr, etc.)
