@@ -1,6 +1,6 @@
-### CTF
+# CTF
 
-You can find my notes for various CTF categories over here.
+## Notes
 
 - [pwn](https://github.com/abhaynayar/ctf/blob/master/notes/pwn.md)
 - [web](https://github.com/abhaynayar/ctf/blob/master/notes/web.md)
@@ -8,7 +8,12 @@ You can find my notes for various CTF categories over here.
 - [forensics](https://github.com/abhaynayar/ctf/blob/master/notes/forensics.md)
 - [android](https://github.com/abhaynayar/ctf/blob/master/notes/android.md)
 
+## Writeups
+
+- [InCTF Nationals 2019](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md)
+
 ### To-do
 
 - [x] Shift all notes into a separate directory.
 - [x] Create a new directory for write-ups.
+- [ ] Add time-wasters

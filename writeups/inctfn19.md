@@ -149,7 +149,7 @@ Again, unfortunately I do not have the source for this, but the concepts require
 inctf{PHP_H45_M4NY_WAYS_TO_BE_EXPLOITED!!}
 ```
 
-## Forensices
+## Forensics
 
 ### The Dilemma 100 pts.
 
@@ -195,7 +195,7 @@ In the end the server responds by saying ```We've searched our database and ther
 
 So this gives us the hint that we need the querybyte parameter to represent the flag format prefix, i.e. inctf. After going to the website and trying it, we are able to do it, but at the end of it we get a timeout error. We are also slowed down by the fact that after every request, we get an auth-code which we have to enter in the next query request (as can be seen in the above request).
 
-Because of the above restrictions I made a small script that allowed me to perform the actions faster to prevent a timeout. I could have fully automated it, but my I wasn't very confident I would be able to do it in time so I used this ad hoc solution.
+Because of the above restrictions I made a small script that allowed me to perform the actions faster to prevent a timeout. I could have fully automated it, but my I wasn't very confident I would be able to do it in time so I used this ad-hoc solution.
 
 ```
 import requests
@@ -215,5 +215,42 @@ for i in a:
 print(s.post(url,{"querybyte":"{","auth":j}).text)
 ```
 
+## Android
+
+### Decode 200 pts.
+
+We are given an APK file. I decompiled it using jadx.
+
+```
+jadx-gui Decode.apk
+```
+
+This is what the MainActivity looks like:
+
+```
+package com.r4hu1.decode;
+
+import android.os.Bundle;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    /* access modifiers changed from: protected */
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        setContentView((int) R.layout.activity_main);
+        Log.d("Key", "Secret Key is : " + ("aW5jdGZ7bmV2M3Jfc3QwcmU=" + "X3MzbnMhdGl2M19kYXRh" + "XzFuXzdoM19zMHVyY2VjMGRlfQ=="));
+    }
+}
+```
+
+We can see that there is some secret key logged in base64 format. After decoding it we get the flag.
+
+```
+$ echo aW5jdGZ7bmV2M3Jfc3QwcmU=X3MzbnMhdGl2M19kYXRhXzFuXzdoM19zMHVyY2VjMGRlfQ== | base64 -d
+inctf{nev3r_st0re_s3ns!tiv3_data_1n_7h3_s0urcec0de}
+```
+
+### Secret Service 200 pts.
 
 
