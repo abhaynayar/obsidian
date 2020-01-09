@@ -18,3 +18,4 @@
 - [x] Shift all notes into a separate directory.
 - [x] Create a new directory for write-ups.
 - [ ] Add time-wasters (CryptoPals, pwnable.kr, websec.fr, etc.)
+- [ ] Link notes to related challenges
