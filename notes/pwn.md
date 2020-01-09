@@ -26,6 +26,11 @@
 - ```nm <binary> | grep ' t '```
 - ```pwndbg> info functions```
 
+### GDB
+- <https://darkdust.net/files/GDB%20Cheat%20Sheet.pdf>
+- Address of a variable ```p &var```
+- Changing variable values ```set var <variable_name>=<value>```
+
 ### pwntools
 - Creating a template ``` pwn template ./<binary> --host 127.0.0.1 --port 1337 ```
 - Debugging with gdb ``` io = gdb.debug('./<binary>', 'b main') ```
