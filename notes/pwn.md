@@ -13,6 +13,7 @@
 
 ### Things to keep in mind
 - byte (8 bits), word (16 bits) and double word (32 bits)
+- RAX: 64-bit, EAX: 32-bit value, AX is the lower 16-bits, AL is the lower 8 bits, AH is the bits 8 through 15 (zero-based)
 - fgets() means you can use null bytes in your payload but not newlines
 - newline is required at the end of your payload to cause the binary to process your input
 - what does ```call``` do?

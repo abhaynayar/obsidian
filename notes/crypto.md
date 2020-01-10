@@ -1,9 +1,17 @@
 ## ► crypto
 
-#### Try out Cryptopals: https://cryptopals.com/
+### Learn
+- Cryptopals: <https://cryptopals.com/>
+- Crypton: <https://github.com/ashutosh1206/Crypton>
+
+### Website
+- [cryptograms](https://quipqiup.com/)
+- [caesar cipher](http://rot13.com)
+
+### Tools
+- RsaCtfTool
 
 ### RSA
-
 - if ```n``` is given, try checking if it is already factored at http://factordb.com
 - use Crypto.Util.number inverse to find modular inverse for RSA
 - use RsaCtfTool to perform known attacks against RSA
