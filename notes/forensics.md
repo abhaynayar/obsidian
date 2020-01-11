@@ -48,6 +48,7 @@ some string-fu:
 - [morse code](https://morsecode.scphillips.com/translator.html)
 
 ### Filesystems
+- fsck
 - foremost ``` animals.dd ``` 
 - mount
 - testdisk

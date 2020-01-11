@@ -27,7 +27,7 @@
 - ```nm <binary> | grep ' t '```
 - ```pwndbg> info functions```
 
-### GDB
+### gdb
 - <https://darkdust.net/files/GDB%20Cheat%20Sheet.pdf>
 - Address of a variable ```p &var```
 - Changing variable values ```set var <variable_name>=<value>```
