@@ -3,6 +3,11 @@
 ### Resources
 - <https://wiki.bi0s.in/reversing/asm/>
 
+### Learn
+- qira-1.3 <https://github.com/geohot/qira>
+- angr <https://github.com/angr/angr>
+- BAP <https://github.com/BinaryAnalysisPlatform/bap>
+
 ### Tools
 - GDB
 - IDA
@@ -24,17 +29,21 @@
 - Passing arguments
   - _64 bit_ : first four arguments rdi, rsi, rdx, rcx
   - _32 bit_ : push arguments on to the stack (include them in the payload)
-  - Arguments are placed on the stack as follows:
+  - Arguments are pushed on to the stack in reverse order:
 
 ```
+; maybe this is wrong
 asm0(0xd8,0x7a)
+[ebp+0x8] = 0x7a
+[ebp+0xc] = 0xd8
 
-# args are pushed while in the previous stack frame
-# ebp + x means we are moving upwards, i.e., opposite
-# to the direction of growth of the stack
+; args are pushed while in the previous stack frame
+; ebp + x means we are moving upwards, i.e., opposite
+; to the direction of growth of the stack
 
-ebp + 0x8 = 0x7a
-ebp + 0xc = 0xd8
+asm2(0x6,0x28)
+[ebp+0xc] = 0x28
+[ebp+0x8] = 0x6
 ```
 
 ### GDB

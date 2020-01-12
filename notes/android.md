@@ -1,6 +1,7 @@
-
-
 ## ► android
+
+### Learn
+- How to get flags out of APKs using ```strings``` (InCTF Nationals 2019)
 
 ### adb
 

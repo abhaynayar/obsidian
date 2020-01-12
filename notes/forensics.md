@@ -1,8 +1,7 @@
 ## ► forensics
 
 ### Learn
-- hexedit (pico18 hex-editor)
-
+- ghex / hexedit (pico18 hex-editor)
 
 ### Initial checks
 - xxd
@@ -32,6 +31,15 @@
 - jsteg (JPG LSB)
 - zsteg (PNG LSB)
 - <https://stylesuxx.github.io/steganography/>
+- NaCTF Phuzzy Photo
+```
+from PIL import Image
+
+ip = Image.open('The_phuzzy_photo.png')
+op = Image.new('RGB', (ip.size[0], ip.size[1]))
+op.putdata(list(ip.getdata())[::6])
+op.show()
+```
 
 reverse image search: http://www.tineye.com, then ```compare chall.png maxresdefault.jpg  -compose src diff.png```
 
@@ -58,3 +66,6 @@ some string-fu:
 ### PCAP
 - wireshark
 - packettotal
+
+### PCAP tips
+- Somtimes you can get the flag by ``` $ strings file.pcap | grep picoCTF ```
