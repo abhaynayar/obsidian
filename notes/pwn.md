@@ -22,6 +22,14 @@
 - passing arguments
   - _64 bit_ : first four arguments rdi, rsi, rdx, rcx
   - _32 bit_ : push arguments on to the stack (include them in the payload)
+- How the stack is layed out: (pico18/buffer2)
+```
+local variables
+base point and etc
+return address 1
+return address 2 (what does this mean?)
+arguments for return function 1
+```
 
 ### Finding function addresses
 - ```nm <binary> | grep ' t '```
@@ -38,7 +46,14 @@
 - Debugging with gdb ``` io = gdb.debug('./<binary>', 'b main') ```
 - Passing commandline arguments ```io = process(['./crackme','blah'])```
 - Shell code ``` shellcode = asm(shellcraft.sh()) ```
-- Cyclic padding ``` pwn cyclic 200```   ``` pwn cyclic -l 0xdeadbeef ```
+- Cyclic padding
+	- In the terminal ``` pwn cyclic 200```   ``` pwn cyclic -l 0xdeadbeef ```
+	- In python: cyclic(length = None, alphabet = None, n = None)
+		- length – The desired length of the list or None if the entire sequence is desired.
+		- alphabet – List or string to generate the sequence over.
+		- n (int) – The length of subsequences that should be unique.
+- Also learn about fit()
+
 ### Return Oriented Programming
 
 #### Finding gadgets
