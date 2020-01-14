@@ -46,9 +46,19 @@ asm2(0x6,0x28)
 [ebp+0x8] = 0x6
 ```
 
+- leave is exactly equivalent to
+```
+mov   esp, ebp
+pop   ebp
+```
+
+- When assembly gets a bit hard to do by hand use <https://carlosrafaelgn.com.br/asm86/>
+- Take reference from <https://github.com/Dvd848/CTFs/blob/master/2019_picoCTF/asm3.md>
+
 ### GDB
 - <https://darkdust.net/files/GDB%20Cheat%20Sheet.pdf>
 - Address of a variable ```p &var```
 - Changing variable values ```set var <variable_name>=<value>```
 - Disable SIGALRM ``` handle SIGALRM ignore ```
 - Learn about fuzzing
+
