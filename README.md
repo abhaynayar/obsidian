@@ -1,5 +1,10 @@
 # CTF
 
+## Writeups
+
+- [InCTF Nationals 2019](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md)
+- [NaCTF 2019](https://abhaynayar.com/blog/fmt.html)
+
 ## Notes
 
 - [pwn](https://github.com/abhaynayar/ctf/blob/master/notes/pwn.md)
@@ -8,11 +13,6 @@
 - [crypto](https://github.com/abhaynayar/ctf/blob/master/notes/crypto.md)
 - [forensics](https://github.com/abhaynayar/ctf/blob/master/notes/forensics.md)
 - [android](https://github.com/abhaynayar/ctf/blob/master/notes/android.md)
-
-## Writeups
-
-- [InCTF Nationals 2019](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md)
-- [NaCTF 2019](https://abhaynayar.com/blog/fmt.html)
 
 ## To-do
 
