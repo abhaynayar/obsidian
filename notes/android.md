@@ -9,6 +9,8 @@ Connect your Android device in debug mode (or use Genymotion).
 
 Installing an app ``` adb install asdf.apk ```
 
+_Sometimes installing an app might not work because of permissions_
+
 Uninstalling an app ``` adb uninstall com.abhay.asdf ```
 
 View logs ``` adb logcat ```
@@ -35,3 +37,7 @@ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.
 ### jadx
 
 Decompile an app ``` jadx-gui <apk-file> ```
+
+### Things to keep in mind
+
+- Check ```res/values/strings.xml```
