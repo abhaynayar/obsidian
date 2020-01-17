@@ -1,5 +1,21 @@
 # InCTF Nationals 2019
 
+## Challenges
+
+- Reverse Engineering
+	- [Hoth](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#hoth-200-pts)
+	- [PartyPart](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#partypart-300-pts)
+- Web Exploitation
+	- [Slender Ingress](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#slender-ingress-300-pts)
+	- [PHP Alert](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#php-alert-200-pts)
+- Forensics
+	- [The Dilemma](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#the-dilemma-100-pts)
+	- [Mos Espa - Tatooine](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#mos-espa---tatooine-400-pts)
+- Android
+	- [Decode](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#decode-200-pts)
+	- [Secret Service](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#secret-service-200-pts)
+
+
 ## Reverse Engineering
 
 ### Hoth 200 pts.
