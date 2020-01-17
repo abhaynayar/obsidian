@@ -1,4 +1,6 @@
-# CTF
+# 🚩 CTF
+
+Repository on notes, write-ups and tips by ```abhay~```
 
 ## Writeups
 
