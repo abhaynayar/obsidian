@@ -54,6 +54,10 @@ arguments for return function 1
 		- n (int) – The length of subsequences that should be unique.
 - Also learn about fit()
 
+### Find offset for overflow
+
+``` dmesg | tail ```
+
 ### Return Oriented Programming
 
 #### Finding gadgets
@@ -83,18 +87,23 @@ arguments for return function 1
 3. write the string to the address using the gadget found in step 1.
 4. call system() with address of the written string.
 
-★ in case you have leaked it, libc might already have the string
+★  In case you have leaked it, libc might already have the string
 
 #### Leaking libc.so.6
 
-- understand dynamic linking
+- Leaking the address of functions
+	- Get the address of ```puts``` using ```pwndbg> x puts```
+	- Get the address of ```system``` using ```pwndbg> system```
+	- Get the offset between them.
+	- Get the address of ```puts``` while running the program.
+	- Now, you can call ```system``` using address of ```puts``` and the offset you calculated earlier.
+	- <https://sidsbits.com/Defeating-ASLR-with-a-Leak/>
+	- <https://www.youtube.com/watch?v=evug4AhrO7o>
+- Understand dynamic linking
   - https://ropemporium.com/guide.html (appendix A)
   - https://systemoverlord.com/2017/03/19/got-and-plt-for-pwning.html
-- using a format string vulnerability (https://srikavin.me/blog/posts/5d87dbe86e58ed23d8620868-nactf-2019-loopy-0-1#Loopy--0-1)
-- leaking the address of puts (https://sidsbits.com/Defeating-ASLR-with-a-Leak/)
+- Using a format string vulnerability (https://srikavin.me/blog/posts/5d87dbe86e58ed23d8620868-nactf-2019-loopy-0-1#Loopy--0-1)
 
-#### Leaking stack canaries
-#### Heap overflow
 
 ### Format String Attacks
 #### Reading from an arbritrary address
@@ -108,3 +117,6 @@ python -c 'print "\xef\xbe\xad\xde%6$s"' | ./<binary>
 ```
 
 - Offset notation ``` %6$x ```
+
+#### Leaking stack canaries
+#### Heap overflow

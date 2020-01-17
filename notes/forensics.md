@@ -2,6 +2,7 @@
 
 ### Learn
 - ghex / hexedit (pico18 hex-editor)
+- PIL
 
 ### Initial checks
 - xxd
