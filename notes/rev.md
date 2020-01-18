@@ -62,3 +62,5 @@ pop   ebp
 - Disable SIGALRM ``` handle SIGALRM ignore ```
 - Learn about fuzzing
 
+### IDA
+- Open strings window using ```Shift + F12```. Can also open during debug mode.
