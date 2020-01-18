@@ -15,7 +15,7 @@
 	- [Decode](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#decode-200-pts)
 	- [Secret Service](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#secret-service-200-pts)
 - Binary Exploitation
-	- [Printer]()
+	- [Printer](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#printer)
 
 ## Reverse Engineering
 
@@ -269,6 +269,19 @@ inctf{nev3r_st0re_s3ns!tiv3_data_1n_7h3_s0urcec0de}
 ```
 
 ### Secret Service 200 pts.
+
+Using ```jadx-gui``` I saw that the app's package name was ```com.r4hu1.secretservice``` and it had an activity which printed the flag for us. The activity name was ```secretService```. We can launch exported activities using the ```adb``` shell as follows:
+
+```
+$ adb shell
+OnePlus3T:/ $ am start -n com.r4hu1.secretservice/.secretService
+Starting: Intent { cmp=com.r4hu1.secretservice/.secretService }
+OnePlus3T:/
+```
+
+This command spawned up the flag on my device by starting the ```secretService``` activity.
+
+```inctf{exp0rted_activities_ar3_harmful}```
 
 ## Binary Exploitation
 
