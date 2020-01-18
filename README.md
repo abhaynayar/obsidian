@@ -1,6 +1,6 @@
 # 🚩 CTF
 
-Repository on notes, write-ups and tips by ```abhay~```
+Repository on notes, write-ups and tips for playing ```CTFs```.
 
 ## Writeups
 
