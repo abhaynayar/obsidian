@@ -10,16 +10,16 @@ Repository on notes, write-ups and tips for playing ```CTFs```.
 
 ## Notes
 
-- [rev](https://github.com/abhaynayar/ctf/blob/master/notes/rev.md)
-- [pwn](https://github.com/abhaynayar/ctf/blob/master/notes/pwn.md)
-- [web](https://github.com/abhaynayar/ctf/blob/master/notes/web.md)
-- [crypto](https://github.com/abhaynayar/ctf/blob/master/notes/crypto.md)
-- [forensics](https://github.com/abhaynayar/ctf/blob/master/notes/forensics.md)
-- [android](https://github.com/abhaynayar/ctf/blob/master/notes/android.md)
+- [Reverse Engineering](https://github.com/abhaynayar/ctf/blob/master/notes/rev.md)
+- [Binary Exploitation](https://github.com/abhaynayar/ctf/blob/master/notes/pwn.md)
+- [Web Exploitation](https://github.com/abhaynayar/ctf/blob/master/notes/web.md)
+- [Cryptography](https://github.com/abhaynayar/ctf/blob/master/notes/crypto.md)
+- [Forensics](https://github.com/abhaynayar/ctf/blob/master/notes/forensics.md)
+- [Android](https://github.com/abhaynayar/ctf/blob/master/notes/android.md)
 
 ## To-do
 
 - [x] Shift all notes into a separate directory.
 - [x] Create a new directory for write-ups.
+- [x] Link notes to related challenges
 - [ ] Add time-wasters (CryptoPals, pwnable.kr, websec.fr, etc.)
-- [ ] Link notes to related challenges
