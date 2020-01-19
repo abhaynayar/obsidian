@@ -4,7 +4,7 @@ This was an extremely difficult CTF (by my standards) with a weight of ```52.33`
 
 ## warmup
 
-### Welcome 36 pts.
+### welcome 36 pts.
 >This year we added a Proof of Work to some of our challenges.
 >
 >Just run python pow.py <target>, were target is the value provided by the server and get the flag.
