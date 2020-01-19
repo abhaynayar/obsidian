@@ -59,14 +59,13 @@ Give me an input whose md5sum starts with "f49122" and get the flag ;)
 7319391
 
 MITM are real: check SHA, check code, ...
+INS{Miss me with that fhisy line}
 ```
 
 ```
 $ python pow.py f49122
 7319391
 ```
-
-```INS{Miss me with that fhisy line}```
 
 ## web
 
