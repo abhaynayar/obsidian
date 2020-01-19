@@ -1,4 +1,4 @@
-# Insomnihack Teaser
+# Insomni'hack Teaser 2020
 
 This was an extremely difficult CTF (by my standards) with a weight of ```52.33``` so I was only able to do two trivial challenges ```welcome``` & ```LowDeep``` and scored a rank of ```114```. I was trying for ```Kaboom``` & ```secretus``` as well, but wasn't able to do much within the time frame, will upsolve and post them here when done.
 

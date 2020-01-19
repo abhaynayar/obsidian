@@ -4,6 +4,7 @@ Repository on notes, write-ups and tips for playing ```CTFs```.
 
 ## Writeups
 
+- [Insomnihack 2020](writeups/insomnihack20.md)
 - [InCTF Nationals 2019](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md)
 - [NaCTF 2019](https://abhaynayar.com/blog/fmt.html)
 
