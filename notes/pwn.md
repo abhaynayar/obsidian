@@ -108,7 +108,7 @@ arguments for return function 1
 ### Format String Attacks
 #### Reading from an arbritrary address
 1. Get address of string to be read. ``` rabin2 -z <binary> ```
-2. Find the offset from the stack where the input is stored to do this %x. then %x.%x. then %x.%x.%x. and so on until you see the ascii values 25782e.
+2. Find the offset from the stack where the input is stored to do this ```%x.``` then ```%x.%x.``` then ```%x.%x.%x.``` and so on until you see the ascii values ```25782e```.
 3. once you know the offset, store the address to be read at that
    offset by typing it in as the first thing in the buffer and then
    use the offset you found out to go read in that address.
