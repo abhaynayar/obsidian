@@ -31,4 +31,4 @@ Repository on notes, write-ups and tips for playing ```CTFs```.
 - [x] Shift all notes into a separate directory.
 - [x] Create a new directory for write-ups.
 - [x] Link notes to related challenges.
-- [ ] Add time-wasters. (CryptoPals, pwnable.kr, websec.fr, etc.)
+- [x] Add time-wasters. (CryptoPals, pwnable.kr, websec.fr, etc.)
