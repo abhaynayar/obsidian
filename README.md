@@ -5,6 +5,7 @@ Repository on notes, write-ups and tips for playing ```CTFs```.
 ## Labs / Wargames
 
 - [Portswigger's Web Security Academy](labs/websec.md)
+- [Hacker101 CTF](labs/h101.md)
 - Overthewire Natas
 - PwnFunction's XSS labs
 - XSS Game (App-spot)
