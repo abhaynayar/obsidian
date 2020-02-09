@@ -1,6 +1,6 @@
 # 🚩 CTF
 
-Repository on notes, write-ups and tips for playing ```CTFs```.
+Security related notes, labs and CTF write-ups.
 
 ## Notes
 
