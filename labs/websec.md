@@ -6,7 +6,7 @@
 
 1. [Access Control](#access-control)
 2. [Cross Origin Resource Sharing](#cross-origin-resource-sharing-cors)
-
+3. [Cross-site scripting](#cross-site-scripting)
 
 ## Access Control
 
@@ -325,4 +325,40 @@ function reqListener() {
 }
 </script>
 ```
+
+## Intranets and CORS without credentials
+
+- Without ACAO header we can't get cookies, but we can still access the website.
+- There is one common situation where an attacker can't access a website directly.
+- Internal websites are often held to a lower security standard than external sites.
+
+### [Lab]: CORS vulnerability with internal network pivot attack
+
+```TBD```
+
+-----
+
+## Cross-site Scripting
+
+It allows an attacker to circumvent the same origin policy.
+
+### Types
+
+- Reflected
+- Stored
+- DOM-based
+
+### [Lab]: Reflected XSS into HTML context with nothing encoded
+
+Search bar ```<img src=x onerror=alert(1)>```
+
+### [Lab]: Stored XSS into HTML context with nothing encoded
+
+Comment ```<img src=x onerror=alert(1)>```
+
+### [Lab]: Reflected XSS into HTML context with most tags and attributes blocked
+
+
+
+
 
