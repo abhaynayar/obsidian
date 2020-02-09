@@ -1,22 +1,6 @@
 # 🚩 CTF
 
-Repository on notes, write-ups and tips for playing ```CTFs```.
-
-## Labs / Wargames
-
-- [Portswigger's Web Security Academy](labs/websec.md)
-- [Hacker101 CTF](labs/h101.md)
-- Overthewire Natas
-- PwnFunction's XSS labs
-- XSS Game (App-spot)
-- Audi SQLi labs
-
-## Writeups
-
-- [riceteacatpanda 2020](writeups/rtcp20.md)
-- [Insomni'hack 2020](writeups/insomnihack20.md)
-- [InCTF Nationals 2019](writeups/inctfn19.md)
-- [NaCTF 2019](https://abhaynayar.com/blog/fmt.html)
+Security related notes, labs and CTF write-ups.
 
 ## Notes
 
@@ -26,6 +10,26 @@ Repository on notes, write-ups and tips for playing ```CTFs```.
 - [Cryptography](notes/crypto.md)
 - [Forensics](notes/forensics.md)
 - [Android](notes/android.md)
+
+## Labs / Courses
+
+Web
+- [Portswigger's Web Security Academy](labs/websec.md)
+- [Hacker101 CTF](labs/h101.md)
+- [Overthewire: Natas](https://overthewire.org/wargames/natas/)
+- [XSS Game | PwnFunction](https://xss.pwnfunction.com/)
+- [XSS game](https://xss-game.appspot.com/)
+
+Android
+- [Android App Reverse Engineering 101](https://maddiestone.github.io/AndroidAppRE/)
+- [MOBISEC - Mobile Security Course](https://mobisec.reyammer.io/)
+
+## Writeups
+
+- [riceteacatpanda 2020](writeups/rtcp20.md)
+- [Insomni'hack 2020](writeups/insomnihack20.md)
+- [InCTF Nationals 2019](writeups/inctfn19.md)
+- [NaCTF 2019](https://abhaynayar.com/blog/fmt.html)
 
 ## To-do
 

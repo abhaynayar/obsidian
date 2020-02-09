@@ -1,8 +1,12 @@
 # Portswigger's Web Security Academy
 
-Notes and ```lab``` solutions/hints.
-
 ⭐ Read the actual solutions (upsolve).
+
+## Contents
+
+1. [Access Control](#access-control)
+2. [Cross Origin Resource Sharing](#cross-origin-resource-sharing-cors)
+
 
 ## Access Control
 
