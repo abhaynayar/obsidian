@@ -12,9 +12,6 @@ Security related notes, labs and CTF write-ups.
 - [Android](notes/android.md)
 
 ## Labs / Courses
-Android
-- [Android App Reverse Engineering 101](https://maddiestone.github.io/AndroidAppRE/)
-- [MOBISEC - Mobile Security Course](https://mobisec.reyammer.io/)
 
 Web
 - [Portswigger's Web Security Academy](labs/websec.md)
@@ -22,6 +19,10 @@ Web
 - [Overthewire: Natas](https://overthewire.org/wargames/natas/)
 - [XSS Game | PwnFunction](https://xss.pwnfunction.com/)
 - [XSS game](https://xss-game.appspot.com/)
+
+Android
+- [Android App Reverse Engineering 101](https://maddiestone.github.io/AndroidAppRE/)
+- [MOBISEC - Mobile Security Course](https://mobisec.reyammer.io/)
 
 ## Writeups
 
