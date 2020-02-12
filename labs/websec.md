@@ -354,7 +354,7 @@ It allows an attacker to circumvent the same origin policy.
 
 ### Reflected XSS
 
-Includes data from an HTTP request in the immediate response.
+Includes unsafe data from an HTTP request in the immediate response.
 
 How to:
 
@@ -416,7 +416,62 @@ Comment ```<img src=x onerror=alert(1)>```
 
 ## DOM-based
 
+Includes unsafe data into the DOM.
 
+- Need to place data into a source such that it propogates into a sink to execute arbritrary javascript.
+- Most common source for DOM XSS is the URL.
+- Generally need to use browser's developer tools.
 
+### Testing HTML Sinks
+
+1. Place random alphanumeric string into a source (such as ```location.search```).
+2. Use developer tools ```Ctrl-F``` to check where your string appears (view source won't work).
+3. Identify context. Refine input. Infer processing (single quotes, double quotes).
+
+#### Note about URL-encoding
+
+- Browsers behave differently with respect to URL encoding.
+- Chrome, Firefox, Safari encode ```location.search``` and ```location.hash```.
+- IE11 and Edge (pre-Chromium) don't encode sources.
+
+### Testing JS Sinks
+
+- Input doesn't appear in DOM.
+- Need to use JS debugger.
+- For each source (like ```location```) find cases in JS code where it is referenced.
+- Find it in the developer tools ```Ctrl-Shift-F``` and add a breakpoint to see how the value is used.
+
+```
+document.write()
+document.writeln()
+document.domain
+someDOMElement.innerHTML
+someDOMElement.outerHTML
+someDOMElement.insertAdjacentHTML
+someDOMElement.onevent
+```
+
+```
+add()
+after()
+append()
+animate()
+insertAfter()
+insertBefore()
+before()
+html()
+prepend()
+replaceAll()
+replaceWith()
+wrap()
+wrapInner()
+wrapAll()
+has()
+constructor()
+init()
+index()
+jQuery.parseHTML()
+$.parseHTML()
+```
 
 
