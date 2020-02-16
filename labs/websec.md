@@ -278,14 +278,14 @@ Check the log
 
 Given the following request
 
-```
+```http
 GET /api/requestApiKey HTTP/1.1
 Host: vulnerable-website.com
 ```
 
 If the following origins are allowed
 
-```
+```http
 HTTP/1.1 200 OK
 Access-Control-Allow-Origin: https://subdomain.vulnerable-website.com
 ```
@@ -432,6 +432,8 @@ Includes unsafe data into the DOM.
 - For each source (like ```location```) find cases in JS code where it is referenced.
 - Find it in the developer tools ```Ctrl-Shift-F``` and add a breakpoint to see how the value is used.
 
+### Exploiting DOM XSS with different sources and sinks
+
 #### Lab: DOM XSS in document.write sink using source location.search
 
 The sink and source are in embedded javascript within the search page.
@@ -544,9 +546,7 @@ Works ```/feedback?returnPath=javascript:onload=alert(document.cookie)```
 - ```ng-app``` attribute is processed by AngularJS.
 - Anything within ```{{}}``` will be executed.
 
-#### Lab: DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded
-
-[link](https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-angularjs-expression)
+#### [Lab](https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-angularjs-expression): DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded
 
 > This lab contains a DOM-based cross-site scripting vulnerability in a AngularJS expression within the search functionality.
 >
@@ -554,11 +554,34 @@ Works ```/feedback?returnPath=javascript:onload=alert(document.cookie)```
 >
 > To solve this lab, perform a cross-site scripting attack that executes an AngularJS expression and calls the alert function.
 
-Using Wappalyzer, I found out that the AngularJS version is 1.7.7 and from the below blog post by Gareth Heyes I found out the corresponding payload in Angular >= 1.6.0 which has removed the sandbox.
+Using Wappalyzer, I found out that the AngularJS version is 1.7.7 and from this [blog](https://portswigger.net/research/xss-without-html-client-side-template-injection-with-angularjs) by Gareth Heyes I found out the corresponding payload in Angular >= 1.6.0 which doesn't have a sandbox. ```{{constructor.constructor('alert(1)')()}}```
 
-[tutorial](https://portswigger.net/research/xss-without-html-client-side-template-injection-with-angularjs)
+Intended solution ```{{$on.constructor('alert(1)')()}}```
 
-```{{constructor.constructor('alert(1)')()}}```
+### Reflected DOM XSS
 
+The website includes unsafe data from the request and places it into javascript or DOM.
 
+```eval('var data = "reflected string"');```
 
+#### [Lab](https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-dom-xss-reflected): Reflected DOM XSS
+
+In file searchResult.js breakpoint at line 5.
+
+```javascript
+eval('var searchResultsObj = ' + this.responseText);
+```
+
+In console check value of ```this.responseText```
+
+```javascript
+"{\"searchTerm\":\"asdf\",\"results\":[]}"
+```
+
+Therefore searchTerm under searchResultObj is user supplied. It is being sunk at line 19.
+
+```javascript
+h1.innerText = searchResults.length + " search results for '" + searchTerm + "'";
+```
+
+XSS in [innerText](https://stackoverflow.com/questions/52707031/does-innertext-prevent-xss).
