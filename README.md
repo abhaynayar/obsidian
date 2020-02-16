@@ -4,25 +4,25 @@ Security related notes, labs and CTF write-ups.
 
 ## Notes
 
+- [Web Exploitation](labs/websec.md)
+- [Android](notes/android.md)
 - [Reverse Engineering](notes/rev.md)
 - [Binary Exploitation](notes/pwn.md)
-- [Web Exploitation](notes/web.md)
-- [Cryptography](notes/crypto.md)
 - [Forensics](notes/forensics.md)
-- [Android](notes/android.md)
+- [Cryptography](notes/crypto.md)
 
 ## Labs / Courses
 
 Web
 - [Portswigger's Web Security Academy](labs/websec.md)
 - [Hacker101 CTF](labs/h101.md)
+
+To-do
+- [Android App Reverse Engineering 101](https://maddiestone.github.io/AndroidAppRE/)
+- [MOBISEC - Mobile Security Course](https://mobisec.reyammer.io/)
 - [Overthewire: Natas](https://overthewire.org/wargames/natas/)
 - [XSS Game | PwnFunction](https://xss.pwnfunction.com/)
 - [XSS game](https://xss-game.appspot.com/)
-
-Android
-- [Android App Reverse Engineering 101](https://maddiestone.github.io/AndroidAppRE/)
-- [MOBISEC - Mobile Security Course](https://mobisec.reyammer.io/)
 
 ## Writeups
 

