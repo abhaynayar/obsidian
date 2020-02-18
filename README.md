@@ -2,6 +2,13 @@
 
 Security related notes, labs and CTF write-ups.
 
+## Writeups
+
+- [riceteacatpanda 2020](writeups/rtcp20.md)
+- [Insomni'hack 2020](writeups/insomnihack20.md)
+- [InCTF Nationals 2019](writeups/inctfn19.md)
+- [NaCTF 2019](https://abhaynayar.com/blog/fmt.html)
+
 ## Notes
 
 - [Web Exploitation](labs/websec.md)
@@ -23,13 +30,6 @@ To-do
 - [Overthewire: Natas](https://overthewire.org/wargames/natas/)
 - [XSS Game | PwnFunction](https://xss.pwnfunction.com/)
 - [XSS game](https://xss-game.appspot.com/)
-
-## Writeups
-
-- [riceteacatpanda 2020](writeups/rtcp20.md)
-- [Insomni'hack 2020](writeups/insomnihack20.md)
-- [InCTF Nationals 2019](writeups/inctfn19.md)
-- [NaCTF 2019](https://abhaynayar.com/blog/fmt.html)
 
 ## To-do
 
