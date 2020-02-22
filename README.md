@@ -11,9 +11,9 @@ Security related notes, labs and CTF write-ups.
 
 ## Labs / Courses
 
-- [MOBISEC - Mobile Security Course](https://mobisec.reyammer.io/)
-- [Insecure Bank v2](labs/bank.md)
+- [MOBISEC - Mobile Security Course](labs/mobisec.md)
 - [Portswigger's Web Security Academy](labs/websec.md)
+- [Insecure Bank v2](labs/bank.md)
 - [Hacker101 CTF](labs/h101.md)
 
 ## Notes
