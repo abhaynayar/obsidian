@@ -11,6 +11,7 @@ Security related notes, labs and CTF write-ups.
 
 ## Labs / Courses
 
+- [MOBISEC - Mobile Security Course](https://mobisec.reyammer.io/)
 - [Insecure Bank v2](labs/bank.md)
 - [Portswigger's Web Security Academy](labs/websec.md)
 - [Hacker101 CTF](labs/h101.md)
@@ -28,7 +29,6 @@ Security related notes, labs and CTF write-ups.
 ## To-do
 
 - [ ] [Android App Reverse Engineering 101](https://maddiestone.github.io/AndroidAppRE/)
-- [ ] [MOBISEC - Mobile Security Course](https://mobisec.reyammer.io/)
 - [x] Shift all notes into a separate directory.
 - [x] Create a new directory for write-ups.
 - [x] Link notes to related challenges.
