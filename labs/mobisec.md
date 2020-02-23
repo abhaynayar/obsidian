@@ -61,7 +61,7 @@ Android framework APIs:
 	- https://developer.android.com/docs/
 	- https://developer.android.com/guide/
 	- https://developer.android.com/reference/
-- Google for "android <apinameyouneverheardabout>"
+- Google for "android &lt;apinameyouneverheardabout&gt;"
 
 Package name
 
@@ -78,30 +78,30 @@ Basics
 
 Component types
 
-1. [Activity](https://developer.android.com/reference/android/app/Activity): a screen
-2. Service: perform an action in the background
-3. Broadcast Receiver: respond to systemr-wide event
-4. Content Provider: manage shared set of app data (sqlite)
+1. [Activity](https://developer.android.com/reference/android/app/Activity): a screen that the user can see.
+2. Service: performs an action in the background.
+3. Broadcast Receiver: respond to system-wide event.
+4. Content Provider: manage shared set of app data (sqlite).
 
-### Intents
+Intents
 
-- Talking between components
-- Use cases: starting another activity, sending data to another activity
+- Used for talking between components.
+- Use cases: starting another activity, sending data to another activity.
 
 Types of Intents
 
-- Explicit: specify component to talk with
-- Implicit: specify type of action and data
+- Explicit: specify component to talk with.
+- Implicit: specify type of action and data.
 
 Intent Filters
 
 - A way for apps to declare the intents they can handle.
-- The system knows it can invoke that intent (ex. link can be opened by various browsers)
+- System knows apps that can handle an invoked intent (ex. link can be opened by various browsers).
 
 Android framework versions / [API](https://developer.android.com/guide/topics/manifest/uses-sdk-element#ApiLevels) levels:
 
 - Each API builds on previous versions in an additive way.
-- Old APIs are deprecated but rarely removied.
+- Old APIs are deprecated but rarely removed.
 - New Android versions are backward-compatible.
 - Each device runs one Android framework version.
 - Minimum API level: Each app needs to specify which versions it can work on.
@@ -109,7 +109,7 @@ Android framework versions / [API](https://developer.android.com/guide/topics/ma
 
 Android Manifest
 
-- The most important file in an Android app. [docs](https://developer.android.com/guide/topics/manifest/manifest-intro)
+- The most important file in an Android app. [~](https://developer.android.com/guide/topics/manifest/manifest-intro)
 - Key information needed by the framework to run the app.
 
 Manifest Components:
@@ -117,16 +117,16 @@ Manifest Components:
 - Activities
 - Services
 - Intent Filters
-- Min / Target SDK
-- Permissions [docs](https://developer.android.com/guide/topics/permissions/overview)
+- Minimum / Target SDK
+- Permissions [~](https://developer.android.com/guide/topics/permissions/overview)
 
 Android Studio (important paths):
 
-- [android-studio]/bin/studio.sh
+- &lt;android-studio&gt;/bin/studio.sh
 - ~/Android/Sdk/platforms-tools/{adb,fastboot}
-- ~/Android/Sdk/build-tools/[version]/aap
+- ~/Android/Sdk/build-tools/&lt;version&gt;/aap
 - ~/.android/avd/\*
-- ~/AndroidStudioProjects/[name]/app/build/outputs/apk/debug/app-debug.apk (If you don't find it: $ find -name "\*.apk")
+- ~/AndroidStudioProjects/&lt;name&gt;/app/build/outputs/apk/debug/app-debug.apk (If you don't find it: $ find -name "\*.apk")
 
 ## 4 - Intro to Android architecture and security
 
@@ -139,7 +139,7 @@ App installation
 - Android framework creates a new linux user.
 - Each app given a private directory (internal shared).
 
-### Binder
+Binder
 
 Crossing the bridge
 
@@ -155,13 +155,13 @@ Binder RPC
                 Process           |   process / service
                                   |
                +---------------+  |   +----------------+
-               | Binder proxy  |  |   |  Binder stub   |
+               | Binder Proxy  |  |   |  Binder Stub   |
  User space    +---------------+  |   +----------------+
                                   |
 +---------------------------------+------------------------+
 
  Kernel space           +--------------------+
-                        |   Binder driver    |
+                        |   Binder Driver    |
                         +--------------------+
 
                         +--------------------+
@@ -177,7 +177,7 @@ Binder internals
 
 Managers
 
-```
+```bash
 $ adb shell service list
 ...
 android.view.autofill.IAutoFillManager
@@ -191,19 +191,22 @@ Binder IPC
 
 - High-level API: intents
 - Low-level: Binder calls
-- Steps (A calls B.X)
-	1. A calls ```startActivity(new Intent(B.X))```
-	2. Binder Driver calls privileged process ActivityManager.
-	3. Activity Manager calls Binder Driver to call B.
-	4. Activity B.X calls ```onCreate()```
+- Steps (A calls B.X):
+	1. A calls ```startActivity(new Intent(B.X))```.
+	2. Binder Proxy relays that to Binder Driver.
+	3. Binder Driver calls Binder Stub of privileged process.
+	4. Binder Stub calls relevant method in ActivityManager.
+	5. Call is returned back to the Binder Driver.
+	6. Binder Driver forwards it to B's Binder Proxy.
+	7. Activity B.X calls ```onCreate()```
 
-### Android permission system [docs](https://developer.android.com/reference/android/Manifest.permission#SEND_SMS)
+Android permission system [~](https://developer.android.com/reference/android/Manifest.permission#SEND_SMS)
 
 - Android framework has a long list of permissions.
 - Example: ```android.permission.INTERNET```
 - {READ,WRITE}_EXTERNAL_STORAGE: /sdcard (in the past removable)
 
-```
+```bash
 generic_x86_arm:/sdcard $ ls -l
 total 40
 drwxrwx--x 2 root sdcard_rw 4096 2020-02-20 19:45 Alarms
@@ -218,30 +221,30 @@ drwxrwx--x 2 root sdcard_rw 4096 2020-02-20 19:45 Podcasts
 drwxrwx--x 2 root sdcard_rw 4096 2020-02-20 19:45 Ringtones
 ```
 
-RECEIVE_BOOT_COMPLETED
+RECEIVE\_BOOT\_COMPLETED
 
 - System broadcasts "ACTION_BOOT_COMPLETED" on booting.
-- An app can use intent-filters to automatically start at boot.
+- Apps can use corresponding intent-filters to automatically start at boot.
 - Useful to gain persistence (but requires a permission).
 
-SYSTEM_ALERT_WINDOW
+SYSTEM\_ALERT\_WINDOW
 
 - Draw on top of other apps.
-- Custom posistion, shape, content transparency.
+- Custom position, shape, content transparency.
 - Leads to attacks: UI confusion, clickjacking, phishing, [Cloak & Dagger](https://www.youtube.com/watch?v=RYQ1i03OVpI&t=1s).
 
-Permission Protection Levels [docs](https://developer.android.com/guide/topics/permissions/overview#normal-dangerous)
+Permission Protection Levels [~](https://developer.android.com/guide/topics/permissions/overview#normal-dangerous)
 
 - Normal: automatically grant permission at install time without user prompt (users can't revoke these permissions).
 - Dangerous: prompt user to grant permission at run time.
 - Signature: granted at install time if app signed by same certificate as app defining permission.
-- Special: must include in manifest + send intent to user (Ex: SYSTEM\_ALERT_WINDOW, WRITE_SETTINGS).
+- Special: must include in manifest + send intent to user (Ex: SYSTEM\_ALERT\_WINDOW, WRITE\_SETTINGS).
 
 Permission Granting
 
-- Normal: nothing explicit
-- Dangerous: user prompt (API &gt;= 23: runtime, API &lt; 23: install time)
-- Signature: certificate or user prompt
+- Normal: nothing explicit required from the user.
+- Dangerous: user prompt (API &gt;= 23: runtime, API &lt; 23: install time).
+- Signature: certificate or user prompt (not supported by all third-party).
 
 Permissions Groups
 
@@ -249,20 +252,20 @@ Permissions Groups
 - Other mappinngs over [here](https://developer.android.com/guide/topics/permissions/overview#permission-groups).
 
 ```xml
-    <uses-permission android:name="android.permission.SEND_SMS"/>
+<uses-permission android:name="android.permission.SEND_SMS"/>
 ```
 
-- Custom Permissions [docs](https://developer.android.com/guide/topics/permissions/defining)
+- Custom Permissions [~](https://developer.android.com/guide/topics/permissions/defining)
 - System Permissions defined in the same [way](http://androidxref.com/8.1.0_r33/xref/frameworks/base/core/res/AndroidManifest.xml#566).
 - Components Permission Enforcement (for specific components within an app).
 
 Permission Enforcement Implementation
 
 - Ways: Linux groups vs. explicit checks
-- [Groups](http://androidxref.com/8.1.0_r33/xref/frameworks/base/data/etc/platform.xml#24): INTERNET = inet, BLUETOOTH = be_net
+- [Groups](http://androidxref.com/8.1.0_r33/xref/frameworks/base/data/etc/platform.xml#24): INTERNET = ```inet```, BLUETOOTH = ```be_net```
 - Checks: service's code does a check
 
-android:exported [docs](https://developer.android.com/guide/topics/manifest/activity-element#exported)
+android:exported [~](https://developer.android.com/guide/topics/manifest/activity-element#exported)
 
 - Default value is false.
 - If component defines an intent-filter, then default value is true.
@@ -286,14 +289,16 @@ Primitives
 - Purpose: distinguish, not identify (system vs. normal apps for signature permissions).
 - SSL: website is legitimate (through chain of certificates till CA which the browser trusts).
 
-android:shareUserId [docs](https://developer.android.com/guide/topics/manifest/manifest-element#uid)
+android:shareUserId [~](https://developer.android.com/guide/topics/manifest/manifest-element#uid)
 
 - Apps can request to be assigned the same Linux user ID only if their certificates are the same.
 - Both apps can access each others internal storage, components.
 
-```android:shareUserId="com.mobisec.shareduser"```
+```xml
+android:shareUserId="com.mobisec.shareduser"
+```
 
-Resources [docs](https://developer.android.com/guide/topics/resources/providing-resources)
+Resources [~](https://developer.android.com/guide/topics/resources/providing-resources)
 
 - Additional files and static content that the app uses.
 - drawable, layout, raw
@@ -301,24 +306,23 @@ Resources [docs](https://developer.android.com/guide/topics/resources/providing-
 
 Resources under the hood
 
-```
+```xml
 # smali code
 const v4, 0x7f07002b
 
 # res/values/strings.xml
-\<string name="secret\_string"\>Juicy Secret\</string\>
+<string name="secret_string">Juicy Secret</string>
 
 # res/values/public.xml (it specifies the mapping)
-\<public type="string" name="secret\_string" id="0x7f07002b" /\>
-
+<public type="string" name="secret_string" id="0x7f07002b" />
 ```
 
-RunTime.exec() [docs](https://developer.android.com/reference/java/lang/Runtime)
+RunTime.exec() [~](https://developer.android.com/reference/java/lang/Runtime)
 
 - Analogous to C's system() or Python's os.system()
 - Runtime.exec("cp ../flag /sdcard/leaked-flag.txt")
 
-Reflection [docs](https://developer.android.com/reference/java/lang/reflect/package-summary)
+Reflection [~](https://developer.android.com/reference/java/lang/reflect/package-summary)
 
 - To play with java objects.
 - Bypass access modifiers.
@@ -334,7 +338,7 @@ Dynamic Code Loading
 - From: file-system, embedded, just-downloaded.
 - Obfuscation [paper](http://www.s3.eurecom.fr/~yanick/publications/2014_ndss_android-remote-code-execution.pdf) by author.
 
-```
+```java
 Class<?> cls = (Class<?>) classloader.loadClass("com.mobisec.Peppa");
 Method m = cls.getMethod("pig");
 ```
