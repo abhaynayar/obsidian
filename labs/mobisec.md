@@ -494,4 +494,133 @@ Apk is a zip file (kinda)
 $ unzip app.apk
 ```
 
+Java / Dalvik bytecode
+
+- Cannot be run by processor.
+- Can be run by VM (JVM/DVM).
+- DVM: code that your processor can run, takes Dalvik bytecode as input and executes intended behaviour.
+- We use virtual machine so that the same code can run across multiple devices / architectures (DVM is custom).
+- There is on security benefit to having a virtual machine.
+
+Dalvik bytecode verifier
+
+- Checks if the bytecode is well-formed.
+- Dalvik is easy to disassemble.
+- Therefore bad for the bad guys.
+
+What can bad guys do then?
+
+- You can still obfuscate (Reflection).
+- You can also load code dynamically.
+- Or use native code (no such thing as native code verifier, Google NaCl doesn't apply).
+
+Dalvik bytecode
+
+- Knows about OO concepts.
+- Dest-to-src syntax.
+- Types: V void, B byte, S short, C char, I int, Z boolean.
+- Classes: L&lt;fullyqualifiedclassname&gt; (ex.: Landroid.content.Intent;).
+- The bytecode is nicely split in "methods" (.smali files).
+- Dalvik is register-based.
+- Each method has its own register "frame".
+- Methods' args are placed in the last registers of the frame.
+- If a method is non-static, the first argument is "this".
+
+Register frame
+
+Consider a method s.t.
+- it takes 3 arguments
+- its register frame has 6 registers
+
+The method will use
+- Registers v0, v1, v2, v3, v4, v5
+- Arguments are placed in v3, v4, v5
+
+Register model
+
+- Different from CPU registers.
+- Not shared across methods.
+- Can contain values and references though.
+
+Examples
+
+```java
+int pig(int x) {
+    return 2*x;
+}
+```
+
+```dalvik
+.method pig(I)I
+    .registers 3
+
+    mul-int/lit8 v0, v2, 0x2
+
+    return v0
+.end method
+```
+
+```
+int foo(int a, Peppa p) {
+    int b = p.pig(a);
+    return b;
+}
+```
+
+```
+.method foo(ILcom/mobisec/Peppa;)I
+    .registers 5
+
+    invoke-virtual {v4, v3}, Lcom/mobisec/Peppa;->pig(I)I
+    move-result v0
+
+    add-int v1, v3, v0
+    return v1
+.end method
+```
+
+Dalvik instructions [~](https://source.android.com/devices/tech/dalvik/dalvik-bytecode)
+
+```dalvik
+; moving
+const v5, 0x123
+move v4, v5
+
+; arithmetic
+add-int v1, v3, v0
+mul-int/lit8 v0, v2, 0x2
+
+; invocation
+invoke-virtual {v4, v3}, Lcom/mobisec/Peppa;->pig(I)I
+invoke-static ...
+invoke-{direct, super, interface} ...
+
+; return
+move-result v5
+
+; set / get
+iget, iget-object, ...
+iput, iput-object, ...
+sget, sput ... (for static fields)
+
+; new object
+new-instance v2, Lcom/mobisec/Peppa;
+
+; control flow
+if-ne v0, v1, :label_a
+...
+:label_a
+...
+goto :label_b
+
+; meta
+filled-new-array
+```
+
+Which component executes Dalvik?
+
+![](mobisec/art.png)
+
+ODEX: optimized DEX
+
 
