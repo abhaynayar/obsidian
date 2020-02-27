@@ -3,6 +3,8 @@
 > Prof. Yanick Fratonio
 > [https://mobisec.reyammer.io/](https://mobisec.reyammer.io/)
 
+## 1 - Welcome!
+## 2 - Quick History on Smartphones
 ## 3 - Intro to app development
 
 Languages used to develop android apps:
@@ -619,8 +621,71 @@ filled-new-array
 
 Which component executes Dalvik?
 
+
+1. In the past (uptil Android 4.4)
+	- DVM, libdvm.so
+	- When about to execute a method, compile and run it.
+	- Compilation is done "on-demand" (Just-in-time).
+	- Compiled code stored in cache.
+
+2. Then we got Android ART (introduced in Android 5)
+	- Android Run-Time replaced the old DVM (optional in Android 4.4).
+	- Ahead-of-time compilation (at app installation time).
+	- App boot and execution are faster, but more space required on RAM & DISK.
+	- Installation takes much longer, bad repercussion on system upgrades, could take ~15 minutes.
+
+3. New version of ART (introduced in Android 7)
+	- Profiles an app and precompiles only the "hot" methods (most likely to be used).
+	- Other parts of the app are left uncompiled.
+	- Automatically precompiles methods "near to be used."
+	- Precompilation only happens when the device is idle and charging.
+	- Quick path to install / upgrade.
+
 ![](mobisec/art.png)
 
 ODEX: optimized DEX
 
+- dex →  _dexopt_ →  ODEX
+- Faster to boot and run.
+- Most system apps that start at boot are ODEXed.
+- ODEX is an additional file, next to an APK.
+- Device dependent.
 
+Analogous of ODEX for ART
+
+- The new ART uses two formats.
+- The ART format (.art files):
+	- pre-initialized classes / objects.
+	- only one file: **boot.art**
+	- contains pre-initialized memory for most of the Android framework.
+- The OAT files:
+	- compiled bytecode to machine code wrapped in an ELF file.
+	- can contain one or more DEX files (actual Dalvik bytecode).
+	- obtained with _dex2oat_ (usually run at install time).
+	- you still have **.odex** files.
+	- **.odex** files are OAT-formatted files!
+	- one important file: **boot.oat**
+	- all traditional ODEX files are OAT files.
+	- can be inspected with **oatdump**.
+
+When a new app starts
+
+- All app processes are created by forking Zygote (init, template).
+- Optimization trick: **boot.oat** is already mapped in memory, no need to reload the framework!
+
+![](https://en.wikipedia.org/wiki/File:ART_view.png)
+
+More information
+
+- [stackoverflow](http://newandroidbook.com/files/Andevcon-ART.pdf)
+- [newandroidbook](http://newandroidbook.com/files/Andevcon-ART.pdf)
+- [ctf-challenge](http://reyammer.blogspot.com/2016/03/from-android-art-binary-only-to-dex-yes.html)
+
+Tools time!
+
+- ```unzip app.apk```
+	- AndroidManifest.xml (compressed)
+	- classes.dex
+	- resources (compressed)
+
+- 
