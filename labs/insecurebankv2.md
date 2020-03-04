@@ -17,31 +17,31 @@ My Genymotion wasn't working, but Android Emulator worked.
 
 Checklist
 
-[ ] Flawed Broadcast Receivers
-[ ] Intent Sniffing and Injection
-[ ] Weak Authorization mechanism
-[ ] Local Encryption issues
-[ ] Vulnerable Activity Components
-[ ] Root Detection and Bypass
-[ ] Emulator Detection and Bypass
-[ ] Insecure Content Provider access
-[ ] Insecure Webview implementation
-[ ] Weak Cryptography implementation
-[ ] Application Patching
-[ ] Sensitive Information in Memory
-[ ] Insecure Logging mechanism
-[ ] Android Pasteboard vulnerability
-[ ] Application Debuggable
-[ ] Android keyboard cache issues
-[ ] Android Backup vulnerability
-[ ] Runtime Manipulation
-[ ] Insecure SDCard storage
-[ ] Insecure HTTP connections
-[ ] Parameter Manipulation
-[ ] Hardcoded secrets
-[ ] Username Enumeration issue
-[ ] Developer Backdoors
-[x] Weak change password implementation
+- [ ] Flawed Broadcast Receivers
+- [ ] Intent Sniffing and Injection
+- [ ] Weak Authorization mechanism
+- [ ] Local Encryption issues
+- [ ] Vulnerable Activity Components
+- [ ] Root Detection and Bypass
+- [ ] Emulator Detection and Bypass
+- [ ] Insecure Content Provider access
+- [ ] Insecure Webview implementation
+- [ ] Weak Cryptography implementation
+- [ ] Application Patching
+- [ ] Sensitive Information in Memory
+- [ ] Insecure Logging mechanism
+- [ ] Android Pasteboard vulnerability
+- [ ] Application Debuggable
+- [ ] Android keyboard cache issues
+- [ ] Android Backup vulnerability
+- [ ] Runtime Manipulation
+- [ ] Insecure SDCard storage
+- [ ] Insecure HTTP connections
+- [ ] Parameter Manipulation
+- [ ] Hardcoded secrets
+- [ ] Username Enumeration issue
+- [ ] Developer Backdoors
+- [x] Weak change password implementation
 
 -----
 
@@ -108,8 +108,9 @@ username=dinesh&newpassword=dinesh
 
 -----
 
-# Dynamic Analysis
-## Login Screen
+## Other notes
+
+### Login Screen
 
 Intercepting the request in Burp Suite
 
@@ -126,7 +127,7 @@ username=dinesh&password=Dinesh%40123%24
 
 - Trivial SQL injection doesn't work.
 
-## Transfer Screen
+### Transfer Screen
 
 Get Accounts
 
@@ -154,7 +155,7 @@ User-Agent: Apache-HttpClient/UNAVAILABLE (java 1.4)
 username=dinesh&password=Dinesh%40123%24&from_acc=888888888&to_acc=666666666&amount=2000
 ```
 
-## Drozer
+### Drozer
 
 ```
 # getting attack surface
