@@ -12,7 +12,7 @@ Security related notes, labs and CTF write-ups.
 ## Labs / Courses
 
 - [Insecure Bank v2](labs/insecurebankv2.md)
-- [MOBISEC - Mobile Security Course](labs/mobisec.md)
+- [MOBISEC - Mobile Security Course](https://github.com/abhaynayar/mobisec)
 - [Portswigger's Web Security Academy](labs/websec.md)
 - [Hacker101 CTF](labs/h101.md)
 
