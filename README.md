@@ -4,7 +4,7 @@ Security related notes, labs and CTF write-ups.
 
 ## Writeups
 
-- [b01lers 2020](writeups/b01lers.md)
+- [b01lers 2020](writeups/b01lers)
 - [riceteacatpanda 2020](writeups/rtcp20.md)
 - [Insomni'hack 2020](writeups/insomnihack20.md)
 - [InCTF Nationals 2019](writeups/inctfn19.md)
