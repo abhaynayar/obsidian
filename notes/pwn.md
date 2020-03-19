@@ -12,17 +12,17 @@
 - ```./<binary>```
 
 ### Things to keep in mind
-- byte (8 bits), word (16 bits) and double word (32 bits)
-- RAX: 64-bit, EAX: 32-bit value, AX is the lower 16-bits, AL is the lower 8 bits, AH is the bits 8 through 15 (zero-based)
-- fgets() means you can use null bytes in your payload but not newlines
-- newline is required at the end of your payload to cause the binary to process your input
-- what does ```call``` do?
-  1. pushes address of next instruction on to the stack
-  2. changes ```eip``` to given address
-- passing arguments
-  - _64 bit_ : first four arguments rdi, rsi, rdx, rcx
-  - _32 bit_ : push arguments on to the stack (include them in the payload)
-- How the stack is layed out: (pico18/buffer2)
+- (BYTE): 8 bits, (WORD): 16 bits, (DWORD): 32 bits, (QWORD): 64 bits.
+- RAX: 64-bit, EAX: 32-bit value, AX is the lower 16-bits, AL is the lower 8 bits, AH is the bits 8 through 15 (zero-based).
+- fgets() means you can use null bytes in your payload but not newlines.
+- Newline is required at the end of your payload to cause the binary to process your input.
+- What does ```call``` do?
+  1. pushes address of next instruction on to the stack.
+  2. changes ```eip``` to given address.
+- Passing arguments:
+  - _64 bit_ : first four arguments rdi, rsi, rdx, rcx.
+  - _32 bit_ : push arguments on to the stack (include them in the payload).
+- How the stack is layed out: (pico18/buffer2).
 ```
 local variables
 base point and etc
