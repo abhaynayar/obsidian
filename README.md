@@ -4,11 +4,15 @@ Security related notes, labs and CTF write-ups.
 
 ## Writeups
 
-- [b01lers 2020](writeups/b01lers20)
-- [riceteacatpanda 2020](writeups/rtcp20.md)
-- [Insomni'hack 2020](writeups/insomnihack20.md)
-- [InCTF Nationals 2019](writeups/inctfn19.md)
-- [NaCTF 2019](https://abhaynayar.com/blog/fmt.html)
+2020
+- [riftCTF](https://youtu.be/K5YnRLG6Cr8)
+- [b01lers](writeups/b01lers20)
+- [riceteacatpanda](writeups/rtcp20.md)
+- [Insomni'hack](writeups/insomnihack20.md)
+
+2019
+- [InCTF Nationals](writeups/inctfn19.md)
+- [NaCTF](https://abhaynayar.com/blog/fmt.html)
 
 ## Labs / Courses
 
