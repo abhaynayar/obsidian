@@ -4,6 +4,7 @@
 - <https://wiki.bi0s.in/reversing/asm/>
 
 ### Learn
+- z3 ```pip install z3-solver```
 - qira-1.3 <https://github.com/geohot/qira>
 - angr <https://github.com/angr/angr>
 - BAP <https://github.com/BinaryAnalysisPlatform/bap>
