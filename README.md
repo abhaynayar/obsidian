@@ -14,13 +14,12 @@ Security related notes, labs and CTF write-ups.
 - [InCTF Nationals](writeups/inctfn19.md)
 - [NaCTF](https://abhaynayar.com/blog/fmt.html)
 
-## Labs / Courses
+## Labs
 
 - [KGB Messenger](labs/kgb.md)
 - [Insecure Bank v2](labs/insecurebankv2.md)
 - [MOBISEC - Mobile Security Course](https://github.com/abhaynayar/mobisec)
 - [Portswigger's Web Security Academy](labs/websec.md)
-- [Hacker101 CTF](labs/h101.md)
 
 ## Notes
 
@@ -34,8 +33,8 @@ Security related notes, labs and CTF write-ups.
 
 ## To-do
 
-- [ ] [Android App Reverse Engineering 101](https://maddiestone.github.io/AndroidAppRE/)
 - [x] Shift all notes into a separate directory.
 - [x] Create a new directory for write-ups.
 - [x] Link notes to related challenges.
 - [x] Add time-wasters. (CryptoPals, pwnable.kr, websec.fr, etc.)
+
