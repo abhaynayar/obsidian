@@ -16,10 +16,10 @@ Security related notes, labs and CTF write-ups.
 
 ## Labs
 
-- [KGB Messenger](labs/kgb.md)
-- [Insecure Bank v2](labs/insecurebankv2.md)
 - [MOBISEC - Mobile Security Course](https://github.com/abhaynayar/mobisec)
 - [Portswigger's Web Security Academy](labs/websec.md)
+- [KGB Messenger](labs/kgb.md)
+- [Insecure Bank v2](labs/insecurebankv2.md)
 
 ## Notes
 
