@@ -22,8 +22,8 @@ Log in using the credentials given in the documentation.
 Checklist
 
 - [x] Flawed Broadcast Receivers
-- [ ] Intent Sniffing and Injection
-- [ ] Weak Authorization mechanism
+- [x] Intent Sniffing and Injection
+- [x] Weak Authorization mechanism
 - [ ] Local Encryption issues
 - [ ] Vulnerable Activity Components
 - [ ] Root Detection and Bypass
@@ -115,9 +115,9 @@ Intent sniffing can be done when the application is sending broadcast intents.
 
 We can use drozer module `app.broadcast.sniff` to sniff the required intent.
 
-The action to be sniffed is `<action android:name="theBroadcast"/>`.
+The action to be sniffed is `<action android:name="theBroadcast"/>`
 
-Therefore the drozer command required will be: `dz> run app.broadcast.sniff --action theBroadcast`.
+Therefore the drozer command required will be: `dz> run app.broadcast.sniff --action theBroadcast`
 
 But, after I run the change password functionality on my phone, drozer fails to register any broadcast intents. If anyone knows why this might be happening, do let me know.
 
@@ -126,6 +126,12 @@ I then proceeded to use the sniffer provided in the walkthrough `~/insecure_bank
 Once we install the app, we can call the intent using the above drozer code.
 
 `Phone Number is: 1234 and New Password is: asdf`
+
+-----
+
+## Weak Authorization mechanism
+
+Under `res/values/strings.xml` we find `is_admin`. Patch the app using apktool to change its value from `no` to `yes`.
 
 -----
 
