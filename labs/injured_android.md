@@ -2,7 +2,6 @@
 
 ## Setup
 
-Just clone the repository to your local machine.  
 `git clone https://github.com/B3nac/InjuredAndroid`
 
 ## Flag One - Login
@@ -29,9 +28,7 @@ The condition to start the FlagOneSuccess intent is for the editText2's text to 
 
 ## Flag Two - Exported Activity
 
-For exported activities, we need to look into the manifest.
-
-We see that the following activity is exported:
+The following activity is exported (looking into the manifest):
 
 ```xml
 <activity android:name="b3nac.injuredandroid.b25lActivity" android:exported="true"/>
@@ -83,7 +80,7 @@ This time, we need to look into what `Decoder.getData()` returns:
 if (((EditText) findViewById(R.id.editText2)).getText().toString().equals(new String(new Decoder().getData())))
 ```
 
-We simple need to base64 decode the given string:
+We need to base64 decode the given string:
 
 ```java
 public class Decoder {
@@ -101,7 +98,7 @@ We get the flag as `4_overdone_omelets`.
 
 The `b3nac.injuredandroid.FlagFiveActivity` calls the `b3nac.injuredandroid.FlagFiveReceiver`.
 
-Looking at the code of the latter, we see that once the receiver is called twice, we get the flag.
+Once the receiver is called twice, we get the flag.
 
 ```java
 // -snip-
@@ -131,7 +128,7 @@ public void submitFlag(View view) {
 }
 ```
 
-We see that we need to reverse a custom decrypt method implemented in the `VGV4dEVuY3J5cHRpb25Ud28` class. But since we already have a pretty good decompiled version of the Java code, we simply need to copy and paste the code to an external file and run the Java code after doing some necessary fixes. I have uploaded my code [here](injured_android/VGV4dEVuY3J5cHRpb25Ud28.java).
+We need to reverse a custom decrypt method implemented in the `VGV4dEVuY3J5cHRpb25Ud28` class. But since we already have a pretty good decompiled version of the Java code, we can copy and paste the code to an external file and run the Java code after doing some necessary fixes. I have uploaded my code [here](injured_android/VGV4dEVuY3J5cHRpb25Ud28.java).
 
 ```bash
 $ javac VGV4dEVuY3J5cHRpb25Ud28.java 
@@ -141,7 +138,7 @@ Decrypted: k3FElEG9lnoWbOateGhj5pX6QsXRNJKh///8Jxi8KXW7iDpk2xRxhQ== -> {This_Isn
 
 ## Flag Seven - SQLite
 
-Within the activity, we see that the following string is being base64 decoded `MmFiOTYzOTBjN2RiZTM0MzlkZTc0ZDBjOWIwYjE3Njc=` to `2ab96390c7dbe3439de74d0c9b0b1767`. We can get the md5 hash of this value from the internet: `hunter2`.
+Within the activity, the following string is being base64 decoded `MmFiOTYzOTBjN2RiZTM0MzlkZTc0ZDBjOWIwYjE3Njc=` to `2ab96390c7dbe3439de74d0c9b0b1767`. We can get the md5 hash of this value from the internet: `hunter2`.
 
 There was reference to a remote url as well, but it seemed to be rotated. I solved it using python.
 
@@ -189,7 +186,7 @@ C10ud_S3cur1ty_lol
 
 ## Flag Nine - Firebase
 
-After decompiling `b3nac.injuredandroid.FlagNineFirebaseActivity` we see that it is using firebase directory `/flags` through the following lines, where `ZmxhZ3Mv` is the base64 encoded form of `flags`.
+`FlagNineFirebaseActivity` is using firebase directory `/flags`. In decompilation where `ZmxhZ3Mv` is the base64 encoded form of `flags`.
 
 ```java
 byte[] decodedDirectory = Base64.decode("ZmxhZ3Mv", 0);
@@ -210,7 +207,7 @@ Where I get the string `[nine!_flag]`. In the activity for this flag, there is a
 
 ## Flag Eleven - Deep Links
 
-```
+```xml
 <activity android:label="@string/title_activity_deep_link" android:name="b3nac.injuredandroid.DeepLinkActivity">
     <intent-filter android:label="filter_view_flag11">
         <action android:name="android.intent.action.VIEW"/>
@@ -237,13 +234,13 @@ In this `https://injuredandroid.firebaseio.com/binary/.json` URL we find a strin
 
 ## Flag Twelve - Protected Components
 
-When we check the hint for this flag, we see that we need to use an exported activity. The FlagTwelveProtected itself isn't exported therefore we can't call it through an intent. In the manifest, if we look careful (or search for `exported="true"`) we come across the following:
+For this challenge we need to use an exported activity. The FlagTwelveProtected itself isn't exported therefore we can't call it through an intent. In the manifest, if we look careful (or search for `exported="true"`) we come across the following:
 
 ```xml
 <activity android:theme="@style/AppTheme.NoActionBar" android:label="@string/title_activity_exported_protected_intent" android:name="b3nac.injuredandroid.ExportedProtectedIntent" android:exported="true"/>
 ```
 
-When we go into the Java code of the following activity, we see that we can use it to pivot to the protected activity.
+The Java code of the following activity, can be used to pivot to the protected activity.
 
 ```java
 public void onResume() {
