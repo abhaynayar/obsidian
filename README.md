@@ -2,9 +2,19 @@
 
 Security related notes, labs and CTF write-ups.
 
+## Notes
+
+- [Web Exploitation](notes/web.md)
+- [Reverse Engineering](notes/rev.md)
+- [Binary Exploitation](notes/pwn.md)
+- [Android](notes/android.md)
+- [Forensics](notes/forensics.md)
+- [Cryptography](notes/crypto.md)
+
 ## Writeups
 
 2020
+- [hackpack]()
 - [riftCTF](https://youtu.be/K5YnRLG6Cr8)
 - [b01lers](writeups/b01lers20)
 - [riceteacatpanda](writeups/rtcp20.md)
@@ -16,21 +26,11 @@ Security related notes, labs and CTF write-ups.
 
 ## Labs
 
+- [Portswigger's Web Security Academy](labs/websec.md)
+- [MOBISEC - Mobile Security Course](https://github.com/abhaynayar/mobisec)
 - [Injured Android](labs/injured_android.md)
 - [KGB Messenger](labs/kgb.md)
 - [Insecure Bank v2](labs/insecurebankv2.md)
-- [MOBISEC - Mobile Security Course](https://github.com/abhaynayar/mobisec)
-- [Portswigger's Web Security Academy](labs/websec.md)
-
-## Notes
-
-- [Web Exploitation](labs/websec.md)
-- [Android](notes/android.md)
-- [Reverse Engineering](notes/rev.md)
-- [Binary Exploitation](notes/pwn.md)
-- [Forensics](notes/forensics.md)
-- [Cryptography](notes/crypto.md)
-
 
 ## To-do
 
