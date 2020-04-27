@@ -14,7 +14,9 @@ Security related notes, labs and CTF write-ups.
 ## Writeups
 
 2020
-- [hackpack]()
+- houseplant
+- sarcon
+- hackpack
 - [riftCTF](https://youtu.be/K5YnRLG6Cr8)
 - [b01lers](writeups/b01lers20)
 - [riceteacatpanda](writeups/rtcp20.md)
