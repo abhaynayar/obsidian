@@ -42,46 +42,50 @@ Bug Bounty
 ### Tools
 
 <table>
-    <thead>
-        <tr>
-            <th>Tools</th>
-            <th>Usage</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>ffuf</td>
-            <td>$ ffuf -w ~/wordlists/common.txt -u https://example.com/FUZZ</td>
-			<td>$ ffuf -w ~/wordlists/10-million-password-list-top-100.txt -X POST -d "username=admin&password=FUZZ" -H "Content-Type: application/x-www-form-urlencoded" -u https://www.example.com/login -mc all -fc 200</td>
-			<td>$ ffuf -w ~/wordlists/common.txt -b "cookie1=value1;cookie2=value2" -H "X-Header: ASDF" -u https://example.com/dir/FUZZ</td>
-        </tr>
-        <tr>
-            <td>sublist3r</td>
-            <td>$ sublister -d example.com</td>
-        </tr> 
-        <tr>
-            <td>dnsrecon</td>
-            <td>
-				$ dnsrecon -n 8.8.8.8 -d example.com<br>
-				$ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt
-			</td>
-        </tr>
-    </tbody>
+<thead>
+<tr><th>Tools</th>
+<th>Usage</th></tr>
+</thead>
+<tbody>
+
+<tr>
+<td>ffuf</td>
+<td>$ ffuf -w ~/wordlists/common.txt -u https://example.com/FUZZ<br>
+$ ffuf -w ~/wordlists/10-million-password-list-top-100.txt -X POST -d "username=admin&password=FUZZ" -H "Content-Type: application/x-www-form-urlencoded" -u https://www.example.com/login -mc all -fc 200<br>
+$ ffuf -w ~/wordlists/common.txt -b "cookie1=value1;cookie2=value2" -H "X-Header: ASDF" -u https://example.com/dir/FUZZ</td>
+</tr>
+
+<tr>
+<td>sublist3r</td>
+<td>$ sublister -d example.com</td>
+</tr> 
+
+<tr>
+<td>dnsrecon</td>
+<td>$ dnsrecon -n 8.8.8.8 -d example.com<br>
+$ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
+</tr>
+
+</tbody>
 </table>
 
 
 ### Vulnerability Classes
 
-#### XSS
-#### XXE
 #### SQLi
 
 - Do a simple sanity check for `'` or `"` in payload. Try bypassing client side restrictions for input in fields such as date.
 - Once you have a good working injection, move the work over to sqlmap. End sqlmap detection phase once it finds a positive.
 - While `union` can be used with `select`, look for **stacked queries** to execute any SQL statement. Remember to commit.
+- If any words are filtered, see if they are done recursively. If not, `selselectect` if will work.
 
+#### PHP issues
+
+- Type confusion: If an array is passed to `strcmp()`, it will give a warning but the compare result return 0.
+- Object injection: If `unserialize()` is being used, you might be able to craft an object and trampoline over `__destruct()`.
+
+#### XSS
+#### XXE
 #### SSTI
 #### SSRF
 #### CSRF
-
-
