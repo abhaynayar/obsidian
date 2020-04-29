@@ -81,7 +81,7 @@ $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
 
 #### PHP issues
 
-- Type confusion: If an array is passed to `strcmp()`, it will give a warning but the compare result return 0.
+- Type confusion: If an array is passed to `strcmp()`, it will give a warning but the compare result returns 0.
 - Object injection: If `unserialize()` is being used, you might be able to craft an object and trampoline over `__destruct()`.
 
 #### XSS
