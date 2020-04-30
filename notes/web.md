@@ -75,6 +75,8 @@ $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
 #### SQLi
 
 - Do a simple sanity check for `'` or `"` in payload. Try bypassing client side restrictions for input in fields such as date.
+- Sometimes comments don't work with semicolon. `OR 1=1--` might work when `OR `1=1;--` doesn't.
+- Remember to encode spaces to `+` and other url unsafe characters as well.
 - Once you have a good working injection, move the work over to sqlmap. End sqlmap detection phase once it finds a positive.
 - While `union` can be used with `select`, look for **stacked queries** to execute any SQL statement. Remember to commit.
 - If any words are filtered, see if they are done recursively. If not, `selselectect` if will work.
@@ -83,6 +85,7 @@ $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
 
 - Type confusion: If an array is passed to `strcmp()`, it will give a warning but the compare result returns 0.
 - Object injection: If `unserialize()` is being used, you might be able to craft an object and trampoline over `__destruct()`.
+- Type juggling: `0e123` evaluates to `0`.
 
 #### XSS
 #### XXE
