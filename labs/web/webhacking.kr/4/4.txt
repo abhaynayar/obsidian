@@ -1,0 +1,10 @@
+<?php
+  sleep(1); // anti brute force
+  if((isset($_SESSION['chall4'])) && ($_POST['key'] == $_SESSION['chall4'])) solve(4);
+  $hash = rand(10000000,99999999)."salt_for_you";
+  $_SESSION['chall4'] = $hash;
+  for($i=0;$i<500;$i++) $hash = sha1($hash);
+?>
+
+// value being hashed is not put into session use script `sol.py`
+// just keep the session opened and find the value that gets the hash

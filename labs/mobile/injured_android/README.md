@@ -150,7 +150,7 @@ https���injuredandroid�firebaseio�com�sqlite�json
 
 The text is partly messed up after the rotation, I simply guess the actual URL and get the flag.
 
-![](injured_android/flag_seven.png)
+![](flag_seven.png)
 
 Then we need to go back to the activity and enter the flag as `S3V3N_11` and the password as `hunter2`.
 

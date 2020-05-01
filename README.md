@@ -13,12 +13,26 @@ Security related notes, labs and CTF write-ups.
 
 ## Labs
 
-- [Portswigger's Web Security Academy](labs/portswigger)
-- [XSS game](labs/xss_game)
+Web
+
+- [Portswigger](labs/web/portswigger)
+- [XSS game](labs/web/xss_game)
+- [247CTF](labs/web/247ctf)
+- [websec.fr](labs/web/websec.fr)
+- [webhacking.kr](labs/web/webhacking.kr)
+- [ctfchallenge.co.uk](labs/web/ctfchallenge.co.uk)
+
+Mobile
+
+- [MOBISEC](https://github.com/abhaynayar/mobisec)
+- [Insecure Bank](labs/mobile/insecure_bank)
+- [Injured Android](labs/mobile/injuredandroid)
+- [KGB Messenger](labs/mobile/kgb)
 
 ## Writeups
 
 2020
+
 - houseplant
 - sarcon
 - hackpack
@@ -28,6 +42,7 @@ Security related notes, labs and CTF write-ups.
 - [Insomni'hack](writeups/insomnihack20.md)
 
 2019
+
 - [InCTF Nationals](writeups/inctfn19.md)
 - [NaCTF](https://abhaynayar.com/blog/fmt.html)
 
@@ -37,4 +52,4 @@ Security related notes, labs and CTF write-ups.
 - [x] Create a new directory for write-ups.
 - [x] Link notes to related challenges.
 - [x] Add time-wasters. (CryptoPals, pwnable.kr, websec.fr, etc.)
-
+- [ ] Upload houseplant, sarcon, hackpack directories.
