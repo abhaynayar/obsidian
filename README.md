@@ -13,11 +13,8 @@ Security related notes, labs and CTF write-ups.
 
 ## Labs
 
-- [Portswigger's Web Security Academy](labs/websec.md)
-- [MOBISEC - Mobile Security Course](https://github.com/abhaynayar/mobisec)
-- [Injured Android](labs/injured_android.md)
-- [KGB Messenger](labs/kgb.md)
-- [Insecure Bank v2](labs/insecurebankv2.md)
+- [Portswigger's Web Security Academy](labs/portswigger)
+- [XSS game](labs/xss_game)
 
 ## Writeups
 
