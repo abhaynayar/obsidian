@@ -38,6 +38,8 @@ Bug Bounty
 - Make a flow diagram of deciding to opt-in or out of features.
 - Test every input, but know when to give up.
 - When one directory isn't accessible, try its subdirectories.
+- Chrome, Firefox, Safari encode `location.search` and `location.hash`.
+- IE11 and Edge (pre-Chromium) don't encode sources.
 
 ### Tools
 
@@ -71,10 +73,9 @@ $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
 
 
 ### Vulnerability Classes
-
 #### SQLi
 
-- [Portswigger - SQL injection cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet)
+- [Portswigger - SQL injection cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet) (doesn't include sqlite)
 - Do a simple sanity check for `'` or `"` in payload. Try bypassing client side restrictions for input in fields such as date.
 - Oracle comments don't work with semicolon. `OR 1=1--` might work when `OR 1=1;--` doesn't.
 - MySQL comments `--` require a space after them to work `-- `.
@@ -83,21 +84,29 @@ $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
 - In where clause, try to use quotes to cover table and column names.
 - While `union` can be used with `select`, look for **stacked queries** to execute any SQL statement. Remember to commit.
 - If any words are filtered, see if they are done recursively. If not, `selselectect` if will work.
+
 - [Portswigger - Blind SQL injection](https://portswigger.net/web-security/sql-injection/blind)
-- 
 
 #### PHP issues
 
 - Type confusion: If an array is passed to `strcmp()`, it will give a warning but the compare result returns 0.
-- Object injection: If `unserialize()` is being used, you might be able to craft an object and trampoline over `__destruct()`.
+- Object injection: If `unserialize()` is being used, you might be able to craft an object and use trampoline functions.
 - Type juggling: `0e123` evaluates to `0`.
 
 #### XSS
 
+- [Portswigger - XSS cheatsheet](https://portswigger.net/web-security/cross-site-scripting/cheat-sheet)
 - [Portswigger - XSS contexts](https://portswigger.net/web-security/cross-site-scripting/contexts)
 - When browsers parse tag attributes, they HTML-decode their values first. `<foo bar='z'>` is the same as `<foo bar='&#x7a;'>`
+- AngularJS `ng-app` attribute is processed by AngularJS. Anything within `{{}}` will be executed.
+- jQuery `attr()` used to change attributes, can act as a sink.
 
 #### XXE
+
+- [PayloadAllTheThings - XXE](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XXE%20Injection)
+    - Retrieve files
+    - SSRF through XXE
+
 #### SSTI
 #### SSRF
 #### CSRF
