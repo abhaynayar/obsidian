@@ -21,6 +21,7 @@ Web
 - [websec.fr](labs/web/websec.fr)
 - [webhacking.kr](labs/web/webhacking.kr)
 - [ctfchallenge.co.uk](labs/web/ctfchallenge.co.uk)
+- [OverTheWire - Natas](labs/web/natas)
 
 Mobile
 
@@ -53,3 +54,4 @@ Mobile
 - [x] Link notes to related challenges.
 - [x] Add time-wasters. (CryptoPals, pwnable.kr, websec.fr, etc.)
 - [ ] Upload houseplant, sarcon, hackpack directories.
+

@@ -86,6 +86,10 @@ $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
 - If any words are filtered, see if they are done recursively. If not, `selselectect` if will work.
 
 - [Portswigger - Blind SQL injection](https://portswigger.net/web-security/sql-injection/blind)
+- For time-based, first figure out the max time a request can take.
+- Remember to start `substring(str,pos,len)` from `1` not `0`.
+- For postgres time-based, `||pg_sleep(10)`
+- For postgres time-based conditions `'; SELECT CASE WHEN (condition) THEN pg_sleep(10) ELSE pg_sleep(0) END--`
 
 #### PHP issues
 
