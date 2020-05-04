@@ -16,12 +16,14 @@ Security related notes, labs and CTF write-ups.
 Web
 
 - [Portswigger](labs/web/portswigger)
-- [XSS game](labs/web/xss_game)
-- [247CTF](labs/web/247ctf)
+- [ctfchallenge.co.uk](labs/web/ctfchallenge.co.uk)
+- [pwnfunction - XSS Game](labs/web/pwnfunction)
+- [247CTF - Web](labs/web/247ctf)
 - [websec.fr](labs/web/websec.fr)
 - [webhacking.kr](labs/web/webhacking.kr)
-- [ctfchallenge.co.uk](labs/web/ctfchallenge.co.uk)
+- [Google - XSS game](labs/web/xss_game)
 - [OverTheWire - Natas](labs/web/natas)
+
 
 Mobile
 

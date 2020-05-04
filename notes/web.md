@@ -104,6 +104,8 @@ $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
 - When browsers parse tag attributes, they HTML-decode their values first. `<foo bar='z'>` is the same as `<foo bar='&#x7a;'>`
 - AngularJS `ng-app` attribute is processed by AngularJS. Anything within `{{}}` will be executed.
 - jQuery `attr()` used to change attributes, can act as a sink.
+- [XSS in postMessage](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#xss-in-postmessage)
+- Strings can be concatenated using minus `-` sign. In a js `eval` context you can use: `"-alert(1)-"`
 
 #### XXE
 
