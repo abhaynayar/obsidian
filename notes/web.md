@@ -38,6 +38,7 @@ Bug Bounty
 - Make a flow diagram of deciding to opt-in or out of features.
 - Test every input, but know when to give up.
 - When one directory isn't accessible, try its subdirectories.
+- In python `requests` no need to url-encode, it's done automatically.
 - Chrome, Firefox, Safari encode `location.search` and `location.hash`.
 - IE11 and Edge (pre-Chromium) don't encode sources.
 
@@ -68,6 +69,17 @@ $ ffuf -w ~/wordlists/common.txt -b "cookie1=value1;cookie2=value2" -H "X-Header
 $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
 </tr>
 
+<tr>
+<td>gau</td>
+<td>$ echo example.com | gau<br>
+$ cat domains.txt | gau</td>
+</tr>
+
+<tr>
+<td>paramspider</td>
+<td>$ python3 paramspider.py --domain hackerone.com</td>
+</tr>
+
 </tbody>
 </table>
 
@@ -87,7 +99,9 @@ $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
 
 - [Portswigger - Blind SQL injection](https://portswigger.net/web-security/sql-injection/blind)
 - For time-based, first figure out the max time a request can take.
+- For faster blind-sqli execution, first check what characters `*i*` does the target string contain from `string.printable` and append it to a filtered list. Then from that filtered list of characters, check the real order of the target string `i*`.
 - Remember to start `substring(str,pos,len)` from `1` not `0`.
+- Use `LIKE BINARY` for case-senstivie blind sqli matching.
 - For postgres time-based, `||pg_sleep(10)`
 - For postgres time-based conditions `'; SELECT CASE WHEN (condition) THEN pg_sleep(10) ELSE pg_sleep(0) END--`
 
@@ -113,7 +127,10 @@ $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
     - Retrieve files
     - SSRF through XXE
 
-#### SSTI
-#### SSRF
 #### CSRF
+- Try removing the anti-CSRF token altogether.
+- Try submitting anti-CSRF token generated for one user in another user's session.
+- Submitting forms through JavaScript: `document.getElementById("myForm").submit();` or `document.forms[0].submit();`
 
+#### SSRF
+#### SSTI
