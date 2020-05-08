@@ -36,11 +36,9 @@ Bug Bounty
 
 - Test things under different environments, browsers.
 - Make a flow diagram of deciding to opt-in or out of features.
-- Test every input, but know when to give up.
+- Test every input, make sure to disregard any client-side restrictions.
 - When one directory isn't accessible, try its subdirectories.
-- In python `requests` no need to url-encode, it's done automatically.
-- Chrome, Firefox, Safari encode `location.search` and `location.hash`.
-- IE11 and Edge (pre-Chromium) don't encode sources.
+- In python `requests` there is url-encodint is done automatically.
 
 ### Tools
 
@@ -120,6 +118,8 @@ $ cat domains.txt | gau</td>
 - jQuery `attr()` used to change attributes, can act as a sink.
 - [XSS in postMessage](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#xss-in-postmessage)
 - Strings can be concatenated using minus `-` sign. In a js `eval` context you can use: `"-alert(1)-"`
+- Chrome, Firefox, Safari encode `location.search` and `location.hash`.
+- IE11 and Edge (pre-Chromium) don't encode sources.
 
 #### XXE
 
@@ -132,5 +132,9 @@ $ cat domains.txt | gau</td>
 - Try submitting anti-CSRF token generated for one user in another user's session.
 - Submitting forms through JavaScript: `document.getElementById("myForm").submit();` or `document.forms[0].submit();`
 
-#### SSRF
-#### SSTI
+#### Command Injection
+
+- Try `|ls`.
+- For time delays use `sleep 10` or `& ping -c 10 127.0.0.1 &`
+- Redirect output to a file you can read using your browser.
+
