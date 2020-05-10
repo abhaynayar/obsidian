@@ -39,6 +39,8 @@ Bug Bounty
 - Test every input, make sure to disregard any client-side restrictions.
 - When one directory isn't accessible, try its subdirectories.
 - In python `requests` there is url-encodint is done automatically.
+- Look into the URI spec `https://www.ietf.org/rfc/rfc3986.txt`.
+- If certain characters are blocked, use illegal unicode chars in Burp Intruder.
 
 ### Tools
 
@@ -120,6 +122,10 @@ $ cat domains.txt | gau</td>
 - Strings can be concatenated using minus `-` sign. In a js `eval` context you can use: `"-alert(1)-"`
 - Chrome, Firefox, Safari encode `location.search` and `location.hash`.
 - IE11 and Edge (pre-Chromium) don't encode sources.
+- Blind XSS:
+    - Read `https://brutelogic.com.br/blog/blind-xss-code/` get the code here `http://brutelogic.com.br/brutal/blind/index.txt`.
+    - Use `http://xss.rocks/xss.js` for including an `alert()` js file.
+    - Use `xsshunter.com` to test for blind xss.
 
 #### XXE
 

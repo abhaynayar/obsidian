@@ -33,6 +33,10 @@ Mobile
 - [Injured Android](labs/mobile/injuredandroid)
 - [KGB Messenger](labs/mobile/kgb)
 
+## Books
+
+- [The Tangled Web](books/tangled.md)
+
 ## Writeups
 
 2020

