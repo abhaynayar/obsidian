@@ -175,6 +175,9 @@ text
 title
 ```
 
+- Then I looked into [this](https://owasp.org/www-pdf-archive/Mario_Heiderich_OWASP_Sweden_The_image_that_called_me.pdf) presentation.
+- Also, this doesn't show "Tag not allowed": `<svg><.*></svg>`
+
 #### Reflected XSS into attribute with angle brackets HTML-encoded
 
 ```html

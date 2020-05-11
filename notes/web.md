@@ -41,6 +41,7 @@ Bug Bounty
 - In python `requests` there is url-encodint is done automatically.
 - Look into the URI spec `https://www.ietf.org/rfc/rfc3986.txt`.
 - If certain characters are blocked, use illegal unicode chars in Burp Intruder.
+- For faster HTTP requests and multithreading use C code as in `websec.fr/28`.
 
 ### Tools
 
