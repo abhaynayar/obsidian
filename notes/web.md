@@ -21,6 +21,7 @@ CTF
 
 Vulnerable Apps
 
+- [Vulhub](https://github.com/vulhub/vulhub)
 - [DVWA](http://www.dvwa.co.uk/)
 - [bWAPP](http://www.itsecgames.com/)
 - [OWASP Juice Shop](https://owasp.org/www-project-juice-shop/)
@@ -41,7 +42,9 @@ Bug Bounty
 - In python `requests` there is url-encodint is done automatically.
 - Look into the URI spec `https://www.ietf.org/rfc/rfc3986.txt`.
 - If certain characters are blocked, use illegal unicode chars in Burp Intruder.
-- For faster HTTP requests and multithreading use C code as in `websec.fr/28`.
+- For faster HTTP requests and multithreading use `Turbo Intruder`.
+- Sometimes, `Wappalyzer` may detect extra information in view-source.
+- Be aware of encodings. For example, browsers automatically URL-encode certain things.
 
 ### Tools
 
@@ -81,6 +84,11 @@ $ cat domains.txt | gau</td>
 <td>$ python3 paramspider.py --domain hackerone.com</td>
 </tr>
 
+<tr>
+<td>turbointruder</td>
+<td>https://portswigger.net/research/turbo-intruder-embracing-the-billion-request-attack</td>
+</tr>
+
 </tbody>
 </table>
 
@@ -108,6 +116,7 @@ $ cat domains.txt | gau</td>
 
 #### PHP issues
 
+- Sometimes `<?` does not work but `<?php` does.
 - Type confusion: If an array is passed to `strcmp()`, it will give a warning but the compare result returns 0.
 - Object injection: If `unserialize()` is being used, you might be able to craft an object and use trampoline functions.
 - Type juggling: `0e123` evaluates to `0`.
@@ -119,14 +128,21 @@ $ cat domains.txt | gau</td>
 - When browsers parse tag attributes, they HTML-decode their values first. `<foo bar='z'>` is the same as `<foo bar='&#x7a;'>`
 - AngularJS `ng-app` attribute is processed by AngularJS. Anything within `{{}}` will be executed.
 - jQuery `attr()` used to change attributes, can act as a sink.
-- [XSS in postMessage](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#xss-in-postmessage)
 - Strings can be concatenated using minus `-` sign. In a js `eval` context you can use: `"-alert(1)-"`
-- Chrome, Firefox, Safari encode `location.search` and `location.hash`.
-- IE11 and Edge (pre-Chromium) don't encode sources.
+- Chrome, Firefox, Safari encode `location.search` and `location.hash`. IE11 and Edge (pre-Chromium) don't encode sources.
+- To pop XSS in `innerHTML` first load the script into `iframe srcdoc` then load that `iframe` into the `innerHTML`.
+- If there is any encoded entities `&lt;` and `&gt;` see if there are any `unescape` calls you can pass them through.
+
 - Blind XSS:
     - Read `https://brutelogic.com.br/blog/blind-xss-code/` get the code here `http://brutelogic.com.br/brutal/blind/index.txt`.
     - Use `http://xss.rocks/xss.js` for including an `alert()` js file.
     - Use `xsshunter.com` to test for blind xss.
+- CSP Bypass:
+    - In your devtools, look at the network tab and within the headers for the response, you'll see the CSP header.
+    - You can also copy the url and put it into Google's CSP Evaluator at: `csp-evaluator.withgoogle.com`
+    - If `default-src` is `self`, it can be problematic if the user can upload files.
+
+- [XSS in postMessage](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#xss-in-postmessage)
 
 #### XXE
 
