@@ -45,6 +45,7 @@ Bug Bounty
 - For faster HTTP requests and multithreading use `Turbo Intruder`.
 - Sometimes, `Wappalyzer` may detect extra information in view-source.
 - Be aware of encodings. For example, browsers automatically URL-encode certain things.
+- The server might be Windows. Don't forget, in case of webshells, you might need different commands. 
 
 ### Tools
 
@@ -105,6 +106,7 @@ $ cat domains.txt | gau</td>
 - In where clause, try to use quotes to cover table and column names.
 - While `union` can be used with `select`, look for **stacked queries** to execute any SQL statement. Remember to commit.
 - If any words are filtered, see if they are done recursively. If not, `selselectect` if will work.
+- If whitespaces are filtered you can use alternates to spaces such as: `[tabs] %0a %00 %09 %0d /**/`
 
 - [Portswigger - Blind SQL injection](https://portswigger.net/web-security/sql-injection/blind)
 - For time-based, first figure out the max time a request can take.
@@ -120,6 +122,13 @@ $ cat domains.txt | gau</td>
 - Type confusion: If an array is passed to `strcmp()`, it will give a warning but the compare result returns 0.
 - Object injection: If `unserialize()` is being used, you might be able to craft an object and use trampoline functions.
 - Type juggling: `0e123` evaluates to `0`.
+- For checking if any functions are blacklisted:
+```php
+var_dump(ini_get('safe_mode'));
+var_dump(explode(',',ini_get('disable_functions')));
+var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
+```
+- We can set a directory as base using: `open_basedir`
 
 #### XSS
 
