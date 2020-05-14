@@ -46,6 +46,7 @@ Bug Bounty
 - Sometimes, `Wappalyzer` may detect extra information in view-source.
 - Be aware of encodings. For example, browsers automatically URL-encode certain things.
 - The server might be Windows. Don't forget, in case of webshells, you might need different commands. 
+- For a newline, somtimes you need CRLF, individual CR or LF might not work, therefore use: `%0d%0a`
 
 ### Tools
 
