@@ -49,6 +49,8 @@ Bug Bounty
 - For a newline, somtimes you need CRLF, individual CR or LF might not work, therefore use: `%0d%0a`
 
 ### Tools
+#### Burp Suite
+
 
 <table>
 <thead>
@@ -108,6 +110,7 @@ $ cat domains.txt | gau</td>
 - While `union` can be used with `select`, look for **stacked queries** to execute any SQL statement. Remember to commit.
 - If any words are filtered, see if they are done recursively. If not, `selselectect` if will work.
 - If whitespaces are filtered you can use alternates to spaces such as: `[tabs] %0a %00 %09 %0d /**/`
+- If you are in the context of MySQL, you can use variables without explicitly defining them. For example if "admin" is being filtered, you can put "nimda" as one of the columns (say, id) and use `reverse(id)` in another column (webhacking.kr - 59).
 
 - [Portswigger - Blind SQL injection](https://portswigger.net/web-security/sql-injection/blind)
 - For time-based, first figure out the max time a request can take.
