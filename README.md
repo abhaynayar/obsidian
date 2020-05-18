@@ -16,8 +16,8 @@ Security related notes, labs and CTF write-ups.
 Web
 
 - [Portswigger](labs/web/portswigger)
-- [OverTheWire Natas](labs/web/natas)
 - [ctfchallenge.co.uk](labs/web/ctfchallenge.co.uk)
+- [OverTheWire Natas](labs/web/natas)
 - [pwnfunction XSS Game](labs/web/pwnfunction)
 - [247CTF](labs/web/247ctf)
 - [websec.fr](labs/web/websec.fr)
@@ -35,6 +35,7 @@ Mobile
 
 ## Books
 
+- [Real World Bug Hunting]()
 - [The Tangled Web](books/tangled.md)
 
 ## Writeups
