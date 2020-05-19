@@ -6,27 +6,25 @@
 - Make a flow diagram of deciding to opt-in or out of features.
 - Test every input, make sure to disregard any client-side restrictions.
 - When one directory isn't accessible, try its subdirectories.
-- In python `requests` there is url-encodint is done automatically.
+- In python `requests` there is url-encoding is done automatically.
 - Look into the URI spec `https://www.ietf.org/rfc/rfc3986.txt`.
 - If certain characters are blocked, use illegal unicode chars in Burp Intruder.
 - For faster HTTP requests and multithreading use `Turbo Intruder`.
 - Sometimes, `Wappalyzer` may detect extra information in view-source.
 - Be aware of encodings. For example, browsers automatically URL-encode certain things.
 - The server might be Windows. Don't forget, in case of webshells, you might need different commands. 
-- For a newline, somtimes you need CRLF, individual CR or LF might not work, therefore use: `%0d%0a`
+- For a newline, somtimes you need CRLF, individual CR or LF might not work, therefore use: `%0d%0a` (webhacking.kr - 38).
+- Don't forget to look into the sources, interesting things might not always be inline.
 
 ### Tools
 #### Burp Suite
-
 - Learn Burp hotkeys.
 - Plugins
     - Autorize / Auto Repeater
     - Flow / Logger++
     - Turbo Intruder
 
-### Usage
 #### ffuf
-
 ```bash
 $ ffuf -w ~/wordlists/common.txt -u https://example.com/FUZZ
 $ ffuf -w ~/wordlists/10-million-password-list-top-100.txt -X POST -d "username=admin&password=FUZZ" -H "Content-Type: application/x-www-form-urlencoded" -u https://www.example.com/login -mc all -fc 200
@@ -80,7 +78,6 @@ https://portswigger.net/research/turbo-intruder-embracing-the-billion-request-at
 - If you are in the context of MySQL, you can use variables without explicitly defining them. For example if "admin" is being filtered, you can put "nimda" as one of the columns (say, id) and use `reverse(id)` in another column (webhacking.kr - 59).
 - To just see tables created by the user in MySQL: `union select table_name,null,null from information_schema.tables where table_schema not in ('information_schema','mysql','performance_schema')`
 - Syntax of LIMIT: `LIMIT offset,quantity` where offset starts from 0.
-
 - [Portswigger - Blind SQL injection](https://portswigger.net/web-security/sql-injection/blind)
 - For time-based, first figure out the max time a request can take.
 - For faster blind-sqli execution, first check what characters `*i*` does the target string contain from `string.printable` and append it to a filtered list. Then from that filtered list of characters, check the real order of the target string `i*`.
@@ -114,7 +111,6 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 - Chrome, Firefox, Safari encode `location.search` and `location.hash`. IE11 and Edge (pre-Chromium) don't encode sources.
 - To pop XSS in `innerHTML` first load the script into `iframe srcdoc` then load that `iframe` into the `innerHTML`.
 - If there is any encoded entities `&lt;` and `&gt;` see if there are any `unescape` calls you can pass them through.
-
 - Blind XSS:
     - Read `https://brutelogic.com.br/blog/blind-xss-code/` get the code here `http://brutelogic.com.br/brutal/blind/index.txt`.
     - Use `http://xss.rocks/xss.js` for including an `alert()` js file.
@@ -123,7 +119,6 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
     - In your devtools, look at the network tab and within the headers for the response, you'll see the CSP header.
     - You can also copy the url and put it into Google's CSP Evaluator at: `csp-evaluator.withgoogle.com`
     - If `default-src` is `self`, it can be problematic if the user can upload files.
-
 - [XSS in postMessage](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#xss-in-postmessage)
 
 #### XXE
@@ -148,14 +143,14 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 
 ### Resources
 
-Courses
+#### Courses
 
 - [Web Security Academy](https://portswigger.net/web-security)
 - [Pentesterlab](https://pentesterlab.com/)
 - [OWASP-wstg](https://owasp.org/www-project-web-security-testing-guide/)
 - [Hacker101](https://www.hackerone.com/hacker101)
 
-CTF
+#### CTF
 
 - [247/CTF](https://247ctf.com/)
 - [websec.fr](http://websec.fr/)
@@ -166,14 +161,14 @@ CTF
 - [Natas - OverTheWire](https://overthewire.org/wargames/natas/)
 - [pwnfunction XSS Game](https://xss.pwnfunction.com/)
 
-Vulnerable Apps
+#### Vulnerable Apps
 
 - [Juice Shop](https://owasp.org/www-project-juice-shop/)
-- [Vulhub](https://github.com/vulhub/vulhub)
 - [bWAPP](http://www.itsecgames.com/)
+- [Vulhub](https://github.com/vulhub/vulhub)
 - [DVWA](http://www.dvwa.co.uk/)
 
-Bug Bounty
+#### Bug Bounty
 
 - [Web Hacking 101](https://leanpub.com/web-hacking-101)
 - [Real World Bug Hunting](https://www.amazon.in/Real-World-Bug-Hunting-Field-Hacking-ebook/dp/B072SQZ2LG)
