@@ -9,7 +9,7 @@
 - If certain characters are blocked, use illegal unicode chars in Burp Intruder.
 - Be aware of double encodings, browsers automatically URL-encode certain things.
 - The server might be Windows. Don't forget, in case of webshells, you might need different commands. 
-- For a newline, somtimes you need CRLF, individual CR or LF might not work, therefore use: `%0d%0a` (webhacking.kr - 38).
+- For a newline, somtimes you need CRLF, individual CR or LF might not work: `%0d%0a` (webhacking.kr - 38).
 - Just because request fails with one method doesn't mean it will fail with a different method. Try `PUT` instead of `GET`.
 
 
@@ -108,6 +108,9 @@ $ python3 arjun.py -u http://example.domain.com/endpoint --get
 `https://github.com/wagiro/BurpBounty`
 
 ### Bugs
+### AWS
+- When hosting a site as an S3 bucket, the bucket name must match the domain name
+
 #### CRLF Injection / HTTP Response Splitting
 - Send a requests such that the response reflects into the headers and inject a CRLF.
 
