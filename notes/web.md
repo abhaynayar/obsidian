@@ -1,113 +1,43 @@
 ##  ► web
 ### Tips
 
-- Test things under different environments, browsers.
-- Make a flow diagram of deciding to opt-in or out of features.
-- Sometimes, `Wappalyzer` may detect extra information in view-source.
 - Test every input, make sure to disregard any client-side restrictions.
 - Remember the source and DOM are different. Keep an eye out for the devtools.
-- If certain characters are blocked, use illegal unicode chars in Burp Intruder.
 - Be aware of double encodings, browsers automatically URL-encode certain things.
+- If the same functionality is available under two different endpoints, test both.
+- For example, image upload while registering and image upload while editing profile.
 - The server might be Windows. Don't forget, in case of webshells, you might need different commands. 
 - For a newline, somtimes you need CRLF, individual CR or LF might not work: `%0d%0a` (webhacking.kr - 38).
-- Just because request fails with one method doesn't mean it will fail with a different method. Try `PUT` instead of `GET`.
+- Just because a request fails with one method doesn't mean it will fail with a different method. Try `PUT` instead of `GET`.
+- Using HTTP method `OPTIONS` to know what methods are allowed on the endpoint.
+- Sometimes, `Wappalyzer` may detect extra information in different pages (or in view-source).
+- Keep noting interesting things. While jumping from one feature to the next you might forget something.
 
+### While hunting bugs
+- Burp (and filter scope)
+- Website source code
+- Browser devtools
+- These notes
+- Notes for the target
 
-### Recon
-- Recon is a continuous process, keep scanning and diffing for subdomains (using git).
-- Don't forget to look into the sources, interesting things might not always be inline.
-- If you have multiple files containing subdomains, merge them using: `$ cat file1.txt file2.txt | sort | uniq > out`
-- If you have a subdomain, look for further subdomains for it.
-- When one directory isn't accessible, try its subdirectories.
-
-#### Wordlists
-- FuzzDB
-- SecLists
-- PayloadAllTheThings
-
-#### projectdiscovery.io
-- subfinder
-- nuclei
-- dnsprobe
-
-#### tomnomnom
-- gf
-- meg
-- httprobe
-- waybackurls
-- assetfinder
-
-#### Amass
-- Look into: `https://github.com/OWASP/Amass/blob/master/doc/tutorial.md`
-
-```
-$ amass intel -whois -d DOMAIN
-$ amass enum -dir OUTPUT -passive -src -d DOMAIN
-
-# Track differences between enumerations
-$ amass track
-
-# Manipulate the Amass graph database
-$ amass db
-
-# To see sources used
-$ amass enum -list
-```
-
-#### ffuf
-```
-# -e    Comma separated list of extensions. Extends FUZZ keyword.
-
-$ ffuf -w ~/wordlists/common.txt -u https://example.com/FUZZ
-$ ffuf -w ~/wordlists/10-million-password-list-top-100.txt -X POST -d "username=admin&password=FUZZ" -H "Content-Type: application/x-www-form-urlencoded" -u https://www.example.com/login -mc all -fc 200
-$ ffuf -w ~/wordlists/common.txt -b "cookie1=value1;cookie2=value2" -H "X-Header: ASDF" -u https://example.com/dir/FUZZ
-```
-
-#### dnsrecon
-```
-$ dnsrecon -n 8.8.8.8 -d example.com
-$ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt
-```
-
-#### gau
-```
-$ echo example.com | gau
-$ cat domains.txt | gau
-```
-
-#### gowitness
-```
-$ gowitness single --url=https://www.google.com/
-$ gowitness file -s ~/domains.txt
-```
-
-#### paramspider
-```
-$ python3 paramspider.py --domain hackerone.com
-```
-
-#### Arjun
-```
-$ python3 arjun.py -u http://example.domain.com/endpoint --get
-```
-
-#### Burp Suite
-- Learn Burp hotkeys
+### Burp Suite
+- Burp hotkeys
+    - Ctrl-R:       Send to repeater
+    - Ctrl-space:   Repeat request
 - Plugins
-    - Autorize / Auto Repeater
     - Flow / Logger++
+    - Auto Repeater / Autorize 
+    - DEFCON - HUNT
     - Turbo Intruder
-
-#### paraminer
-`https://github.com/portswigger/param-miner`
-
-#### turbointruder
-`https://portswigger.net/research/turbo-intruder-embracing-the-billion-request-attack`
-
-#### BurpBounty
-`https://github.com/wagiro/BurpBounty`
+    - BurpBounty
+    - Paraminer
 
 ### Bugs
+
+### API hacking
+
+
+
 ### AWS
 - When hosting a site as an S3 bucket, the bucket name must match the domain name
 
@@ -263,4 +193,82 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 - [Real World Bug Hunting](https://www.amazon.in/Real-World-Bug-Hunting-Field-Hacking-ebook/dp/B072SQZ2LG)
 - [Resources for Beginner Bug Bounty Hunters](https://github.com/nahamsec/Resources-for-Beginner-Bug-Bounty-Hunters/)
 - [Intigriti Article](https://kb.intigriti.com/en/articles/3471127-useful-resources-about-web-hacking-bug-bounty)
+
+### Recon
+- Recon is a continuous process, keep scanning and diffing for subdomains (using git).
+- Don't forget to look into the sources, interesting things might not always be inline.
+- If you have multiple files containing subdomains, merge them using: `$ cat file1.txt file2.txt | sort | uniq > out`
+- If you have a subdomain, look for further subdomains for it.
+- When one directory isn't accessible, try its subdirectories.
+
+#### Wordlists
+- FuzzDB
+- SecLists
+- PayloadAllTheThings
+
+#### projectdiscovery.io
+- subfinder
+- nuclei
+- dnsprobe
+
+#### tomnomnom
+- gf
+- meg
+- httprobe
+- waybackurls
+- assetfinder
+
+#### Amass
+- Look into: `https://github.com/OWASP/Amass/blob/master/doc/tutorial.md`
+
+```
+$ amass intel -whois -d DOMAIN
+$ amass enum -dir OUTPUT -passive -src -d DOMAIN
+
+# Track differences between enumerations
+$ amass track
+
+# Manipulate the Amass graph database
+$ amass db
+
+# To see sources used
+$ amass enum -list
+```
+
+#### ffuf
+```
+# -e    Comma separated list of extensions. Extends FUZZ keyword.
+
+$ ffuf -w ~/wordlists/common.txt -u https://example.com/FUZZ
+$ ffuf -w ~/wordlists/10-million-password-list-top-100.txt -X POST -d "username=admin&password=FUZZ" -H "Content-Type: application/x-www-form-urlencoded" -u https://www.example.com/login -mc all -fc 200
+$ ffuf -w ~/wordlists/common.txt -b "cookie1=value1;cookie2=value2" -H "X-Header: ASDF" -u https://example.com/dir/FUZZ
+```
+
+#### dnsrecon
+```
+$ dnsrecon -n 8.8.8.8 -d example.com
+$ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt
+```
+
+#### gau
+```
+$ echo example.com | gau
+$ cat domains.txt | gau
+```
+
+#### gowitness
+```
+$ gowitness single --url=https://www.google.com/
+$ gowitness file -s ~/domains.txt
+```
+
+#### paramspider
+```
+$ python3 paramspider.py --domain hackerone.com
+```
+
+#### Arjun
+```
+$ python3 arjun.py -u http://example.domain.com/endpoint --get
+```
 
