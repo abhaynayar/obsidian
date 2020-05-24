@@ -36,7 +36,51 @@
 
 ### API hacking
 
+- APIs are kind of like a proxy between client and dbs.
+- Dissecting an API call:
+    - Understand the API endpoint `GET /v2/users/1337`
+    - Understand the GUID and tokens used.
+    - Is there more than one version of the API?
+    - Does the API support SOAP or REST?
+    - Create multiple API calls and study them.
+    - Try causing errors.
+- Access Control:
+    - Enumerate the user types.
+    - Can one user have multiple types?
+    - Does the API support cookies authorization?
+    - Identify the session label (header, cookies, etc.)
+- Broken object level access control (aka IDOR)
+    - Try session label swapping.
+    - Does the object have multiple representations (GUID, numbers)?
+    - For `40X` errors, enumerate more IDs.
+- Mass assignment
+    - Don't guess object properties, find an endpoint that returns them and use it on another endpoint.
+    - Looking at the values, understand how it might be parsed.
+    - Mass assignment + CSRF: if two endpoints use different session label types (cookies in web, authorization header in mobile).
+- Improper data filtering
+    - APIs return sensitive data that's filtered by the client.
+- Real traffic is better than documentation, use Burp to record your traffic.
+- Use different clients - mobile / web / web for mobile.
+- Use old versions - archive.org, apkpure.com
+- Scan for older versions `v0.0` to `v5.0` in URL
+- Find more endpoints:
+    - Scan JS, APK and IPA file for strings.
+    - Known docs: /swagger.json, /api-docs, /application.wadl, etc.
+    - Find different hosts using the same API.
+    - Look for niche features.
+    - Other technologies: SOAP, GraphQL, Elastic Search, Websockets.
+- Tend to be vulnerable:
+    - Export injection
+    - User management
+    - Custom views of dashboard
+    - Object sharing among users
 
+- Source:
+    - Pranav Hivarekar.
+    - https://www.youtube.com/watch?v=Gc7EUjRsrSo
+
+### Oauth
+`TBD`
 
 ### AWS
 - When hosting a site as an S3 bucket, the bucket name must match the domain name
