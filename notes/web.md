@@ -33,6 +33,48 @@
     - Paraminer
 
 ### Bugs
+### postMessage
+
+Install apache and put these files in `/var/www/html` then open `http://localhost/send.html`
+
+send.html
+```html
+<script>
+        function send_message() {
+                document.getElementById("frame").contentWindow.postMessage("konnichiwa", "http://localhost/receive.html");
+        }
+</script>
+
+<iframe id="frame" onload="send_message()" src="receive.html"></iframe>
+```
+
+receive.html
+```html
+<script>
+    window.addEventListener("message", function(message) {
+        document.write("data: " + message.data + "<br>");
+        document.write("origin: " + message.origin);
+    });
+</script>
+```
+
+To do in using `window.open` instead of `iframe`
+
+```js
+window.addEventListener("message", function(message) {
+    console.log(message.data);
+});
+
+myWindow = window.open("https://google.com","","height=500,width=500");
+myWindow.postMessage("test","");
+```
+
+Sources:
+- @vinodsparrow, @fransrosen, @detectify, @tomnomnom
+- https://twitter.com/s0md3v/status/1256511604046340096
+- https://twitter.com/xdavidhu/status/1262317923311509505
+- https://labs.detectify.com/2016/12/08/the-pitfalls-of-postmessage/
+- https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
 
 ### API hacking
 
@@ -87,10 +129,6 @@
 
 #### CRLF Injection / HTTP Response Splitting
 - Send a requests such that the response reflects into the headers and inject a CRLF.
-
-#### postMessage
-- https://twitter.com/s0md3v/status/1256511604046340096
-- https://twitter.com/xdavidhu/status/1262317923311509505
 
 #### Subdomain takeovers
 ```

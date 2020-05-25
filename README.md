@@ -42,9 +42,6 @@ Mobile
 
 2020
 
-- houseplant
-- sarcon
-- hackpack
 - [riftCTF](https://youtu.be/K5YnRLG6Cr8)
 - [b01lers](writeups/b01lers20)
 - [riceteacatpanda](writeups/rtcp20.md)
@@ -54,12 +51,4 @@ Mobile
 
 - [InCTF Nationals](writeups/inctfn19.md)
 - [NaCTF](https://abhaynayar.com/blog/fmt.html)
-
-## To-do
-
-- [x] Shift all notes into a separate directory.
-- [x] Create a new directory for write-ups.
-- [x] Link notes to related challenges.
-- [x] Add time-wasters. (CryptoPals, pwnable.kr, websec.fr, etc.)
-- [ ] Upload houseplant, sarcon, hackpack directories.
 
