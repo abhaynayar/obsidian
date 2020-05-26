@@ -21,6 +21,7 @@
 - Notes for the target
 
 ### Burp Suite
+- Set scope and remove tracking-like requests to reduce clutter.
 - Burp hotkeys
     - Ctrl-R:       Send to repeater
     - Ctrl-space:   Repeat request
@@ -78,6 +79,7 @@ Sources:
 
 ### API hacking
 
+#### https://www.youtube.com/watch?v=Gc7EUjRsrSo
 - APIs are kind of like a proxy between client and dbs.
 - Dissecting an API call:
     - Understand the API endpoint `GET /v2/users/1337`
@@ -117,9 +119,58 @@ Sources:
     - Custom views of dashboard
     - Object sharing among users
 
-- Source:
-    - Pranav Hivarekar.
-    - https://www.youtube.com/watch?v=Gc7EUjRsrSo
+#### https://www.youtube.com/watch?v=ijalD2NkRFg
+
+- Common API security issues
+    - Access controls
+    - Input validation
+    - Rate limiting
+    - Restricting HTTP methods
+    - 3rd party API abuse
+    - App logic errors
+
+- Access controls
+    - Enumerating restricted endpoints
+    - Modifying session tokens
+    - Reusing older session tokens
+    - Bypass restrictions using IDOR
+    - Using additional parameters
+    - Modifying referer headers
+
+- Input validation
+    - *anything* that the server takes in
+    - Within the request header
+    - GET and POST requests parameters
+    - File uploads (PUT/DELETE) requests
+    - Fuzzing: (speed up using HEAD requests)
+        - RCE
+        - XSS
+        - (L/R)FI
+        - (No)SQLi
+        - Request splitting
+        - Deserialization
+        - XXE
+        - SSTI
+        - Encoding: junk, control chars, emojis
+        - File upload
+        - SSRF
+
+- Rate limiting
+    - Unauthenticated requests
+    - Authenticated requests
+    - As a bot or as a developer
+    - With a deactivated account
+    - With false credentials
+
+- Restricting HTTP methods
+    - What methods does the application expect
+    - Can the methods be used on other endpoints
+
+- 3rd party API abuse
+    - When APIs call other APIs
+    - Request splitting: make request to 3rd party using target
+    - SSRF: APIs which can resolve URLs can be tricked
+    - Unhandled 3rd party input: unexpected errors
 
 ### Oauth
 `TBD`
