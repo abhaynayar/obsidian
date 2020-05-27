@@ -20,6 +20,36 @@
 - These notes
 - Notes for the target
 
+### OWASP ZAP
+> https://www.youtube.com/watch?v=7WL-emt5PDc
+
+#### Principles
+- Right click on everything. `Context-menus`
+- There's an API for that. `https://zap/ui`
+- Look for the help page. `Toolbar > Help`
+
+#### Equivalents
+
+| Burp         | Zap                    |
+|--------------|------------------------|
+| Site map     | Site tree              |
+| HTTP history | History                |
+| Scope        | Context                |
+| Interceptor  | Break                  |
+| Repeater     | Request editor         |
+| Intruder     | Fuzzer                 |
+| Spider       | Spider                 |
+| Scanner      | Active scan            |
+| BApp store   | Addon marketplace      |
+| Sequencer    | Token gen & analysis   |
+| Decoder      | Encode / decode / hash |
+| Macros       | Zest record            |
+| Comparer     | Compare requests       |
+
+To-do:
+1. Learn ZAP rest API.
+2. Do the ZAP automation course.
+
 ### Burp Suite
 - Set scope and remove tracking-like requests to reduce clutter.
 - Burp hotkeys
@@ -35,7 +65,6 @@
 
 ### Bugs
 ### postMessage
-
 Install apache and put these files in `/var/www/html` then open `http://localhost/send.html`
 
 send.html
@@ -78,8 +107,8 @@ Sources:
 - https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
 
 ### API hacking
+> https://www.youtube.com/watch?v=Gc7EUjRsrSo
 
-#### https://www.youtube.com/watch?v=Gc7EUjRsrSo
 - APIs are kind of like a proxy between client and dbs.
 - Dissecting an API call:
     - Understand the API endpoint `GET /v2/users/1337`
@@ -119,8 +148,7 @@ Sources:
     - Custom views of dashboard
     - Object sharing among users
 
-#### https://www.youtube.com/watch?v=ijalD2NkRFg
-
+> https://www.youtube.com/watch?v=ijalD2NkRFg
 - Common API security issues
     - Access controls
     - Input validation
