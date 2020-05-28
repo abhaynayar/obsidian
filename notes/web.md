@@ -50,6 +50,13 @@ To-do:
 1. Learn ZAP rest API.
 2. Do the ZAP automation course.
 
+#### HUNT
+> https://github.com/bugcrowd/HUNT
+> https://github.com/1ndianl33t/Gf-Patterns
+
+#### Mini-workshop
+> https://github.com/we45/ZAP-Mini-Workshop
+
 ### Burp Suite
 - Set scope and remove tracking-like requests to reduce clutter.
 - Burp hotkeys
@@ -64,7 +71,43 @@ To-do:
     - Paraminer
 
 ### Bugs
-### postMessage
+
+#### SSRF
+> talk: https://www.youtube.com/watch?v=o-tL9ULF0KI
+> slides: https://docs.google.com/presentation/d/1JdIjHHPsFSgLbaJcHmMkE904jmwPM4xdhEuwhy2ebvo/htmlpresent
+
+##### Basic Example
+Upload avatar via URL and triggers the following request:
+
+```
+GET /api/v1/fetch?url=https://site.com/myfunnycatmeme.jpeg
+Host: thesiteweareabouttpwn.com
+```
+
+Changing the URL parameter to something.internal.target.com may give us access to see internal assets
+Not limited to http, you can use other protocols
+- file:///etc/passwd
+- gopher://
+- ssh://
+
+##### SSRF Hurdles
+- Problem: metadata or internal IPs are getting filtered
+- Solution: Use a custom domain like meta.mydomain.com and point it to the asset you are trying to access (aws.mydomain.com -> 169.254.169.254)
+- Problem: Only able to use whitelisted domains
+- Solution: Find an open redirect on the whitelisted domain(s) and use that to exploit your SSRF
+- Problem: SSRF is there but I can't see the output
+- Solution: Use Javascript and exfil data
+
+#### Financially-oriented
+> Soroush Dalili
+
+- Common bugs
+    - TOCTOU and race conditions 
+        - Transfering money, buying items, coupons
+        - Changing order upon payment completion
+
+
+#### postMessage
 Install apache and put these files in `/var/www/html` then open `http://localhost/send.html`
 
 send.html
@@ -106,7 +149,7 @@ Sources:
 - https://labs.detectify.com/2016/12/08/the-pitfalls-of-postmessage/
 - https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
 
-### API hacking
+#### API hacking
 > https://www.youtube.com/watch?v=Gc7EUjRsrSo
 
 - APIs are kind of like a proxy between client and dbs.
@@ -200,10 +243,10 @@ Sources:
     - SSRF: APIs which can resolve URLs can be tricked
     - Unhandled 3rd party input: unexpected errors
 
-### Oauth
+#### Oauth
 `TBD`
 
-### AWS
+#### AWS
 - When hosting a site as an S3 bucket, the bucket name must match the domain name
 
 #### CRLF Injection / HTTP Response Splitting
