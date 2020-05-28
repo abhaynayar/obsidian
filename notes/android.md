@@ -1,6 +1,7 @@
 ## ► android
 
 ### Learn
+- Look into my other repository `https://github.com/abhaynayar/mobisec`
 - How to get flags out of APKs using ```strings``` (InCTF Nationals 2019)
 
 ### adb

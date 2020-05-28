@@ -4,14 +4,12 @@
 - Cryptopals: <https://cryptopals.com/>
 - Crypton: <https://github.com/ashutosh1206/Crypton>
 
-### Website
+### Websites
 - [ciphers](https://www.dcode.fr)
+- [cyber chef](https://gchq.github.io/CyberChef/)
 - [cryptograms](https://quipqiup.com/)
 - [caesar cipher](http://rot13.com)
 - [vignere cipher](https://www.mygeocachingprofile.com/codebreaker.vigenerecipher.aspx)
-
-### Tools
-- RsaCtfTool
 
 ### RSA
 - if ```n``` is given, try checking if it is already factored at http://factordb.com
@@ -110,7 +108,7 @@ HMAC
 - What does "+" in the above formula mean? Concatenation?
 
 
-#### Crypto Attacks
+Crypto Attacks
 
 Stream Cipher Reuse
 

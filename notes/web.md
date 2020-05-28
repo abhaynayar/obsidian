@@ -5,7 +5,7 @@
 - Remember the source and DOM are different. Keep an eye out for the devtools.
 - Be aware of double encodings, browsers automatically URL-encode certain things.
 - If the same functionality is available under two different endpoints, test both.
-- For example, image upload while registering and image upload while editing profile.
+- For example, image upload while registering, versus image upload while editing profile.
 - The server might be Windows. Don't forget, in case of webshells, you might need different commands. 
 - For a newline, somtimes you need CRLF, individual CR or LF might not work: `%0d%0a` (webhacking.kr - 38).
 - Just because a request fails with one method doesn't mean it will fail with a different method. Try `PUT` instead of `GET`.
@@ -14,10 +14,10 @@
 - Keep noting interesting things. While jumping from one feature to the next you might forget something.
 
 ### While hunting bugs
-- Burp (and filter scope)
-- Website source code
-- Browser devtools
-- These notes
+- Setup context in proxy
+- View website source code
+- Use browser devtools
+- Keep these notes open
 - Notes for the target
 
 ### OWASP ZAP
@@ -28,7 +28,7 @@
 - There's an API for that. `https://zap/ui`
 - Look for the help page. `Toolbar > Help`
 
-#### Equivalents
+#### Equivalents of Burp in ZAP
 
 | Burp         | Zap                    |
 |--------------|------------------------|
@@ -47,15 +47,9 @@
 | Comparer     | Compare requests       |
 
 To-do:
-1. Learn ZAP rest API.
-2. Do the ZAP automation course.
-
-#### HUNT
-> https://github.com/bugcrowd/HUNT
-> https://github.com/1ndianl33t/Gf-Patterns
-
-#### Mini-workshop
-> https://github.com/we45/ZAP-Mini-Workshop
+1. Learn the ZAP rest API.
+2. Learn scripting in ZAP.
+3. https://github.com/we45/ZAP-Mini-Workshop
 
 ### Burp Suite
 - Set scope and remove tracking-like requests to reduce clutter.
@@ -65,7 +59,6 @@ To-do:
 - Plugins
     - Flow / Logger++
     - Auto Repeater / Autorize 
-    - DEFCON - HUNT
     - Turbo Intruder
     - BurpBounty
     - Paraminer
@@ -73,11 +66,10 @@ To-do:
 ### Bugs
 
 #### SSRF
-> talk: https://www.youtube.com/watch?v=o-tL9ULF0KI
+> talk: https://www.youtube.com/watch?v=o-tL9ULF0KI<br>
 > slides: https://docs.google.com/presentation/d/1JdIjHHPsFSgLbaJcHmMkE904jmwPM4xdhEuwhy2ebvo/htmlpresent
 
-##### Basic Example
-Upload avatar via URL and triggers the following request:
+Basic Example: upload avatar via URL and triggers the following request
 
 ```
 GET /api/v1/fetch?url=https://site.com/myfunnycatmeme.jpeg
@@ -90,7 +82,7 @@ Not limited to http, you can use other protocols
 - gopher://
 - ssh://
 
-##### SSRF Hurdles
+Hurdles
 - Problem: metadata or internal IPs are getting filtered
 - Solution: Use a custom domain like meta.mydomain.com and point it to the asset you are trying to access (aws.mydomain.com -> 169.254.169.254)
 - Problem: Only able to use whitelisted domains
@@ -98,8 +90,8 @@ Not limited to http, you can use other protocols
 - Problem: SSRF is there but I can't see the output
 - Solution: Use Javascript and exfil data
 
-#### Financially-oriented
-> Soroush Dalili
+#### Financially-Oriented
+> https://twitter.com/irsdl/status/1115951243300691968
 
 - Common bugs
     - TOCTOU and race conditions 
@@ -107,7 +99,7 @@ Not limited to http, you can use other protocols
         - Changing order upon payment completion
 
 
-#### postMessage
+#### Understanding postMessage
 Install apache and put these files in `/var/www/html` then open `http://localhost/send.html`
 
 send.html
@@ -250,7 +242,8 @@ Sources:
 - When hosting a site as an S3 bucket, the bucket name must match the domain name
 
 #### CRLF Injection / HTTP Response Splitting
-- Send a requests such that the response reflects into the headers and inject a CRLF.
+- Send a requests such that the response reflects into the headers 
+- Inject a CRLF to make the browser think that the response contains your header
 
 #### Subdomain takeovers
 ```
@@ -286,7 +279,7 @@ $ subfinder -d http://hackerone.com -silent | dnsprobe -silent -f domain | httpr
 - Use `LIKE BINARY` for case-senstivie blind sqli matching.
 - For postgres time-based, `||pg_sleep(10)`
 - For postgres time-based conditions `'; SELECT CASE WHEN (condition) THEN pg_sleep(10) ELSE pg_sleep(0) END--`
-- To test for SQL injection (can be put in burp intruder): [source](https://twitter.com/pwntheweb/status/1253224265853198336)
+- To test for SQL injection: [source](https://twitter.com/pwntheweb/status/1253224265853198336)
 
 ```
 /?q=1
@@ -304,9 +297,9 @@ $ subfinder -d http://hackerone.com -silent | dnsprobe -silent -f domain | httpr
 /?q='or''='
 ```
 
-SQLmap
-- If SQLmap stops in between, try pressing `Enter`.
-- Always use `--threads 10` with SQLmap.
+sqlmap
+- If SQLmap stops in between, try pressing `Enter` or `Ctrl-c`
+- Always use `--threads 10` to speed up.
 - Output goes to `~/.sqlmap/output/`
 
 #### PHP
@@ -321,7 +314,7 @@ var_dump(ini_get('safe_mode'));
 var_dump(explode(',',ini_get('disable_functions')));
 var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 ```
-- We can set a directory as base using: `open_basedir`
+- We can set a directory as base using `open_basedir`
 
 #### XSS
 
@@ -401,7 +394,7 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 ### Recon
 - Recon is a continuous process, keep scanning and diffing for subdomains (using git).
 - Don't forget to look into the sources, interesting things might not always be inline.
-- If you have multiple files containing subdomains, merge them using: `$ cat file1.txt file2.txt | sort | uniq > out`
+- If you have multiple files containing subdomains, merge them using `$ cat file1.txt file2.txt | sort | uniq > out`
 - If you have a subdomain, look for further subdomains for it.
 - When one directory isn't accessible, try its subdirectories.
 
@@ -423,7 +416,7 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 - assetfinder
 
 #### Amass
-- Look into: `https://github.com/OWASP/Amass/blob/master/doc/tutorial.md`
+- Look into `https://github.com/OWASP/Amass/blob/master/doc/tutorial.md`
 
 ```
 $ amass intel -whois -d DOMAIN

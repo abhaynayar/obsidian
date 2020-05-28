@@ -17,13 +17,12 @@
 ### Steganography
 - exiftool
 - strings
-- steghide (try blank password) ```$ steghide --extract -sf matryoshka.png```
+- steghide (try blank password) `$ steghide --extract -sf matryoshka.png`
 - stegcracker
 - stegdetect (JPG)
 - zbarimg/zbarcam (QR-codes)
 - stegoveritas
 - stegsnow
-
 - pngcheck
 - Stegsolve
 - tweakpng

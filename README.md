@@ -30,25 +30,23 @@ Mobile
 
 - [MOBISEC](https://github.com/abhaynayar/mobisec)
 - [Insecure Bank](labs/mobile/insecure_bank)
-- [Injured Android](labs/mobile/injuredandroid)
+- [Injured Android](labs/mobile/injured_android)
 - [KGB Messenger](labs/mobile/kgb)
 
 ## Books
 
-- [Real World Bug Hunting]()
 - [The Tangled Web](books/tangled.md)
+- [Real World Bug Hunting](books/rwbh.md)
+- [Mastering Modern Web Penetration Testing](books/mmwpt.md)
 
 ## Writeups
-
 2020
-
-- [riftCTF](https://youtu.be/K5YnRLG6Cr8)
+- [riftCTF](https://youtu.be/K5YnRLG6Cr8) (video)
 - [b01lers](writeups/b01lers20)
 - [riceteacatpanda](writeups/rtcp20.md)
 - [Insomni'hack](writeups/insomnihack20.md)
 
 2019
-
 - [InCTF Nationals](writeups/inctfn19.md)
-- [NaCTF](https://abhaynayar.com/blog/fmt.html)
+- [NaCTF](https://abhaynayar.com/blog/fmt.html) (blog)
 
