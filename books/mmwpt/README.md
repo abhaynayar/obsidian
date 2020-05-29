@@ -68,3 +68,35 @@ Pre-flight request
 
 ## Ch2 - Information Gathering
 
+Google dorks
+- backup.sql intext:"SELECT" ext:sql site:net
+- Google Hacking for Penetration Testers
+```
+ext:pdf site:abhaynayar.com
+site:abhaynayar.com
+inurl:/downloads site:abhaynayar.com
+intitle:login site:abhaynayar.com
+backup.sql intext:"SELECT" ext:sql
+```
+
+Generate wordlists
+```
+$ cewl abhaynayar.com
+```
+Cookies, country, headers.
+```
+$ whatweb abhaynayar.com
+```
+
+Computer search engine
+```
+https://www.shodan.io/search?query=Werkzeug
+```
+
+Reverse IP Lookup
+```
+https://www.yougetsignal.com/tools/web-sites-on-web-server/
+```
+
+## Ch3 - XSS
+
