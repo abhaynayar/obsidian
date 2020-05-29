@@ -11,6 +11,13 @@ Security related notes, labs and CTF write-ups.
 - [Forensics](notes/forensics.md)
 - [Cryptography](notes/crypto.md)
 
+## Books
+
+- [The Tangled Web](books/tangled.md)
+- [Real World Bug Hunting](books/rwbh.md)
+- [Mastering Modern Web Penetration Testing](books/mmwpt)
+
+
 ## Labs
 
 Web
@@ -25,7 +32,6 @@ Web
 - [Google XSS game](labs/web/xss_game)
 - [OWASP Juice Shop](labs/web/juice-shop)
 
-
 Mobile
 
 - [MOBISEC](https://github.com/abhaynayar/mobisec)
@@ -33,13 +39,8 @@ Mobile
 - [Injured Android](labs/mobile/injured_android)
 - [KGB Messenger](labs/mobile/kgb)
 
-## Books
-
-- [The Tangled Web](books/tangled.md)
-- [Real World Bug Hunting](books/rwbh.md)
-- [Mastering Modern Web Penetration Testing](books/mmwpt.md)
-
 ## Writeups
+
 2020
 - [riftCTF](https://youtu.be/K5YnRLG6Cr8) (video)
 - [b01lers](writeups/b01lers20)

@@ -12,6 +12,7 @@
 - Using HTTP method `OPTIONS` to know what methods are allowed on the endpoint.
 - Sometimes, `Wappalyzer` may detect extra information in different pages (or in view-source).
 - Keep noting interesting things. While jumping from one feature to the next you might forget something.
+- To go directly into console in devtools `Ctrl-shift-J` similarly you can find shortcuts for other tabs.
 
 ### While hunting bugs
 - Setup context in proxy
@@ -247,7 +248,7 @@ Sources:
 
 #### Subdomain takeovers
 ```
-$ subfinder -d http://hackerone.com -silent | dnsprobe -silent -f domain | httprobe -prefer-https | nuclei -t nuclei-templates/subdomain-takeover/detect-all-takeovers.yaml
+$ subfinder -d http://hackerone.com -silent | dnsprobe -silent -f domain | httprobe -prefer-https | nuclei -t ~/tools/web/nuclei-templates/subdomain-takeover/detect-all-takeovers.yaml
 ```
 
 #### GitHub dorks
