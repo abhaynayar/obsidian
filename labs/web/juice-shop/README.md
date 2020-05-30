@@ -1,4 +1,4 @@
-## OWASP - Juice Shop (Solutions)
+## OWASP - Juice Shop solutions
 
 ### 1-star
 #### Bonus Payload

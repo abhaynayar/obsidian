@@ -1,3 +1,3 @@
 ## OverTheWire - natas solutions
-All levels have been solved using python files you can find in this directory.
+Solutions can be found under [py\_sol](py_sol).
 

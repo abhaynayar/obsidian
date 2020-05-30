@@ -1,4 +1,5 @@
 ##  ► web
+
 ### Tips
 
 - Test every input, make sure to disregard any client-side restrictions.
@@ -15,6 +16,7 @@
 - To go directly into console in devtools `Ctrl-shift-J` similarly you can find shortcuts for other tabs.
 
 ### While hunting bugs
+
 - Setup context in proxy
 - View website source code
 - Use browser devtools
@@ -22,12 +24,8 @@
 - Notes for the target
 
 ### OWASP ZAP
-> https://www.youtube.com/watch?v=7WL-emt5PDc
 
-#### Principles
-- Right click on everything. `Context-menus`
-- There's an API for that. `https://zap/ui`
-- Look for the help page. `Toolbar > Help`
+> https://www.youtube.com/watch?v=7WL-emt5PDc
 
 #### Equivalents of Burp in ZAP
 
@@ -48,11 +46,13 @@
 | Comparer     | Compare requests       |
 
 To-do:
+
 1. Learn the ZAP rest API.
 2. Learn scripting in ZAP.
 3. https://github.com/we45/ZAP-Mini-Workshop
 
 ### Burp Suite
+
 - Set scope and remove tracking-like requests to reduce clutter.
 - Burp hotkeys
     - Ctrl-R:       Send to repeater
@@ -67,6 +67,7 @@ To-do:
 ### Bugs
 
 #### SSRF
+
 > talk: https://www.youtube.com/watch?v=o-tL9ULF0KI<br>
 > slides: https://docs.google.com/presentation/d/1JdIjHHPsFSgLbaJcHmMkE904jmwPM4xdhEuwhy2ebvo/htmlpresent
 
@@ -92,6 +93,7 @@ Hurdles
 - Solution: Use Javascript and exfil data
 
 #### Financially-Oriented
+
 > https://twitter.com/irsdl/status/1115951243300691968
 
 - Common bugs
@@ -101,6 +103,7 @@ Hurdles
 
 
 #### Understanding postMessage
+
 Install apache and put these files in `/var/www/html` then open `http://localhost/send.html`
 
 send.html
@@ -143,6 +146,7 @@ Sources:
 - https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
 
 #### API hacking
+
 > https://www.youtube.com/watch?v=Gc7EUjRsrSo
 
 - APIs are kind of like a proxy between client and dbs.
@@ -237,28 +241,35 @@ Sources:
     - Unhandled 3rd party input: unexpected errors
 
 #### Oauth
+
 `TBD`
 
 #### AWS
+
 - When hosting a site as an S3 bucket, the bucket name must match the domain name
 
 #### CRLF Injection / HTTP Response Splitting
+
 - Send a requests such that the response reflects into the headers 
 - Inject a CRLF to make the browser think that the response contains your header
 
 #### Subdomain takeovers
+
 ```
 $ subfinder -d http://hackerone.com -silent | dnsprobe -silent -f domain | httprobe -prefer-https | nuclei -t ~/tools/web/nuclei-templates/subdomain-takeover/detect-all-takeovers.yaml
 ```
 
 #### GitHub dorks
+
 - `"example.com" ssh language:yaml` [source](https://twitter.com/ADITYASHENDE17/status/1262747235785138178)
 - `http://chat.googleapis.com/v1/rooms` [source](https://twitter.com/uraniumhacker/status/1262193407616679936)
 
 #### GraphQL
+
 - `https://graphql.org/learn/`
 
 #### SQLi
+
 
 - [Portswigger - SQL injection cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet) (doesn't include sqlite)
 - Do a simple sanity check for `'` or `"` in payload. Try bypassing client side restrictions for input in fields such as date.
@@ -360,6 +371,7 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 - Redirect output to a file you can read using your browser.
 
 ### Resources
+
 #### Courses
 
 - [Web Security Academy](https://portswigger.net/web-security)
@@ -393,6 +405,7 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 - [Intigriti Article](https://kb.intigriti.com/en/articles/3471127-useful-resources-about-web-hacking-bug-bounty)
 
 ### Recon
+
 - Recon is a continuous process, keep scanning and diffing for subdomains (using git).
 - Don't forget to look into the sources, interesting things might not always be inline.
 - If you have multiple files containing subdomains, merge them using `$ cat file1.txt file2.txt | sort | uniq > out`
@@ -400,16 +413,19 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 - When one directory isn't accessible, try its subdirectories.
 
 #### Wordlists
+
 - FuzzDB
 - SecLists
 - PayloadAllTheThings
 
 #### projectdiscovery.io
+
 - subfinder
 - nuclei
 - dnsprobe
 
 #### tomnomnom
+
 - gf
 - meg
 - httprobe
@@ -417,55 +433,55 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 - assetfinder
 
 #### Amass
-- Look into `https://github.com/OWASP/Amass/blob/master/doc/tutorial.md`
+
+Look into `https://github.com/OWASP/Amass/blob/master/doc/tutorial.md`
 
 ```
 $ amass intel -whois -d DOMAIN
 $ amass enum -dir OUTPUT -passive -src -d DOMAIN
 
-# Track differences between enumerations
-$ amass track
-
-# Manipulate the Amass graph database
-$ amass db
-
-# To see sources used
+# see sources used
 $ amass enum -list
 ```
 
 #### ffuf
-```
-# -e    Comma separated list of extensions. Extends FUZZ keyword.
 
+```
 $ ffuf -w ~/wordlists/common.txt -u https://example.com/FUZZ
 $ ffuf -w ~/wordlists/10-million-password-list-top-100.txt -X POST -d "username=admin&password=FUZZ" -H "Content-Type: application/x-www-form-urlencoded" -u https://www.example.com/login -mc all -fc 200
 $ ffuf -w ~/wordlists/common.txt -b "cookie1=value1;cookie2=value2" -H "X-Header: ASDF" -u https://example.com/dir/FUZZ
+# use switch -e for comma separated list of extensions to extend FUZZ keyword
 ```
 
 #### dnsrecon
+
 ```
 $ dnsrecon -n 8.8.8.8 -d example.com
 $ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt
 ```
 
 #### gau
+
 ```
 $ echo example.com | gau
 $ cat domains.txt | gau
 ```
 
 #### gowitness
+
 ```
 $ gowitness single --url=https://www.google.com/
 $ gowitness file -s ~/domains.txt
 ```
 
 #### paramspider
+
 ```
 $ python3 paramspider.py --domain hackerone.com
 ```
 
 #### Arjun
+
 ```
 $ python3 arjun.py -u http://example.domain.com/endpoint --get
 ```

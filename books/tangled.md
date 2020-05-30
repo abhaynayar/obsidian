@@ -1,4 +1,5 @@
-## The Tangled Web - lcamtuf
+## The Tangled Web notes
+> Michał Zalewski
 
 ## It starts with a URL
 ### URL Structure

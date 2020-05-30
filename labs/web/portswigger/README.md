@@ -1,4 +1,4 @@
-# Portswigger - Web Security Academy (Solutions)
+# Portswigger solutions
 ## Contents
 
 - [SQLi](#sqli)

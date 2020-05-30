@@ -1,3 +1,3 @@
-## Real-world bug hunting
+## Real-world bug hunting notes
 > Peter Yaworski
 

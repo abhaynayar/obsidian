@@ -1,4 +1,4 @@
-# Injured Android Write-up
+# Injured Android solutions
 
 ## Setup
 

@@ -1,4 +1,4 @@
-# Mastering Modern Web Penetration Testing
+# Mastering Modern Web Penetration Testing notes
 > Prakhar Prasad
 
 ## Ch1 - Common Security Protocols
