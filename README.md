@@ -13,9 +13,9 @@ Security related notes, labs and CTF write-ups.
 
 ## Books
 
-- [Mastering Modern Web Penetration Testing](books/mmwpt)
 - [The Tangled Web](books/tangled.md)
 - [Real World Bug Hunting](books/rwbh.md)
+- [Mastering Modern Web Penetration Testing](books/mmwpt)
 
 
 ## Labs

