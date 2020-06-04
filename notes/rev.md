@@ -1,5 +1,35 @@
 ##  ► rev
 
+### r2book
+
+- seek `s`
+- block size `b`
+- non-VA mode `-n`
+- print `p`: hex `px`, dissassembly `pd`
+- write `w`: hex `wx`, assembly `wa`, file `wf`
+
+visual mode
+- visual mode `V` (to quit `q`)
+- navigation `HJKL`
+- cursor mode `c`: hold shift and navigate using `HJKL` to select bytes
+- overwrite bytes by pressing `i`
+- switch columns (hex, ascii) using `TAB`
+- for different visual mode representations `p` or `P`
+- curses-like panels interface, accessible with `V!`
+
+command-line options
+- open r2 without file: `$r2 -`
+- run script before interactive prompt: `$r2 -i patch.r2 target.bin`
+- run command without interactive prompt: `$r2 -qc ij hi.bin > imports.json`
+- set configuration variables: `$r2 -e scr.color=0 blah.bin`
+- debug `$r2 -d ls`
+- use an existing project file `$r2 -p test`
+
+commands
+- general format: `[.][times][cmd][~grep][@[@iter]addr!size][|>pipe] ;`
+- commands are identified by a single case-sensitive character [a-zA-Z]
+- execute command in shell context `!` for cmd callback use `=!`
+
 ### Resources
 - <https://wiki.bi0s.in/reversing/asm/>
 
