@@ -457,12 +457,12 @@ Read about it in RFC 6749.
 ```
 resource owner ~> client application <~> server {resource, authorization}
 ```
-
-Some important components
-
+| Component        | Description                                                                              |
+|------------------|------------------------------------------------------------------------------------------|
 | Redirect URI     | Determines the URI to redirect to once the flow is completed                             |
 | Client ID        | Unique ID returned when the third party application is registered to the OAuth provider. |
 | Client secret    | Secret token generated during the registration process and tied to the client ID.        |
+| Receiving grants | There are two common authorization flows: authorization grant, implicit grant            |
 
 Authorization grant
 
@@ -498,7 +498,7 @@ Implicit grant
 
 OAuth exploitation
 
-- open redirect (malform scope or `client_id` and hijack `redirect_uri`)
+open redirect (malform scope or `client_id` and hijack `redirect_uri`)
 
 hijack flow (can change `redirect_uri` to get `access_token` but if only `http://example.com/token/callback` is allowed)
 - directory traversal (we can use the following urls if we can save files on `example.com`)
