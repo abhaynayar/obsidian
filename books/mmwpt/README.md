@@ -459,6 +459,7 @@ resource owner ~> client application <~> server {resource, authorization}
 ```
 
 Some important components
+
 | Redirect URI     | Determines the URI to redirect to once the flow is completed                             |
 | Client ID        | Unique ID returned when the third party application is registered to the OAuth provider. |
 | Client secret    | Secret token generated during the registration process and tied to the client ID.        |
@@ -466,14 +467,17 @@ Some important components
 Authorization grant
 
 1. `prakharprasad.com` sends a request to `example.com/authorize`:`https://www.example.com/oauth/authorize?client_id=2190698099&redirect_uri= https%3A%2F%2Fprakharprasad.com%2Fredirect&response_type=code&scope=read`
+
 ```
 - client_id
 - redirect_uri
 - response_type
 - scope
 ```
+
 2. after granting access through prompt you get redirected to `https://prakharprasad.com/redirect?code=af8SFAdas`
 3. this callback url then makes another request to the `token` endpoint:`https://www.example.com/oauth/token?client_id=2190698099&client_secret=adb12hge&grant_type=authorization_code&code=af8SFAdas&redirect_uri=https%3A%2F%2Fprakharprasad.com%2Ftoken`
+
 ```
 - client_id
 - redirect_uri
@@ -481,6 +485,7 @@ Authorization grant
 - grant_type
 - code
 ```
+
 4. then `example.com` returns the auth token to `prakharprasad.com` using the parameters sent in the request: `Access Token = Auth Code + Client ID + Client Secret + Redirect URI`
 5. the auth flow ends here. now `prakharprasad.com` can send requests to `example.com` using `access_token` and get user's information.
 
