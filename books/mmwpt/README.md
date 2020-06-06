@@ -524,4 +524,51 @@ force a malicious app installation
 
 ## Ch11 - API testing
 
+- The REST API makes use of a URL's path to define relationship between resources.
+- The resources are separated by a forward slash each time, based on the design hierarchy (top-down).
+- HTTP methods have a specific meaning in the context of a REST API most of the time:
+
+| Method  | Description            |
+|---------|------------------------|
+| GET     | resource state         |
+| POST    | create new resource    |
+| PUT     | update resource        |
+| DELETE  | remove resource        |
+| HEAD    | resource metadata      |
+| OPTIONS | list available methods |
+
+- HTTP response codes also have certain meanings in the context of REST API. Mostly same as those of HTTP.
+
+Authentication types:
+1. Basic HTTP `Authorization: Basic base64encode(usr:pwd)`
+2. Access tokens
+3. Cookies
+
+REST API clients
+1. Advanced REST client
+2. Postman
+
+Custom API explorers
+1. Facebook's Graph API Explorer
+2. Google's API Console
+3. Dropbox's API Explorer
+
+Things to do:
+1. Read the docs
+2. Make a lot of requests
+3. Learn the scope
+4. Learn roles
+5. Read disclosed bugs
+
+Methodology:
+1. List endpoints
+2. Trying different HTTP methods
+3. Exploiting API bugs
+    - Scope
+    - Roles
+    - IDORs
+
+Further reading:
+- http://philippeharewood.com/
+- https://pranavhivarekar.in/
 
