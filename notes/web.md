@@ -468,6 +468,12 @@ $ echo example.com | gau
 $ cat domains.txt | gau
 ```
 
+#### httpx
+
+```
+$ httpx -l domains
+```
+
 #### gowitness
 
 ```

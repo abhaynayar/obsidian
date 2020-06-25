@@ -13,6 +13,7 @@ Security related notes, labs and CTF write-ups.
 
 ## Books
 
+- [Practical Malware Analysis](books/malware.md)
 - [The Tangled Web](books/tangled.md)
 - [Real World Bug Hunting](books/rwbh.md)
 - [Mastering Modern Web Penetration Testing](books/mmwpt)
