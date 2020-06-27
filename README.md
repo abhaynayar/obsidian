@@ -15,6 +15,7 @@ Security related notes, labs and CTF write-ups.
 
 Reversing
 
+- [Radare2 Book](books/r2)
 - [Practical Malware Analysis](books/malware)
 
 Web
