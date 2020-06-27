@@ -17,6 +17,7 @@ Reversing
 
 - [Radare2 Book](books/r2)
 - [Practical Malware Analysis](books/malware)
+- [Practical Reverse Engineering](books/pre)
 
 Web
 
