@@ -17,6 +17,8 @@ Some basic commands
 - Command history: `!~...`
 - Examine `x`: example `x @ esi`
 - Read registers: `dr` or `dr=`
+- `=!`: the rest of the string is passed to the currently loaded IO plugin
+- Multiple commands can be executed using `;` as in `px;dr=`
 
 Visual mode
 
@@ -46,7 +48,7 @@ Redirection and grep
 - Redirect stdout `px > out`
 - Pipe into cmds `pd 10 | grep rcx`
 
-Internal grep: `~`
+Internal grep
 
 ```
 pd 20~call
@@ -64,7 +66,7 @@ Expressions
 ?vi 0x8048000+34
 ?vi 0x8048000+0x34
 ? 0x8048000+0x34
-? 1+2+3-4*3
+? 1+2+3-4\*3
 ```
 
 Debugging
@@ -99,7 +101,12 @@ Debugging
 
 ### Configuration
 
-```
-TBD
-```
+- The core reads `~/.config/radare2/radare2rc` while starting.
+- To prevent radare2 from parsing this file at startup, pass it the `-N` option.
+- From the command line: `$ radare2 -N -e scr.color=1 -e asm.syntax=intel -d /bin/ls`
+- Within radare you can use the `e` or the `Ve` command to configure stuff.
+- Use the `eco/ec/ecs` command for colours and themes.
+- In visual mode use the `R` key to randomize colors or choose the next theme in the list.
+- Get a list of configuration variables by entering `e` in your radare console: `e??~color`
+- To list all the environment variables that matter to know where it will be looking for files: `r2 -H`
 
