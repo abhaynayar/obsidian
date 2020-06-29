@@ -50,21 +50,35 @@ sub edi, ebx
 
 Exercise
 
-What does this code do?
+Q1. What does this code do? What is the type of the [EBP+8] and [EBP+C] in line 1 and 8?
 
 ```
-mov edi, [ebp+8]    ; edi = value at [ebp+8]
-mov edx, edi        ; edx = edi
-or ecx, 0FFFFFFFFh  ; ecx = 0FFFFFFFFh
-repne scasb         ; while(al!=edi) edi++
-add ecx, 2          ; ecx += 2 => ecx = 1
-neg ecx             ; ecx = -ecx => ecx = 0FFFFFFFFh
-mov al, [ebp+0Ch]   ; al = value at [ebp+0Ch]
-mov edi, edx        ; edi = edx
-rep stosb           ; while(al!=edi) edi=al
+mov edi, [ebp+8]    ; edi = [ebp+8] (address of a str)
+mov edx, edi        ; edx = edi (duplicate address)
+xor eax, eax        ; eax = 0 (null-byte)
+or ecx, 0FFFFFFFFh  ; ecx = -1 (no. of repititions)
+repne scasb         ; while(edi!=null && ecx!=0) { edi++; ecx--; }
+add ecx, 2          ; ecx+=2 (starting at -1 and null byte)
+neg ecx             ; ecx = -ecx (length of string is positive)
+mov al, [ebp+0Ch]   ; al = [ebp+0Ch] (value of a chr)
+mov edi, edx        ; edi = edx (back to original str)
+rep stosb           ; while(ecx!=0) { edi=al; ecx-- }
 mov eax, edx        ; eax = edx
 ```
 
+Arithmetic Operations
 
+- When multiplying or dividing by two, we use shift operations (this is called _strength reduction_).
+- MUL/IMUL is used for unsigned/signed multiplication. It has three forms: 
+
+```
+IMUL reg/mem — Same as MUL (stored in AX, DX:AX, EDX:EAX)
+IMUL reg1, reg2/mem — reg1 = reg1 * reg2/mem
+IMUL reg1, reg2/mem, imm — reg1 = reg2 * imm
+```
+
+- Similarly we have DIV/IDIV for unsigned/signed division, they only take one parameter as the divisor and use AX, DX:AX, or EDX:EAX as the dividend. The resulting quotient/remainder is stored in AL/AH, AX/DX, or EAX/EDX.
+
+Stack operations and function invocation
 
 

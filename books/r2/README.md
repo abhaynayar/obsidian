@@ -19,6 +19,8 @@ Some basic commands
 - Read registers: `dr` or `dr=`
 - `=!`: the rest of the string is passed to the currently loaded IO plugin
 - Multiple commands can be executed using `;` as in `px;dr=`
+- To display sections and their addresses: `iS`
+
 
 Visual mode
 

@@ -4,9 +4,9 @@ Security related notes, labs and CTF write-ups.
 
 ## Notes
 
-- [Web Exploitation](notes/web.md)
 - [Reverse Engineering](notes/rev.md)
 - [Binary Exploitation](notes/pwn.md)
+- [Web](notes/web.md)
 - [Android](notes/android.md)
 - [Forensics](notes/forensics.md)
 - [Cryptography](notes/crypto.md)
