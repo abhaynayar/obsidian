@@ -1,54 +1,39 @@
 ##  ► rev
+### Assembly
+Basics:
+
+- Byte (8 bits), word (16 bits) and double word (32 bits)
+- RAX: 64-bit, EAX: 32-bit value, AX is the lower 16-bits, AL is the lower 8 bits, AH is the bits 8 through 15 (zero-based)
+- Passing arguments
+    - 64-bit: first four arguments rdi, rsi, rdx, rcx rest on the stack
+    - 32-bit: push arguments on to the stack (include them in the payload)
+    - Arguments are pushed on to the stack in reverse order
+
+Instructions:
+
+- LEAVE: equivalent to `mov esp,ebp; pop ebp`
+- CALL: push address of next instruction and change eip to given address.
+- MOVS/MOVSB/MOVSW/MOVSD: move data from string to string.
+- MOVSX: move with signed extension.
+
+Coding in assembly:
+
+- 64-bit `$ nasm -felf64 hello.asm && ld hello.o && ./a.out`
+- 32-bit: `$ nasm -felf32 -g -F dwarf eip.asm && ld -m elf_i386 -o eip eip.o`
+- In gdb, you can set breakpoint for the asm program using its labels, for example `b _start`
+- [Running assembly in C](https://github.com/Dvd848/CTFs/blob/master/2019_picoCTF/asm3.md)
 
 ### C
 
-Signed-ness
+Signedness:
 
 - Make sure to use `%u` format specifier for unsigned data-types.
 - The CPU does not care about signed and unsigned representations.
 - We can see the difference while shifting integers and overflows.
 
-### Assembly
+Datatypes:
 
-- Running a program `nasm -felf64 hello.asm && ld hello.o && ./a.out`
-- Byte (8 bits), word (16 bits) and double word (32 bits)
-- RAX: 64-bit, EAX: 32-bit value, AX is the lower 16-bits, AL is the lower 8 bits, AH is the bits 8 through 15 (zero-based)
-- What does `call` do?
-    1. Pushes address of next instruction on to the stack
-    2. Changes `eip` to given address
-- Passing arguments
-    - _64 bit_ : first four arguments rdi, rsi, rdx, rcx
-    - _32 bit_ : push arguments on to the stack (include them in the payload)
-    - Arguments are pushed on to the stack in reverse order:
-
-
-```
-; maybe this is wrong
-asm0(0xd8,0x7a)
-[ebp+0x8] = 0x7a
-[ebp+0xc] = 0xd8
-
-; args are pushed while in the previous stack frame
-; ebp + x means we are moving upwards, i.e., opposite
-; to the direction of growth of the stack
-
-asm2(0x6,0x28)
-[ebp+0xc] = 0x28
-[ebp+0x8] = 0x6
-```
-
-`leave` is equivalent to:
-
-```
-mov   esp, ebp
-pop   ebp
-```
-
-Refer:
-
-- https://carlosrafaelgn.com.br/asm86
-- https://github.com/Dvd848/CTFs/blob/master/2019\_picoCTF/asm3.md
-- https://github.com/abhaynayar/ctf/tree/master/labs/rev/asm\_analysis
+- For `uint_` related datatypes you need to `#include <stdint.h>`
 
 ### Tools
 #### GDB
@@ -59,45 +44,41 @@ Refer:
 - Disable SIGALRM `handle SIGALRM ignore`
 - Remove all breakpoints using `d`
 - Address of a variable `p &var`
-- Disassemble function from the command line: `gdb -batch -ex 'file /bin/ls' -ex 'disassemble main'`
-
-https://darkdust.net/files/GDB%20Cheat%20Sheet.pdf
+- Disassemble function from the command line: `$ gdb -batch -ex 'file /bin/ls' -ex 'disassemble main'`
+- Ghidra decompilation in pwndbg: `ctx-ghidra sym.foo()`
 
 #### IDA
 
 - Open strings window using `Shift + F12`. Can also open during debug mode.
 
 ### Resources
-#### Awesome
+
+Awesome:
 
 - https://medium.com/@vignesh4303/reverse-engineering-resources-beginners-to-intermediate-guide-links-f64c207505ed
 
-#### Books
+Books:
 
-- Practical Malware Analysis
-- Practical Reverse Engineering
 - Reverse Engineering for Beginners
-- Mastering Reverse Engineering
-- Windows Internal Book
+- Practical Reverse Engineering
+- Practical Malware Analysis
 - Linux Device Drivers
-
-Tools
-
+- Windows Internals
 - Debugging with GDB
 - The IDA Pro Book
 - Radare2 Book
 - Ghidra Book
 
-#### Courses
+Courses:
 
 - RE101 - Malware Unicorn
 - ARM reversing - Azeria
 
-#### Learn
+#### Todo
 
-- Fuzzing (AFL/ASAN)
+- Windows binaries (x64dbg)
 - Kernel exploitation
 - Browser explotation
 - Z3 & angr framework
-- Windows binaries (x64dbg)
+- Fuzzing (AFL/ASAN)
 
