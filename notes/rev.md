@@ -25,18 +25,27 @@ Coding in assembly:
 
 ### C
 
+32-bit compilation:
+
+```
+$ sudo apt install gcc-multilib
+$ gcc -m32 test.c -o test
+```
+
 Signedness:
 
 - Make sure to use `%u` format specifier for unsigned data-types.
 - The CPU does not care about signed and unsigned representations.
 - We can see the difference while shifting integers and overflows.
+- The conditional opcodes help differentiate in signedness.
 
 Datatypes:
 
 - For `uint_` related datatypes you need to `#include <stdint.h>`
 
 ### Tools
-#### GDB
+
+GDB:
 
 - Examine general format: `x/nfu addr`
 - To examine a double word (giant): `x/xg addr`
@@ -44,10 +53,10 @@ Datatypes:
 - Disable SIGALRM `handle SIGALRM ignore`
 - Remove all breakpoints using `d`
 - Address of a variable `p &var`
-- Disassemble function from the command line: `$ gdb -batch -ex 'file /bin/ls' -ex 'disassemble main'`
+- Disassemble function from the command line: `$ gdb -batch -ex 'file /bin/ls' -ex 'disassemble main'` or `gdb -q ./a.out 'disass main'`
 - Ghidra decompilation in pwndbg: `ctx-ghidra sym.foo()`
 
-#### IDA
+IDA:
 
 - Open strings window using `Shift + F12`. Can also open during debug mode.
 
@@ -74,7 +83,7 @@ Courses:
 - RE101 - Malware Unicorn
 - ARM reversing - Azeria
 
-#### Todo
+Todo:
 
 - Windows binaries (x64dbg)
 - Kernel exploitation
