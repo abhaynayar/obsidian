@@ -22,6 +22,8 @@ Coding in assembly:
 - 32-bit: `$ nasm -felf32 -g -F dwarf eip.asm && ld -m elf_i386 -o eip eip.o`
 - In gdb, you can set breakpoint for the asm program using its labels, for example `b _start`
 - [Running assembly in C](https://github.com/Dvd848/CTFs/blob/master/2019_picoCTF/asm3.md)
+- We usually use `_start` in assembly similar to how we use `main` in C.
+- Therefore we often break at `_start` within gdb.
 
 ### C
 
@@ -47,6 +49,7 @@ Datatypes:
 
 GDB:
 
+- **How to print strings when you have their name (symbol)?**
 - Examine general format: `x/nfu addr`
 - To examine a double word (giant): `x/xg addr`
 - Changing variable values `set var <variable_name>=<value>`
@@ -59,6 +62,10 @@ GDB:
 IDA:
 
 - Open strings window using `Shift + F12`. Can also open during debug mode.
+
+pwntools
+
+- Learn about `send` and `recv`
 
 ### Resources
 
