@@ -28,6 +28,13 @@ Web
 
 ## Labs
 
+Binary Exploitation
+
+- [Heap Exploitation](labs/pwn/heap)
+- [Gynvael - Fuzzing Stream](labs/pwn/gynvael-fuzzing)
+- [FuzzySecurity - ExploitDev](labs/pwn/fuzzysec)
+- [RPISEC - Modern Binary Exploitation](labs/rev/mbe)
+
 Web
 
 - [Portswigger](labs/web/portswigger)
@@ -50,6 +57,7 @@ Mobile
 ## Writeups
 
 2020
+- [ASIS CTF](https://abhaynayar.com/blog/asis.html) (blog)
 - [riftCTF](https://youtu.be/K5YnRLG6Cr8) (video)
 - [b01lers](writeups/b01lers20)
 - [riceteacatpanda](writeups/rtcp20.md)
