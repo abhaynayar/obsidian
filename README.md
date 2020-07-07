@@ -4,8 +4,7 @@ Security related notes, labs and CTF write-ups.
 
 ## Notes
 
-- [Reverse Engineering](notes/rev.md)
-- [Binary Exploitation](notes/pwn.md)
+- [Pwn](notes/pwn.md)
 - [Web](notes/web.md)
 - [Android](notes/android.md)
 - [Forensics](notes/forensics.md)
@@ -25,15 +24,12 @@ Web
 - [Real World Bug Hunting](books/rwbh.md)
 - [Mastering Modern Web Penetration Testing](books/mmwpt)
 
-
 ## Labs
 
-Binary Exploitation
+Pwn
 
-- [Heap Exploitation](labs/pwn/heap)
-- [Gynvael - Fuzzing Stream](labs/pwn/gynvael-fuzzing)
-- [FuzzySecurity - ExploitDev](labs/pwn/fuzzysec)
-- [RPISEC - Modern Binary Exploitation](labs/rev/mbe)
+- [Heap exploitation](labs/pwn/heap)
+- [Fuzzing](labs/pwn/fuzzing)
 
 Web
 
