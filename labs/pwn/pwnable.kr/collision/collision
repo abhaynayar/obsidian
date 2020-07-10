@@ -1,0 +1,25 @@
+ssh col@pwnable.kr -p2222 (pw:guest)
+
+analysis
+- we need to enter a 20 character string as a command line argument.
+- the program goes over the string in 5 iterations as an integer.
+- it sums up the values in each iteration and compares it with 0x21DD09EC.
+- if the value matches it runs "/bin/cat flag".
+
+experimentation
+
+- for example if we enter ABCD...
+- first iteration we get 0x44434241
+
+```
+from pwn import *
+
+hashcode = 0x21DD09EC
+payload = p32(int(hashcode/5))*4 + p32(int(hashcode/5+4))
+io = process(['./col', payload])
+# io = gdb.debug(['./col', payload], 'b*check_password+52')
+io.interactive()
+```
+
+# daddy! I just managed to create a hash collision :)
+

@@ -28,6 +28,7 @@ Web
 
 Pwn
 
+- [pwnable.kr](labs/pwn/pwnable.kr)
 - [Heap exploitation](labs/pwn/heap)
 - [Fuzzing](labs/pwn/fuzzing)
 

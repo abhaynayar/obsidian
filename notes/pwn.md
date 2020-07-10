@@ -12,24 +12,23 @@
 
 1. file
 2. strings
-3. readelf
+3. **readelf**
 4. md5sum
-5. objdump –d
+5. objdump
 6. checksec
-7. wxHexEditor (patching,diffing)
-8. ltrace ./file (library calls)
-9. strace ./file (system calls)
+7. ghex (patching,diffing)
+8. ltrace (library calls)
+9. strace (system calls)
 
 ### Resources
 
 Courses
-
-- https://ropemporium.com/
-- https://sidsbits.com/Path/
-- https://overthewire.org/wargames/narnia
 - ARM reversing - Azeria
 - RE101 - Malware Unicorn
 - [Ultimate guide to reversing](https://medium.com/@vignesh4303/reverse-engineering-resources-beginners-to-intermediate-guide-links-f64c207505ed)
+- https://ropemporium.com/
+- https://sidsbits.com/Path/
+- https://overthewire.org/wargames/narnia
 
 Books
 
@@ -48,6 +47,7 @@ Tools
 
 ### Notes
 
+- **Make sure to set your file as executable before running your tools.**
 -  newline is required at the end of your payload to cause the binary to process your input.
 - `fgets` means you can use null bytes in your payload but not newlines.
 - `gets` ends at newline or EOF, while `strlen` stops at null byte.
@@ -87,6 +87,15 @@ Coding in assembly
 - Therefore we often break at `_start` within gdb.
 - Use `fin` to continue until current function finishes.
 
+### Debugging stripped binaries
+
+- `(gdb) info file`
+- `gef> entry`
+
+References
+
+- https://felix.abecassis.me/2012/08/gdb-debugging-stripped-binaries/
+
 ### C
 
 32-bit compilation
@@ -125,7 +134,7 @@ Resources
 
 - *read-where* primitive: `%s` (for example, `AAAA%7$s` would return the value at the address 0x41414141).
 - *write-what-where* primitive: `%n`
-- `%hhn` lets us write one byte at a time.
+- write one byte at a time: `%hhn` 
 
 Reading from an arbritrary address
 
@@ -139,11 +148,39 @@ Writing to an arbritrary address
 TBD
 ```
 
-Overwriting the GOT
+### GOT and PLT
 
-```
-TBD
-```
+- Since dynamically linked libraries update and also due to ASLR, we cannot hardcode addresses of functions that are run through the libraries.
+- So we use relocation which is done by the dynamic linker called `ld-linux.so` run before any code from libc or your program.
+
+Sections required by relocation
+
+1. .got: table of offsets filled by the linker for external tables.
+2. .plt: stubs to look up addresses in .got section (jump to the right address or ask the linker to resolve it).
+
+How relocation happens
+
+1. When you call a library function for the first time, it calls the `.plt` section function within your binary.
+2. In the `.plt` we have jump to an address in `.got` which has been filled by the linker with the address of the given function in libc.
+
+Lazy binding
+
+- Got gets the actual function address after the first call).
+- Before lazy binding the GOT entry points back into the PLT.
+
+GOT overwrite
+
+- **Look into pico18/echo-back**
+- https://www.youtube.com/watch?v=kUk5pw4w0h4
+- https://nuc13us.wordpress.com/2015/09/04/format-string-exploit-overwrite-got/
+- Find the address of GOT entry of a function that is going to be called.
+- Use arbritrary write primitive to change that to some other function's got address.
+
+References
+
+- http://www.infosecwriters.com/text\_resources/pdf/GOT\_Hijack.pdf
+- https://systemoverlord.com/2017/03/19/got-and-plt-for-pwning.html
+- https://stackoverflow.com/questions/43048932/why-does-the-plt-exist-in-addition-to-the-got-instead-of-just-using-the-got
 
 ### Leaking libc, functions, canaries
 
@@ -164,7 +201,7 @@ Leaking libc base
 
 Leaking functions
 
-- This is similar to leaking libc base, but with a function.
+- Similar to leaking libc base, but with a function.
 - https://sidsbits.com/Defeating-ASLR-with-a-Leak/
 - https://www.youtube.com/watch?v=evug4AhrO7o
 - Get the address of `puts` using `(gdb) x puts`
@@ -178,7 +215,7 @@ Leaking functions
 Getting a shell
 
 - Use a call to `system` by passing shell command as the only argument
-- **Make sure to `call system` not simply jump to it** (for eg: mov eax,_system_ then call eax)
+- **Make sure to `call system` not simply jump to it.** (for eg: mov eax,_system_ then call eax)
 - If you want to directly jump to it, make sure to append a dummy return address and a parameter after it: `payload="A"*offset + system + "AAAA" + binsh`
 - Use `syscall(x)`to call to`execve('/bin/sh', NULL,NULL)`
 - find "x" from: `https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64`
@@ -228,13 +265,13 @@ Using gdb wrappers for heap
 
 ```
 +-----------------+
-|   application   |
-+-----------------+
-|   heap          |
+|   stack         |
 +-----------------+
 |   libraries     |
 +-----------------+
-|   stack         |
+|   heap          |
++-----------------+
+|   application   |
 +-----------------+
 ```
 
@@ -251,6 +288,8 @@ Gynvael's stream
 
 GDB
 
+- `jump +1` jumps to the next line line i.e. skipping the current line. Can be used when stuck in `rep`
+- `tbreak +1` to set a temporary breakpoint at the jump target.
 - `step` steps into subroutines, but `next` will step over subroutines.
 - `step` and `stepi` (and the `next` and `nexti`) are distinguishing by "line" or "instruction" increments.
 - In most of my use-cases I need `nexti` (short `ni`)
@@ -285,16 +324,23 @@ IDA
 - IDA-Options-General-auto comment
 - IDA-Options-General-opcode bytes 8 
 
-_Source: RPISEC-MBE_
-
 pwntools
 
-- Learn about `fit`
-- Learn about `send` and `recv`
+- Learn about:
+    - **send and recv**
+    - fmtstr
+    - rop
+- `flat(*args, preprocessor = None, length = None, filler = de_bruijn(), word_size = None, endianness = None, sign = None)` -> str. Strings are inserted directly while numbers are packed using the pack() function.
+
+```
+flat({32:'1337'})
+```
+- To only see error logs: `context.log_level = 'error'`
+- Need to use `io.interactive` or `io.wait` (?)
 - Use `recv()` to receive everything up till that point.
+- While writin your exploit script keep `io.interactive()` at the end and keep adding sends and receives before it.
 - Sometimes remote connection might be close due to an error in your python code (such as bytes != strings).
 - For passing args: `io = process(['./chall','AAAA'])` or `io = gdb.debug(['./chall','AAAA'], 'b main')`
-- When nothing works try `io.interactive()`
 - Creating a template `pwn template ./<binary> --host 127.0.0.1 --port 1337`
 - Debugging with gdb `io = gdb.debug('./<binary>', 'b main')`
 - Passing commandline arguments `io = process(['./crackme','blah'])`
