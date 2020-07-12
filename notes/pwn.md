@@ -91,6 +91,7 @@ Coding in assembly
 
 - `(gdb) info file`
 - `gef> entry`
+- `gef> disas _start`
 
 References
 
@@ -288,6 +289,10 @@ Gynvael's stream
 
 GDB
 
+- https://sourceware.org/gdb/onlinedocs/gdb/Hooks.html
+- To calculate stuff inside gdb `p 1+2`
+- Delete all breakpoints using `d`
+- Delete breakpoint by number using `d 1`
 - `jump +1` jumps to the next line line i.e. skipping the current line. Can be used when stuck in `rep`
 - `tbreak +1` to set a temporary breakpoint at the jump target.
 - `step` steps into subroutines, but `next` will step over subroutines.
@@ -307,7 +312,6 @@ GDB
 - To examine a double word (giant): `x/xg addr`
 - Changing variable values `set var <variable_name>=<value>`
 - Disable SIGALRM `handle SIGALRM ignore`
-- Remove all breakpoints using `d`
 - Disassemble function from the command line: `$ gdb -batch -ex 'file /bin/ls' -ex 'disassemble main'` or `gdb -q ./a.out 'disass main'`
 - Ghidra decompilation in pwndbg: `ctx-ghidra sym.foo()`
 - Execute python in gdb: `(gdb) python print('asdf')`

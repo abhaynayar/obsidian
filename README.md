@@ -54,6 +54,7 @@ Mobile
 ## Writeups
 
 2020
+- [TSGCTF](writeups/tsg20.txt)
 - [ASIS CTF](https://abhaynayar.com/blog/asis.html) (blog)
 - [riftCTF](https://youtu.be/K5YnRLG6Cr8) (video)
 - [b01lers](writeups/b01lers20)
