@@ -216,7 +216,7 @@ Leaking functions
 Getting a shell
 
 - Use a call to `system` by passing shell command as the only argument
-- **Make sure to `call system` not simply jump to it.** (for eg: mov eax,_system_ then call eax)
+- **Make sure to `call system` not simply jump to it.** (update: you don't need to call system, just align it using an extra ret gadget).
 - If you want to directly jump to it, make sure to append a dummy return address and a parameter after it: `payload="A"*offset + system + "AAAA" + binsh`
 - Use `syscall(x)`to call to`execve('/bin/sh', NULL,NULL)`
 - find "x" from: `https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64`
@@ -289,6 +289,7 @@ Gynvael's stream
 
 GDB
 
+- To search for string in memory `gef> grep asdf`
 - https://sourceware.org/gdb/onlinedocs/gdb/Hooks.html
 - To calculate stuff inside gdb `p 1+2`
 - Delete all breakpoints using `d`
@@ -330,15 +331,8 @@ IDA
 
 pwntools
 
-- Learn about:
-    - **send and recv**
-    - fmtstr
-    - rop
-- `flat(*args, preprocessor = None, length = None, filler = de_bruijn(), word_size = None, endianness = None, sign = None)` -> str. Strings are inserted directly while numbers are packed using the pack() function.
-
-```
-flat({32:'1337'})
-```
+- Searching for strings: `payload += p64(next(libc.search(b'/bin/sh')))`
+- `flat(*args, preprocessor = None, length = None, filler = de_bruijn(), word_size = None, endianness = None, sign = None)` -> str. Strings are inserted directly while numbers are packed using the pack() function: `flat({32:'1337'})`
 - To only see error logs: `context.log_level = 'error'`
 - Need to use `io.interactive` or `io.wait` (?)
 - Use `recv()` to receive everything up till that point.
@@ -349,9 +343,16 @@ flat({32:'1337'})
 - Debugging with gdb `io = gdb.debug('./<binary>', 'b main')`
 - Passing commandline arguments `io = process(['./crackme','blah'])`
 - Shell code `shellcode = asm(shellcraft.sh())`
-- Cyclic padding
-	- In the terminal `pwn cyclic 200` and  `pwn cyclic -l 0xdeadbeef`
-    - In python:
+- Cyclic padding:
+
+Using terminal
+
+```
+$pwn cyclic 200
+pwn cyclic -l 0xdeadbeef
+```
+
+Using python
 
 ```python
 x = 4 #x=8 for 64-bit
@@ -363,6 +364,11 @@ offset -= x # wherever the sequence is found, we replace it
 ```
 
 - Return oriented programming: ropper, ROPgadget, angrop, one\_gadget
+
+```python
+# finding gadgets
+pop_rdi = (rop.find_gadget(['pop rdi', 'ret']))[0]
+```
 
 ```python
 # leaking libc
@@ -389,4 +395,8 @@ main_plt = elf.symbols['main']
 
 rop = offset + p64(pie+pop_rdi) + p64(pie+puts_got) + p64(pie+puts_plt) + p64(pie+main_plt)
 ```
+Learn about:
+  - **send and recv**
+  - fmtstr
+  - rop
 
