@@ -63,8 +63,10 @@ Basics
 - Byte (8 bits), word (16 bits) and double word (32 bits)
 - RAX: 64-bit, EAX: 32-bit value, AX is the lower 16-bits, AL is the lower 8 bits, AH is the bits 8 through 15 (zero-based).
 - Passing arguments: https://ctf101.org/binary-exploitation/what-are-calling-conventions/
-    - 64-bit: first four arguments rdi, rsi, rdx, rcx rest on the stack.
-    - 32-bit: push arguments on to the stack (include them in the payload).
+    - 64-bit:
+        - Linux: RDI, RSI, RDX, RCX, R8, R9
+        - Windows: RCX, RDX, R8, R9, stack.
+    - 32-bit: push arguments on to the stack (include them in the payload). ???
     - Arguments are pushed before the EIP in reverse order (right-to-left).
 - `.bss` segment is used for statically-allocated variables that are not explicitly initialized to any value.
 - Least significant three nibbles are the offset within a page (4KB) `3*4=12 => 2^12 = 4*(2^10)`
@@ -215,10 +217,11 @@ Leaking functions
 
 Getting a shell
 
-- Use a call to `system` by passing shell command as the only argument
+- Use a call to `system` by passing shell command as the only argument.
 - **Make sure to `call system` not simply jump to it.** (update: you don't need to call system, just align it using an extra ret gadget).
 - If you want to directly jump to it, make sure to append a dummy return address and a parameter after it: `payload="A"*offset + system + "AAAA" + binsh`
 - Use `syscall(x)`to call to`execve('/bin/sh', NULL,NULL)`
+- exec syscall on 32bit: 0x0b, exec syscall on 64bit: 0x3b.
 - find "x" from: `https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64`
 
 Writing to memory (in case you want "/bin/sh")
@@ -285,10 +288,51 @@ Gynvael's stream
 - Towards the end of an elf file is a section used as heap and `brk` is used to extend it.
 - When malloc-ing a lot of stuff, if the pages of allocation change it means a new heap is created (?).
 
+### Fuzzing
+
+- To get source from apt `apt-get source binutils`
+- To build binutils `CC=afl-gcc ./configure` then `make`
+
+### ARM exploitation
+
+- ARM mode has 4 byte instruction alignment.
+    – Can’t jump in the middle of instructions.
+- THUMB mode has 2 byte instruction alignment.
+    – When ROPing there’s usually more THUMB gadgets that will be of use due to the 2 byte alignment.
+- Because of 2 & 4 byte instruction alignment, the lowest bit of the program counter (eg r15) will never be set.
+- This bit is re-purposed to tell the processor if we are in THUMB mode or ARM mode.
+
+Sources:
+
+- RPISEC MBE
+
+### Windows Exploitation
+
+- The executable format on Windows is .EXE instead of Linux ELF’s
+- Libraries are .DLL, like Linux .so (eg: MSVCRT.dll is like libc)
+- If you’re going to get rolling on Windows, try to pick up skills debugging with WinDbg **EARLY**.
+- Raw syscalls are virtually never seen in native windows applications or libraries.
+- So instead of using syscalls,  an exploit will almost always use existing imported functions.
+- ntdll.dll – the 'Native API' wraps all the syscalls for the given version of Windows, is pretty low level stuff (the only process that must be loaded).
+- kernel32.dll – the 'Win32 API' more familiar high level stuff OpenFile(), ReadFile(), CreateProcess(), LoadLibrary(), GetProcAddress().
+
+Sources:
+
+- RPISEC MBE
+
 ### Tools
+
+radare2
+
+- Search for a string: `/ string_content`
+- Seek: `s 0xdeadbeef`
+- Print in hex: `px`
+- Change to write mode: `oo+`
+- Write bytes: `w hello, world`
 
 GDB
 
+- To change register values `set $sp += 4`
 - To search for string in memory `gef> grep asdf`
 - https://sourceware.org/gdb/onlinedocs/gdb/Hooks.html
 - To calculate stuff inside gdb `p 1+2`

@@ -1,0 +1,8 @@
+download binutils 2.4.1
+configure and make
+doesn't build completely
+but objdump does so we're gonna fuzz that
+no debug so use CFLAGS "-O0 -g -gdwarf-2"
+copy all files from /usr/bin/ for corpus
+prune elf files $ ls | xargs file | grep -v ELF | cut -d: -f1 | xargs rm 
+

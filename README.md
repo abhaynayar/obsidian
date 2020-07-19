@@ -14,6 +14,7 @@ Security related notes, labs and CTF write-ups.
 
 Reversing
 
+- [Reverse Engineering for Beginners](books/re4b)
 - [Radare2 Book](books/r2)
 - [Practical Malware Analysis](books/malware)
 - [Practical Reverse Engineering](books/pre)
