@@ -119,19 +119,6 @@ Datatypes
 
 - For `uint_` related datatypes you need to `#include <stdint.h>`
 
-### GOT and PLT
-
-- The first time you make a call to a function like `printf` that resides in a dynamic library, it calls `printf@plt`
-- Within `printf@plt` it jumps into `printf@got.plt` that is we jump to whatever address is stored in the GOT.
-- From there we go to `_dl_runtime_resolve` which is in the dynamic linker `ld.so` which helps set up external references to libc.
-- Next time onwards we directly jump to `printf` from the GOT.
-
-Resources
-
-- https://ropemporium.com/guide.html (appendix A)
-- https://systemoverlord.com/2017/03/19/got-and-plt-for-pwning.html
-- https://refspecs.linuxbase.org/LSB\_3.1.1/LSB-Core-generic/LSB-Core-generic/specialsections.html
-
 ### Format String Attacks
 **Offset notation: `%6$x`**
 
@@ -153,13 +140,17 @@ TBD
 
 ### GOT and PLT
 
+- The first time you make a call to a function like `printf` that resides in a dynamic library, it calls `printf@plt`
+- Within `printf@plt` it jumps into `printf@got.plt` that is we jump to whatever address is stored in the GOT.
+- From there we go to `_dl_runtime_resolve` which is in the dynamic linker `ld.so` which helps set up external references to libc.
+- Next time onwards we directly jump to `printf` from the GOT.
 - Since dynamically linked libraries update and also due to ASLR, we cannot hardcode addresses of functions that are run through the libraries.
 - So we use relocation which is done by the dynamic linker called `ld-linux.so` run before any code from libc or your program.
 
 Sections required by relocation
 
-1. .got: table of offsets filled by the linker for external tables.
-2. .plt: stubs to look up addresses in .got section (jump to the right address or ask the linker to resolve it).
+1. `.got`: table of offsets filled by the linker for external tables.
+2. `.plt`: stubs to look up addresses in .got section (jump to the right address or ask the linker to resolve it).
 
 How relocation happens
 
@@ -181,9 +172,13 @@ GOT overwrite
 
 References
 
+- https://ropemporium.com/guide.html (appendix A)
+- https://systemoverlord.com/2017/03/19/got-and-plt-for-pwning.html
+- https://refspecs.linuxbase.org/LSB\_3.1.1/LSB-Core-generic/LSB-Core-generic/specialsections.html
 - http://www.infosecwriters.com/text\_resources/pdf/GOT\_Hijack.pdf
 - https://systemoverlord.com/2017/03/19/got-and-plt-for-pwning.html
 - https://stackoverflow.com/questions/43048932/why-does-the-plt-exist-in-addition-to-the-got-instead-of-just-using-the-got
+
 
 ### Leaking libc, functions, canaries
 
@@ -330,7 +325,7 @@ radare2
 - Change to write mode: `oo+`
 - Write bytes: `w hello, world`
 
-GDB
+gdb
 
 - To change register values `set $sp += 4`
 - To search for string in memory `gef> grep asdf`
@@ -380,7 +375,7 @@ pwntools
 - To only see error logs: `context.log_level = 'error'`
 - Need to use `io.interactive` or `io.wait` (?)
 - Use `recv()` to receive everything up till that point.
-- While writin your exploit script keep `io.interactive()` at the end and keep adding sends and receives before it.
+- While writing your exploit script keep `io.interactive()` at the end and keep adding sends and receives before it.
 - Sometimes remote connection might be close due to an error in your python code (such as bytes != strings).
 - For passing args: `io = process(['./chall','AAAA'])` or `io = gdb.debug(['./chall','AAAA'], 'b main')`
 - Creating a template `pwn template ./<binary> --host 127.0.0.1 --port 1337`

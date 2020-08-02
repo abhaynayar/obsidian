@@ -115,7 +115,7 @@ main:
 - Sometimes the function prologue has `AND ESP, 0FFFFFFF0h` as the CPU performs better if the values it is dealing with are located in memory at addresses aligned on a 4-byte or 16-byte boundary).
 - When you see `SUB ESP, 10h` it allocates 16 bytes on the stack even if required bytes are only 4. This is because the stack is aligned.
 - LEAVE is the equivalent of the `MOV ESP, EBP` and `POP EBP` instruction pair.
-- The number of used vector registers is to be passed in EAX in *NIX systems on x86-64 before a function call.
+- The number of used vector registers is to be passed in EAX in \*NIX systems on x86-64 before a function call.
 
 #### Some differences in AT&T syntax
 
@@ -125,8 +125,10 @@ main:
 - Suffix is added to define operand size: qlwb.
 
 
-ARMv7
+### Stack
 
-```
-```
+- **Save the function’s return address**. Even ARM programs use stack to store return addresses since LR will be overwritten (except leaf functions).
+- CALL is equivalent to a `PUSH address_after_call / JMP operand instruction` pair. RET is equivalent to a `POP tmp / JMP tmp` instruction pair.
+- **Passing function arguments**. The most popular way is `cdecl` in which callee functions get their arguments via the stack pointer.
+
 
