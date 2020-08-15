@@ -1,8 +1,8 @@
 # 🚩 CTF
 
-Security related notes, labs and CTF write-ups.
+Security related notes, labs and writeups
 
-## Notes
+## Tips by CTF category
 
 - [Pwn](notes/pwn.md)
 - [Web](notes/web.md)
@@ -10,14 +10,14 @@ Security related notes, labs and CTF write-ups.
 - [Forensics](notes/forensics.md)
 - [Cryptography](notes/crypto.md)
 
-## Books
+## Notes on security books
 
 Reversing
 
 - [Reverse Engineering for Beginners](books/re4b)
-- [Radare2 Book](books/r2)
-- [Practical Malware Analysis](books/malware)
 - [Practical Reverse Engineering](books/pre)
+- [Practical Malware Analysis](books/malware)
+- [Radare2 Book](books/r2)
 
 Web
 
@@ -25,7 +25,12 @@ Web
 - [Real World Bug Hunting](books/rwbh.md)
 - [Mastering Modern Web Penetration Testing](books/mmwpt)
 
-## Labs
+Uncategorized
+
+- [The Art of Software Security Assessment](books/taossa)
+- [Attacking Network Protocols](books/anp)
+
+## Solutions to labs / wargames
 
 Pwn
 
@@ -53,7 +58,7 @@ Mobile
 - [Injured Android](labs/mobile/injured_android)
 - [KGB Messenger](labs/mobile/kgb)
 
-## Writeups
+## Writeups on past CTFs
 
 2020
 - [TSGCTF](writeups/tsg20.txt)
