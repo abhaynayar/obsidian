@@ -6,19 +6,19 @@ I secured 2nd rank in the CTF, here are some of the challenges that I came acros
 ## Challenges
 
 - Reverse Engineering
-	- [Hoth 200 pts.](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#hoth-200-pts)
-	- [PartyPart 300 pts.](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#partypart-300-pts)
+	- [Hoth 200 pts.](#hoth-200-pts)
+	- [PartyPart 300 pts.](#partypart-300-pts)
 - Web Exploitation
-	- [Slender Ingress 300 pts.](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#slender-ingress-300-pts)
-	- [PHP Alert 200 pts.](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#php-alert-200-pts)
+	- [Slender Ingress 300 pts.](#slender-ingress-300-pts)
+	- [PHP Alert 200 pts.](#php-alert-200-pts)
 - Forensics
-	- [The Dilemma 100 pts.](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#the-dilemma-100-pts)
-	- [Mos Espa - Tatooine 400 pts.](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#mos-espa---tatooine-400-pts)
+	- [The Dilemma 100 pts.](#the-dilemma-100-pts)
+	- [Mos Espa - Tatooine 400 pts.](#mos-espa---tatooine-400-pts)
 - Android
-	- [Decode 200 pts.](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#decode-200-pts)
-	- [Secret Service 200 pts.](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#secret-service-200-pts)
+	- [Decode 200 pts.](#decode-200-pts)
+	- [Secret Service 200 pts.](#secret-service-200-pts)
 - Binary Exploitation
-	- [Printer](https://github.com/abhaynayar/ctf/blob/master/writeups/inctfn19.md#printer)
+	- [Printer](#printer)
 
 ## Reverse Engineering
 
