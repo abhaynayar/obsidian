@@ -1,4 +1,4 @@
-# 🚩 CTF
+# Obsidian
 
 Security related notes, labs and writeups
 
