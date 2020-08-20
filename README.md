@@ -4,6 +4,7 @@ Security related notes, labs and writeups
 
 ## Tips by CTF category
 
+- [Rev](notes/rev.md)
 - [Pwn](notes/pwn.md)
 - [Web](notes/web.md)
 - [Android](notes/android.md)
