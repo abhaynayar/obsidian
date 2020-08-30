@@ -1,14 +1,6 @@
 ##  ► pwn
-### Todo
 
-- Windows binaries
-- ARM exploitation
-- Kernel exploitation
-- Browser explotation
-- Z3 & angr framework
-- Fuzzing (AFL/ASAN)
-
-### Initial checks
+### Recon
 
 1. file
 2. strings
@@ -20,33 +12,10 @@
 8. ltrace (library calls)
 9. strace (system calls)
 
-### Resources
+### Tips
 
-Courses
-- ARM reversing - Azeria
-- RE101 - Malware Unicorn
-- [Ultimate guide to reversing](https://medium.com/@vignesh4303/reverse-engineering-resources-beginners-to-intermediate-guide-links-f64c207505ed)
-- https://ropemporium.com/
-- https://sidsbits.com/Path/
-- https://overthewire.org/wargames/narnia
-
-Books
-
-- Reverse Engineering for Beginners
-- Practical Reverse Engineering
-- Practical Malware Analysis
-- Linux Device Drivers
-- Windows Internals
-
-Tools
-
-- Debugging with GDB
-- The IDA Pro Book
-- Radare2 Book
-- Ghidra Book
-
-### Notes
-
+- View symbols in text section: `$ nm -a empty | grep " t\| T"`
+- **Make sure to point to `/bin/sh` and not the string value itself**
 - **Make sure to set your file as executable before running your tools.**
 -  newline is required at the end of your payload to cause the binary to process your input.
 - `fgets` means you can use null bytes in your payload but not newlines.
@@ -55,6 +24,15 @@ Tools
 - `pwndbg> info functions`
 - `dmesg | tail`
 - `pwn cyclic`
+
+### Debugging stripped binaries
+
+- `(gdb) info file`
+- `gef> entry`
+- `gef> disas _start`
+
+References
+- https://felix.abecassis.me/2012/08/gdb-debugging-stripped-binaries/
 
 ### Assembly
 
@@ -89,16 +67,6 @@ Coding in assembly
 - Therefore we often break at `_start` within gdb.
 - Use `fin` to continue until current function finishes.
 
-### Debugging stripped binaries
-
-- `(gdb) info file`
-- `gef> entry`
-- `gef> disas _start`
-
-References
-
-- https://felix.abecassis.me/2012/08/gdb-debugging-stripped-binaries/
-
 ### C
 
 32-bit compilation
@@ -122,6 +90,7 @@ Datatypes
 ### Format String Attacks
 **Offset notation: `%6$x`**
 
+**Learn about fmtstr in pwntools to automate format string exploits**
 - *read-where* primitive: `%s` (for example, `AAAA%7$s` would return the value at the address 0x41414141).
 - *write-what-where* primitive: `%n`
 - write one byte at a time: `%hhn` 
@@ -182,6 +151,8 @@ References
 
 ### Leaking libc, functions, canaries
 
+**If you can leak any one function, look into the last three nibbles and search for it on https://libc.blukat.me**
+
 Using format string attacks
 
 - http://abhaynayar.com/blog/asis.html
@@ -213,7 +184,7 @@ Leaking functions
 Getting a shell
 
 - Use a call to `system` by passing shell command as the only argument.
-- **Make sure to `call system` not simply jump to it.** (update: you don't need to call system, just align it using an extra ret gadget).
+- **Make sure to `call system` not simply jump to it.** (update: you don't need to call system, we need to align the stack so use an extra `ret` gadget).
 - If you want to directly jump to it, make sure to append a dummy return address and a parameter after it: `payload="A"*offset + system + "AAAA" + binsh`
 - Use `syscall(x)`to call to`execve('/bin/sh', NULL,NULL)`
 - exec syscall on 32bit: 0x0b, exec syscall on 64bit: 0x3b.
@@ -225,6 +196,12 @@ Writing to memory (in case you want "/bin/sh")
 2. Look for places to write to using `readelf -S <binary> ` or ` rabin2 -S <binary>` (don't forget to consider the size)
 3. Write the string to the address using the gadget found in step 1.
 4. Call `system` with address of the written string.
+
+### ret2csu
+
+```
+TBD
+```
 
 ### Heap exploitation
 
@@ -291,9 +268,9 @@ Gynvael's stream
 ### ARM exploitation
 
 - ARM mode has 4 byte instruction alignment.
-    – Can’t jump in the middle of instructions.
+    - Can’t jump in the middle of instructions.
 - THUMB mode has 2 byte instruction alignment.
-    – When ROPing there’s usually more THUMB gadgets that will be of use due to the 2 byte alignment.
+    - When ROPing there’s usually more THUMB gadgets that will be of use due to the 2 byte alignment.
 - Because of 2 & 4 byte instruction alignment, the lowest bit of the program counter (eg r15) will never be set.
 - This bit is re-purposed to tell the processor if we are in THUMB mode or ARM mode.
 
@@ -325,7 +302,7 @@ radare2
 - Change to write mode: `oo+`
 - Write bytes: `w hello, world`
 
-gdb
+gdb/gef
 
 - To change register values `set $sp += 4`
 - To search for string in memory `gef> grep asdf`
@@ -382,7 +359,8 @@ pwntools
 - Debugging with gdb `io = gdb.debug('./<binary>', 'b main')`
 - Passing commandline arguments `io = process(['./crackme','blah'])`
 - Shell code `shellcode = asm(shellcraft.sh())`
-- Cyclic padding:
+
+**Cyclic padding in pwntools**
 
 Using terminal
 
@@ -402,7 +380,7 @@ offset = cyclic_find(core.read(core.esp, x), n=x) #rsp for 64 bit
 offset -= x # wherever the sequence is found, we replace it
 ```
 
-- Return oriented programming: ropper, ROPgadget, angrop, one\_gadget
+**Return oriented programming in pwntools**
 
 ```python
 # finding gadgets
@@ -434,8 +412,36 @@ main_plt = elf.symbols['main']
 
 rop = offset + p64(pie+pop_rdi) + p64(pie+puts_got) + p64(pie+puts_plt) + p64(pie+main_plt)
 ```
-Learn about:
-  - **send and recv**
-  - fmtstr
-  - rop
+
+### Look into
+
+- angr framework
+- fmtstr pwntools
+- rop in pwntools
+
+### Resources
+
+Courses
+
+- ARM reversing - Azeria
+- RE101 - Malware Unicorn
+- [Ultimate guide to reversing](https://medium.com/@vignesh4303/reverse-engineering-resources-beginners-to-intermediate-guide-links-f64c207505ed)
+- https://ropemporium.com/
+- https://sidsbits.com/Path/
+- https://overthewire.org/wargames/narnia
+
+Books
+
+- Reverse Engineering for Beginners
+- Practical Reverse Engineering
+- Practical Malware Analysis
+- Linux Device Drivers
+- Windows Internals
+
+Tools
+
+- Debugging with GDB
+- The IDA Pro Book
+- Radare2 Book
+- Ghidra Book
 
