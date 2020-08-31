@@ -18,7 +18,6 @@ Reversing
 - [Reverse Engineering for Beginners](books/re4b)
 - [Practical Reverse Engineering](books/pre)
 - [Practical Malware Analysis](books/malware)
-- [Radare2 Book](books/r2)
 
 Web
 

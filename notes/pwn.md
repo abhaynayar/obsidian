@@ -15,7 +15,7 @@
 ### Tips
 
 - View symbols in text section: `$ nm -a empty | grep " t\| T"`
-- **Make sure to point to `/bin/sh` and not the string value itself**
+- **Make sure to point to `/bin/sh` and not the string value itself.**
 - **Make sure to set your file as executable before running your tools.**
 -  newline is required at the end of your payload to cause the binary to process your input.
 - `fgets` means you can use null bytes in your payload but not newlines.
