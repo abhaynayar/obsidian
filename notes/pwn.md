@@ -1,5 +1,4 @@
 ##  ► pwn
-
 ### Recon
 
 1. file
@@ -24,68 +23,6 @@
 - `pwndbg> info functions`
 - `dmesg | tail`
 - `pwn cyclic`
-
-### Debugging stripped binaries
-
-- `(gdb) info file`
-- `gef> entry`
-- `gef> disas _start`
-
-References
-- https://felix.abecassis.me/2012/08/gdb-debugging-stripped-binaries/
-
-### Assembly
-
-Basics
-
-- Byte (8 bits), word (16 bits) and double word (32 bits)
-- RAX: 64-bit, EAX: 32-bit value, AX is the lower 16-bits, AL is the lower 8 bits, AH is the bits 8 through 15 (zero-based).
-- Passing arguments: https://ctf101.org/binary-exploitation/what-are-calling-conventions/
-    - 64-bit:
-        - Linux: RDI, RSI, RDX, RCX, R8, R9
-        - Windows: RCX, RDX, R8, R9, stack.
-    - 32-bit: push arguments on to the stack (include them in the payload). ???
-    - Arguments are pushed before the EIP in reverse order (right-to-left).
-- `.bss` segment is used for statically-allocated variables that are not explicitly initialized to any value.
-- Least significant three nibbles are the offset within a page (4KB) `3*4=12 => 2^12 = 4*(2^10)`
-
-Instructions
-
-- LEAVE: equivalent to `mov esp,ebp; pop ebp`
-- CALL: push address of next instruction and change eip to given address.
-- MOVS/MOVSB/MOVSW/MOVSD: move data from string to string.
-- MOVSX: move with signed extension.
-- BND: the return target should be checked against the bounds specified in the BND0 to BND3 registers
-
-Coding in assembly
-
-- 64-bit: `$ nasm -felf64 hello.asm && ld hello.o && ./a.out`
-- 32-bit: `$ nasm -felf32 -g -F dwarf eip.asm && ld -m elf_i386 -o eip eip.o`
-- In gdb, you can set breakpoint for the asm program using its labels, for example `b _start`
-- [Running assembly in C](https://github.com/Dvd848/CTFs/blob/master/2019_picoCTF/asm3.md)
-- We usually use `_start` in assembly similar to how we use `main` in C.
-- Therefore we often break at `_start` within gdb.
-- Use `fin` to continue until current function finishes.
-
-### C
-
-32-bit compilation
-
-```
-$ sudo apt install gcc-multilib
-$ gcc -m32 test.c -o test
-```
-
-Signedness
-
-- Make sure to use `%u` format specifier for unsigned data-types.
-- The CPU does not care about signed and unsigned representations.
-- We can see the difference while shifting integers and overflows.
-- The conditional opcodes help differentiate in signedness.
-
-Datatypes
-
-- For `uint_` related datatypes you need to `#include <stdint.h>`
 
 ### Format String Attacks
 **Offset notation: `%6$x`**
@@ -204,12 +141,107 @@ TBD
 ```
 
 ### Heap exploitation
+#### Nightmare
 
-Bins
+**Tips**
 
-- There is also an array of pointers called bins.
-- They point to doubly linked lists of chunks.
-- These are chunks that were allocated and then freed.
+- When you are working on a heap challenge, make sure you are using the right libc file using `LD_PRELOAD`
+- When you attempt to use `LD_PRELOAD` to have a binary use a specific libc file, you might find an issue if the linker's are not compatible.
+
+**Chunks**
+
+```
+gef> heap chunks
+```
+
+- Every chunk has a heap header/metadata
+- For x64: 0x10 bytes (2x64 bits) before chunk start
+- For x86: 0x08 bytes (2x32 bits) before chunk start
+- The first word contains previous chunk size (zero if not set).
+- The second word contains current chunk size (including heap header/metadata and rounding up for better binning).
+- For the current size word, we have the 3 LSBs as flags:
+    - 0x1: previous chunk in use
+    - 0x2: chunk obtained through mmap()
+    - 0x4: chunk obtained from outside main area
+    
+**Bins**
+
+```
+gef> heap bins
+```
+
+- When chunks are freed they are added to bin lists.
+- These chunks can be used later, for performance benefits.
+
+Fastbins
+
+- 7 "linked lists" indexed by `idx`
+- x64 sized range from 0x20 to 0x80
+- Points to the next chunk in list.
+- Chunks are inserted into the fast bin head first (LIFO).
+
+Tcachebins
+
+- New type of binning mechanism introduced in libc version 2.26
+- Tcache is specific to each thread, so each thread has its own tcache.
+- Speeds up performance as malloc won't have to lock the bin to edit it.
+- Stored like a Fast Bin - LIFO linked list.
+- Can only hold 7 chunks per list at a time.
+- There are a total of 64 tcache lists, with idx values ranging from 0-63, for chunk sizes between 0x20-0x410.
+- It's the fast bin with less checks (and can take in somewhat larger chunks).
+
+Unsorted, large and small bins
+
+- Their lists live together in the same array using the following indexes:
+    - Unsorted bins: 1 (0x01) (0x00 is not used)
+    - Small bins: 62 (0x02 to 0x3f)
+    - Large Bin: 63 (0x40 to 0x7e)
+- Chunks that are not inserted into fastbins or tcachebins are first inserted into unsorted bins.
+- Chunks will remain there until they are sorted. This happens when another call is made to malloc. It will then check through the Unsorted Bin for any possible chunks that can meet the allocation.
+- It will check if there are chunks that belong in one of the small / large bin lists. If there are it will move those chunks to the appropriate bins.
+- Small bins on x64 consists of chunk sizes under 0x400 (1024 bytes), and on x86 consists of chunk sizes under 0x200 (512 bytes)
+- Large bins consists of values above those of small bins.
+- All three chunks have two pointers `fwd` and `bk` as the first thing in the content section because they are doubly linked lists.
+- The large chunk has two more pointers `fwd_nextsize` and `bk_nextsize` to point to next chunk of *different* size. It's kind of like a skip list.
+- Chunks in the large bin are stored largest to smallest.
+
+**Consolidation**
+
+- Heap is fragmented into a lot of smaller pieces.
+- malloc tries to allocate a large chunk of space.
+- Will have to use different memory for it, and effectively waste space.
+- Consolidation tries to fix this by merging adjacent freed chunks together, into larger freed chunks.
+
+**Top chunk**
+
+- A large heap chunk that holds currently unallocated data.
+- Allocating large chunks of memory from the kernel, and managing memory allocations from that memory is a lot more efficient than requesting memory from the kernel each time.
+- malloc first looks into the bins, then into the top chunk.
+
+Top chunk consolidation
+
+- A lot of heap attacks target a bin list.
+- For that we need freed chunks in the bins lists.
+- Consolidation with the top chunk can prevent that.
+- Allocate a small chunk between freed chunks and top chunk.
+
+**Main arena**
+
+- Data structure used for managing heap memory.
+- Contains the head pointers for the bin lists.
+
++----------------+-------------------------+--------------------+
+| Bug            | Bin attack              | House              |
++----------------+-------------------------+--------------------+
+| Double free    | Fastbin attack          | House of Spirit    |
+| Heap overflow  | tcache attack           | House of Lore      |
+| Use after free | Unsorted bin attack     | House of Force     |
+|                | Small/Large bin attack  | House of Einherjar |
+|                | Unsafe unlink (?)       | House of Orange    |
++----------------+-------------------------+--------------------+
+
+
+#### Max Kamper
 
 Chunks
 
@@ -233,6 +265,12 @@ Flags
 - The flags are (LSB to MSB): PREV\_INUSE (if previous chunk is allocated), IS\_MMAPPED (if mmap used), NON\_MAIN\_ARENA (if not stored in main arena).
 - To know whether a chunk is free or not, we need to add size to the pointer of the current chunk and see the PREV\_INUSE flag of the next chunk.
 
+Bins
+
+- There is also an array of pointers called bins.
+- They point to doubly linked lists of chunks.
+- These are chunks that were allocated and then freed.
+
 Using gdb wrappers for heap
 
 - Use `vmmap` to see heap region.
@@ -251,13 +289,13 @@ Using gdb wrappers for heap
 +-----------------+
 ```
 
-Gynvael's stream
+#### Gynvael Coldwind
 
 - User mode programs can ask for one page of memory from the kernel mode.
-- This is why we need heap, since we don't want to waste an entire page everytime we need something.
-- mmap is used to get virtual memory pages from the os (on windows it's called virtual alloc).
-- printf requests a page using mmap because standard output is buffered.
+- `printf` requests a page using mmap because standard output is buffered.
 - Towards the end of an elf file is a section used as heap and `brk` is used to extend it.
+- `mmap` is used to get virtual memory pages from the OS (on windows it's called virtual alloc).
+- This is why we need heap, since we don't want to waste an entire page everytime we need something.
 - When malloc-ing a lot of stuff, if the pages of allocation change it means a new heap is created (?).
 
 ### Fuzzing
