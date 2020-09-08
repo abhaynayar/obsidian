@@ -61,6 +61,7 @@ Mobile
 ## Writeups on past CTFs
 
 2020
+- [ALLES! CTF](writeups/alles20)
 - [TSGCTF](writeups/tsg20.txt)
 - [ASIS CTF](https://abhaynayar.com/blog/asis.html) (blog)
 - [riftCTF](https://youtu.be/K5YnRLG6Cr8) (video)
