@@ -143,12 +143,12 @@ TBD
 ### Heap exploitation
 #### Nightmare
 
-**Tips**
+Glibc version
 
 - When you are working on a heap challenge, make sure you are using the right libc file using `LD_PRELOAD`
 - When you attempt to use `LD_PRELOAD` to have a binary use a specific libc file, you might find an issue if the linker's are not compatible.
 
-**Chunks**
+Chunks
 
 ```
 gef> heap chunks
@@ -164,7 +164,7 @@ gef> heap chunks
     - 0x2: chunk obtained through mmap()
     - 0x4: chunk obtained from outside main area
     
-**Bins**
+Bins
 
 ```
 gef> heap bins
@@ -205,14 +205,14 @@ Unsorted, large and small bins
 - The large chunk has two more pointers `fwd_nextsize` and `bk_nextsize` to point to next chunk of *different* size. It's kind of like a skip list.
 - Chunks in the large bin are stored largest to smallest.
 
-**Consolidation**
+Consolidation
 
 - Heap is fragmented into a lot of smaller pieces.
 - malloc tries to allocate a large chunk of space.
 - Will have to use different memory for it, and effectively waste space.
 - Consolidation tries to fix this by merging adjacent freed chunks together, into larger freed chunks.
 
-**Top chunk**
+Top chunk
 
 - A large heap chunk that holds currently unallocated data.
 - Allocating large chunks of memory from the kernel, and managing memory allocations from that memory is a lot more efficient than requesting memory from the kernel each time.
@@ -225,11 +225,12 @@ Top chunk consolidation
 - Consolidation with the top chunk can prevent that.
 - Allocate a small chunk between freed chunks and top chunk.
 
-**Main arena**
+Main arena
 
 - Data structure used for managing heap memory.
 - Contains the head pointers for the bin lists.
 
+```
 +----------------+-------------------------+--------------------+
 | Bug            | Bin attack              | House              |
 +----------------+-------------------------+--------------------+
@@ -239,6 +240,12 @@ Top chunk consolidation
 |                | Small/Large bin attack  | House of Einherjar |
 |                | Unsafe unlink (?)       | House of Orange    |
 +----------------+-------------------------+--------------------+
+```
+
+Double free
+
+
+
 
 
 #### Max Kamper

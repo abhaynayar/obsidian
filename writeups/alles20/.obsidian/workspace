@@ -1,0 +1,79 @@
+{
+  "main": {
+    "id": "6c9d3e95424a996c",
+    "type": "split",
+    "children": [
+      {
+        "id": "7732d289e0017d0e",
+        "type": "leaf",
+        "active": true,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "README.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "1112a43d7b42f236",
+    "type": "split",
+    "children": [
+      {
+        "id": "7a4dda2f925be468",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7d16f273b2d01fda",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "adb9a52e0bfe8464",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "71e8f1e50774c983",
+    "type": "split",
+    "children": [
+      {
+        "id": "030a4bd3e4ba8883",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "21e967ef16f8ea0a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "README.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "lastOpenFiles": [
+    "README.md"
+  ]
+}
