@@ -30,7 +30,7 @@ In this file there are a few important methods that I have surmised below:
 
 - `create()`: sets up the stage for the game
 - `checkFlag()`: checks the state of each brick, if it matches the solution state, the game map changes to show the flag
-- `updateKoala():` checks for user input and changes the state of the dino
+- `updateKoala()`: checks for user input and changes the state of the dino
 
 In order to get to `checkFlag()` we need to satisfy a certain condition in
 `updateKoala()`. That is, if we hit a certain brick whose "state" is 1337,
@@ -193,7 +193,7 @@ if (toHex(messageDigest.digest()).equals("024800ace2ec394e6af68baa46e81dfbea93f0
 ```
 
 Once we get the hash, we base64 decode the contents of an internal file
-called `flag_enc`. After decoding, we also need to decrypt the file the
+called `flag_enc`. After decoding, we also need to decrypt the file using
 `bArr` that we calculated earlier. Once the file is decrypted, we can see
 that it is written to `map_flag.tmx` and loaded into the world. So I wrote
 a script by mostly copying the decompiled code and got the decrypted map
