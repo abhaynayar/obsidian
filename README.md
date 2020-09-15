@@ -1,6 +1,6 @@
 # Obsidian
 
-Security related notes, labs and writeups
+Security related notes, labs and write-ups
 
 ## Tips by CTF category
 
@@ -10,25 +10,6 @@ Security related notes, labs and writeups
 - [Android](notes/android.md)
 - [Forensics](notes/forensics.md)
 - [Cryptography](notes/crypto.md)
-
-## Notes on security books
-
-Reversing
-
-- [Reverse Engineering for Beginners](books/re4b)
-- [Practical Reverse Engineering](books/pre)
-- [Practical Malware Analysis](books/malware)
-
-Web
-
-- [The Tangled Web](books/tangled.md)
-- [Real World Bug Hunting](books/rwbh.md)
-- [Mastering Modern Web Penetration Testing](books/mmwpt)
-
-Uncategorized
-
-- [The Art of Software Security Assessment](books/taossa)
-- [Attacking Network Protocols](books/anp)
 
 ## Solutions to labs / wargames
 
@@ -53,7 +34,7 @@ Web
 
 Mobile
 
-- [MOBISEC](https://github.com/abhaynayar/mobisec)
+- [MOBISEC](https://github.com/abhaynayar/mobisec) (another repo)
 - [Insecure Bank](labs/mobile/insecure_bank)
 - [Injured Android](labs/mobile/injured_android)
 - [KGB Messenger](labs/mobile/kgb)
@@ -71,5 +52,25 @@ Mobile
 
 2019
 - [InCTF Nationals](writeups/inctfn19.md)
+- [Cisco SecCon](https://abhaynayar.com/blog/xxe.html) (blog)
 - [NaCTF](https://abhaynayar.com/blog/fmt.html) (blog)
+
+## Notes on security books
+
+Reversing
+
+- [Reverse Engineering for Beginners](books/re4b)
+- [Practical Reverse Engineering](books/pre)
+- [Practical Malware Analysis](books/malware)
+
+Web
+
+- [The Tangled Web](books/tangled.md)
+- [Real World Bug Hunting](books/rwbh.md)
+- [Mastering Modern Web Penetration Testing](books/mmwpt)
+
+Uncategorized
+
+- [The Art of Software Security Assessment](books/taossa)
+- [Attacking Network Protocols](books/anp)
 
