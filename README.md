@@ -1,8 +1,8 @@
 # Obsidian
 
-Security related notes, labs and write-ups
+Computer security knowledge base
 
-## Tips by CTF category
+## Notes by category
 
 - [Rev](notes/rev.md)
 - [Pwn](notes/pwn.md)
@@ -11,7 +11,23 @@ Security related notes, labs and write-ups
 - [Forensics](notes/forensics.md)
 - [Cryptography](notes/crypto.md)
 
-## Solutions to labs / wargames
+## CTF Write-ups
+
+2020
+- [ALLES! CTF](writeups/alles20)
+- [TSGCTF](writeups/tsg20.txt)
+- [ASIS CTF](https://abhaynayar.com/blog/asis.html) (blog)
+- [riftCTF](https://youtu.be/K5YnRLG6Cr8) (video)
+- [b01lers](writeups/b01lers20)
+- [riceteacatpanda](writeups/rtcp20.md)
+- [Insomni'hack](writeups/insomnihack20.md)
+
+2019
+- [InCTF Nationals](writeups/inctfn19.md)
+- [Cisco SecCon](https://abhaynayar.com/blog/xxe.html) (blog)
+- [NaCTF](https://abhaynayar.com/blog/fmt.html) (blog)
+
+## Lab write-ups
 
 Pwn
 
@@ -39,23 +55,7 @@ Mobile
 - [Injured Android](labs/mobile/injured_android)
 - [KGB Messenger](labs/mobile/kgb)
 
-## Writeups on past CTFs
-
-2020
-- [ALLES! CTF](writeups/alles20)
-- [TSGCTF](writeups/tsg20.txt)
-- [ASIS CTF](https://abhaynayar.com/blog/asis.html) (blog)
-- [riftCTF](https://youtu.be/K5YnRLG6Cr8) (video)
-- [b01lers](writeups/b01lers20)
-- [riceteacatpanda](writeups/rtcp20.md)
-- [Insomni'hack](writeups/insomnihack20.md)
-
-2019
-- [InCTF Nationals](writeups/inctfn19.md)
-- [Cisco SecCon](https://abhaynayar.com/blog/xxe.html) (blog)
-- [NaCTF](https://abhaynayar.com/blog/fmt.html) (blog)
-
-## Notes on security books
+## Notes on books
 
 Reversing
 
