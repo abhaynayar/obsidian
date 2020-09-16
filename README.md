@@ -14,6 +14,7 @@ Computer security knowledge base
 ## CTF Write-ups
 
 2020
+
 - [ALLES! CTF](writeups/alles20)
 - [TSGCTF](writeups/tsg20.txt)
 - [ASIS CTF](https://abhaynayar.com/blog/asis.html) (blog)
@@ -23,54 +24,53 @@ Computer security knowledge base
 - [Insomni'hack](writeups/insomnihack20.md)
 
 2019
+
 - [InCTF Nationals](writeups/inctfn19.md)
 - [Cisco SecCon](https://abhaynayar.com/blog/xxe.html) (blog)
 - [NaCTF](https://abhaynayar.com/blog/fmt.html) (blog)
 
 ## Lab write-ups
 
-Pwn
-
-- [Heap exploitation](labs/pwn/heap)
-- [ROP Emporium](labs/pwn/rop-emp)
-- [pwnable.kr](labs/pwn/pwnable.kr)
-- [Fuzzing](labs/pwn/fuzzing)
-
 Web
 
-- [Portswigger](labs/web/portswigger)
-- [ctfchallenge.co.uk](labs/web/ctfchallenge.co.uk)
-- [OverTheWire Natas](labs/web/natas)
-- [pwnfunction XSS Game](labs/web/pwnfunction)
 - [247CTF](labs/web/247ctf)
 - [websec.fr](labs/web/websec.fr)
+- [Portswigger](labs/web/portswigger)
 - [webhacking.kr](labs/web/webhacking.kr)
 - [Google XSS game](labs/web/xss_game)
 - [OWASP Juice Shop](labs/web/juice-shop)
+- [OverTheWire Natas](labs/web/natas)
+- [ctfchallenge.co.uk](labs/web/ctfchallenge.co.uk)
+- [pwnfunction XSS Game](labs/web/pwnfunction)
+
+Pwn
+
+- [247CTF](labs/pwn/247ctf)
+- [pwnable.kr](labs/pwn/pwnable.kr)
+- [ROP Emporium](labs/pwn/rop-emp)
 
 Mobile
 
 - [MOBISEC](https://github.com/abhaynayar/mobisec) (another repo)
+- [KGB Messenger](labs/mobile/kgb)
 - [Insecure Bank](labs/mobile/insecure_bank)
 - [Injured Android](labs/mobile/injured_android)
-- [KGB Messenger](labs/mobile/kgb)
 
 ## Notes on books
 
 Reversing
 
-- [Reverse Engineering for Beginners](books/re4b)
-- [Practical Reverse Engineering](books/pre)
 - [Practical Malware Analysis](books/malware)
+- [Practical Reverse Engineering](books/pre)
+- [Reverse Engineering for Beginners](books/re4b)
 
 Web
 
-- [The Tangled Web](books/tangled.md)
-- [Real World Bug Hunting](books/rwbh.md)
+- [The Tangled Web](books/tangled)
 - [Mastering Modern Web Penetration Testing](books/mmwpt)
 
-Uncategorized
+Others
 
-- [The Art of Software Security Assessment](books/taossa)
 - [Attacking Network Protocols](books/anp)
+- [The Art of Software Security Assessment](books/taossa)
 
