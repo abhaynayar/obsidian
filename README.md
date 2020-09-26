@@ -11,7 +11,7 @@ Computer security knowledge base
 - [Forensics](notes/forensics.md)
 - [Cryptography](notes/crypto.md)
 
-## CTF Write-ups
+## CTF write-ups
 
 2020
 
