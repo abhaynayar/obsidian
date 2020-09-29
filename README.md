@@ -2,7 +2,7 @@
 
 Computer security knowledge base
 
-## Notes by category
+## Notes
 
 - [Rev](notes/rev.md)
 - [Pwn](notes/pwn.md)
@@ -11,25 +11,7 @@ Computer security knowledge base
 - [Forensics](notes/forensics.md)
 - [Cryptography](notes/crypto.md)
 
-## CTF write-ups
-
-2020
-
-- [ALLES! CTF](writeups/alles20)
-- [TSGCTF](writeups/tsg20.txt)
-- [ASIS CTF](https://abhaynayar.com/blog/asis.html) (blog)
-- [riftCTF](https://youtu.be/K5YnRLG6Cr8) (video)
-- [b01lers](writeups/b01lers20)
-- [riceteacatpanda](writeups/rtcp20.md)
-- [Insomni'hack](writeups/insomnihack20.md)
-
-2019
-
-- [InCTF Nationals](writeups/inctfn19.md)
-- [Cisco SecCon](https://abhaynayar.com/blog/xxe.html) (blog)
-- [NaCTF](https://abhaynayar.com/blog/fmt.html) (blog)
-
-## Lab write-ups
+## Labs
 
 Web
 
@@ -56,7 +38,7 @@ Mobile
 - [Insecure Bank](labs/mobile/insecure_bank)
 - [Injured Android](labs/mobile/injured_android)
 
-## Notes on books
+## Books
 
 Reversing
 
