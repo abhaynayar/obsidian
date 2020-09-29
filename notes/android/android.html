@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>abhay ~ android</title>
+<link rel="icon" href="../docs/k173.png" type="image/gif" >
+<link rel="stylesheet" href="../style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js" async defer></script>
+</head>
+
+<body>
+<a href="../index.html">
+<img src="../docs/logo.png" id="logo">
+</a>
+
+<h2>Analyzing Android applications</h2>
+<h5>2020-02-25</h5>
+
+<p>
+I recently decided to dive into mobile application security. During my
+initial learning phase, I came across a few key resources and tips that I
+would like to share. TLDR; the MOBISEC [1] course and OWASP MSTG [2] are
+two of the best resources I can recommend to somebody starting off.
+</p>
+
+<h3>Static analysis</h3>
+
+<p>
+To perform static analysis, you first need to decompile the APK. There are
+several ways to do this, I personally prefer apkx [3] since it allows you
+to choose between several compilers and once you provide it with the path
+to a given APK file, it does everything automatically for you.
+</p>
+
+<p>
+Once you have a decompiled output, you can view the files in any text
+editor of your choice. IDEs that are oriented towards Java, such as
+Android Studio and IntelliJ IDEA can help you further by providing
+features such as usage detection and refactoring. Refactoring is an
+important part of any reverse engineer's methodology, as it helps you
+slowly gain a deeper understanding of what the app is trying to achieve.
+</p>
+
+<p>
+In order to proceed with the dynamic analysis, you need information such
+as activity names and strings. You can also identify strings or layouts on
+your physical device and see if those things can be found in strings.xml
+or setContentView(R.layout.xyz).
+</p>
+
+<h3>Using frida for dynamic instrumentation</h3>
+
+<p>
+Frida is a popular tool used for dynamic instrumentation. You can use
+objeciont [4] as a frida wrapper to make your experience a little better.
+To start working with objection, you either need to patch an APK through
+objection, or have frida running on your rooted android phone. You can
+learn more about objection using reference [5].
+</p>
+
+
+<pre class="prettyprint">
+$ objection --gadget 'com.example.app' explore
+
+# some basic commands
+com.example.app on (motorola: 10) [usb] # env
+com.example.app on (motorola: 10) [usb] # cd /data/app/com.example.app
+com.example.app on (motorola: 10) [usb] # ls
+com.example.app on (motorola: 10) [usb] # file download base.apk
+com.example.app on (motorola: 10) [usb] # android keystore list
+
+# scripts and jobs
+com.example.app on (motorola: 10) [usb] # import {{script.js}}
+com.example.app on (motorola: 10) [usb] # jobs list
+com.example.app on (motorola: 10) [usb] # jobs kill {{UUID}}
+
+# activities
+com.example.app on (motorola: 10) [usb] # android hooking get current_activity
+com.example.app on (motorola: 10) [usb] # android intent [launch_activity/launch_service] {{name}}
+com.example.app on (motorola: 10) [usb] # android hooking list [activities/class_methods/classes/receivers/services]
+
+# classes and methods
+com.example.app on (motorola: 10) [usb] # android hooking search classes {{search_term}}
+com.example.app on (motorola: 10) [usb] # android hooking search methods {{class_name}} {{search_term}}
+com.example.app on (motorola: 10) [usb] # android hooking watch [class/class_method] {{name}} --dump-args --dump-backtrace --dump-return
+
+# memory &amp; heap
+com.example.app on (motorola: 10) [usb] # android heap search instances {{class_name}}
+com.example.app on (motorola: 10) [usb] # 
+</pre>
+
+<h3>Using jdb for debugging</h3>
+
+<p>
+First get the target app PID.
+</p>
+
+<pre class="prettyprint">
+$ adb jdwp # list PIDs of debuggable apps
+$ adb shell ps | grep appname # get PID of target
+</pre>
+
+<p>
+Then forward the app process through adb to a local tcp port and attach
+jdb to the local tcp port.
+</p>
+
+<pre class="prettyprint">
+$ adb forward tcp:1337 jdwp:PID
+$ jdb -attach localhost:1337
+
+# Or, in case you want to suspend the app
+$ { echo "suspend"; cat; } | jdb -attach localhost:1337 
+</pre>
+
+<p>
+Some useful jdb android commands:
+</p>
+
+<pre class="prettyprint">
+&gt; classes
+&gt; methods com.app.package.class
+&gt; stop in com.app.class.method
+&gt; locals
+</pre>
+
+
+<h3>Common-bugs</h3>
+
+<ul>
+<li>Attack surface: Look at the manifest for any exported activities.</li>
+<li>Storage: Look into resources.asrc/res/strings.xml, /res/raw, /assets.</li>
+<li>
+  Tokens: Grep for embedded secrets and find out where and how they are
+  being used and whether they should be disclosed or not (using the
+  official documentation of the library, framework, etc) - keywords
+  (firebase io, CONFIG, SECRET, API_KEY, HMAC, private, strings.xml).
+</li>
+<li>
+  XSS: grep for instances of loadUrl and evaluateJavascript in your
+  project directory. Check if the source of input can be controlled by
+  you. Search for "deeplinks" and their schemas.
+</li>
+<li>
+  Intent Redirection: grep for getExtras then observe how the data flows.
+</li>
+<li>
+  Intent Broadcasting: grep for sendBroadcast calls, if there is no
+  specified class or component, you might be able to intercept.
+</li>
+<li>
+  Unprotected Activities: look in the manifest for exported="true" or
+  intent-filters.
+</li>
+<li>
+  Custom Permissions: look in the manifest for permission android:name=""
+  and see if there is a typo while using it in provider
+  android:writePermission="" (report #440749). check if defined
+  permissions are used.
+</li>
+<li>
+  Path Traversal: grep for FileWriter, dataDir, makeTempCopy, getCacheDir,
+  fileUri, getLastPathSegment, filename and see if any files are being
+  written with user-supplied names. 
+</li>
+<li>
+  Zip Path Traversal: if app processes zip files look into zip path
+  traversal (tool: evilarc).
+</li>
+<li>
+  OAuth Grants/Redirect: grep "oauth" or "redirect_uri" and see if the
+  redirection can change.
+</li>
+</ul>
+
+<h3>Side notes</h3>
+
+<ul>
+<li>I've moved the technical details to <a href="android/guide.html">this</a> page.</li>
+<li>Make sure to diff APKs for new functionalities.</li>
+<li>Learn through vulnerable apps, disclosed reports, courses.</li>
+</ul>
+
+<h3>References</h3>
+
+<ol>
+<li><a href="https://mobisec.reyammer.io">MOBISEC course</a></li>
+<li><a href="https://mobile-security.gitbook.io/mobile-security-testing-guide">OWASP MSTG</a></li>
+<li>APK decompiler - <a href="https://github.com/b-mueller/apkx">apkx</a></li>
+<li>Wrapper on frida - <a href="https://github.com/sensepost/objection">objection</a></li>
+<li><a href="https://book.hacktricks.xyz/mobile-apps-pentesting/android-app-pentesting/frida-tutorial/objection-tutorial">objection tutorial</a></li>
+
+<footer>
+<a href="https://github.com/abhaynayar"><img src="../docs/github.png"></a>
+<a href="https://twitter.com/abhaynayar"><img src="../docs/twitter.png"></a>
+<a href="mailto:abhaynayar@gmail.com"><img src="../docs/email.png"></a>
+</footer>
+
+</body>
+</html>
