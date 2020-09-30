@@ -1,18 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
+## ► android
 
-<body>
-<pre>
-<a href="../../index.html">Home</a>
+### External links
 
-<b>My Bookmarks</b>
-You can find my browser bookmarks related to Android over <a href="bookmarks.html">here</a>.
+- Notes and solutions for the [MOBISEC](https://github.com/abhaynayar/mobisec) course.
+- Blog post on android application hacking: [link](blog.txt).
 
-<b>Drozer</b>
+### adb
 
-Here is the <a href="https://labs.f-secure.com/assets/BlogFiles/mwri-drozer-user-guide-2015-03-23.pdf">manual</a>.
-Here is the GitHub <a href="https://github.com/FSecureLABS/drozer">repo</a>.
-First we need to install Java 6 using this <a href="https://gist.github.com/senthil245/6093389">link</a>.
+- Connect your Android device in debug mode (or use Genymotion).
+- Installing an app `adb install asdf.apk`
+- _Sometimes installing an app might not work because of permissions_
+- Uninstalling an app `adb uninstall com.abhay.asdf`
+- View logs `adb logcat`
+- Copy files to device `adb push /machine /mobile`
+- List all packages on device `adb shell pm list packages`
+- Copy files from device `adb pull /data/app/asdf.apk /machine`
+
+### apktool
+
+- Disassemble an app `apktool d <apk-file>`
+- Build a disassembled file `apktool b <decompiled-directory>`
+- Sign the built app using the following commands or uber-apk-signer.
+
+```
+$ keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+$ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore my_application.apk alias_name
+```
+
+### drozer
+
+Here is the <a href="https://labs.f-secure.com/assets/BlogFiles/mwri-drozer-user-guide-2015-03-23.pdf">manual</a>. Here is the GitHub <a href="https://github.com/FSecureLABS/drozer">repo</a>. First we need to install Java 6 using this <a href="https://gist.github.com/senthil245/6093389">link</a>.
 
 ```
 # installing drozer on ubuntu
@@ -57,11 +74,9 @@ Processing mwrlabs.develop... Done.
 Successfully installed 1 modules, 0 already installed.
 ```
 
-<b>Hacking with drozer</b>
+### Hacking with drozer
 
-You can then download <a href="https://github.com/mwrlabs/drozer/releases/download/2.3.4/sieve.apk">sieve</a> (an intentionally vulnerable password
-manager) and start practicing. I recommend you use the app and get around
-it by creating some data. It will help you when you are hacking content ids.
+You can then download [sieve](https://github.com/mwrlabs/drozer/releases/download/2.3.4/sieve.apk") (an intentionally vulnerable password manager) and start practicing. I recommend you use the app and get around it by creating some data. It will help you when you are hacking content ids.
 
 ```
 # install app on phone
@@ -84,12 +99,12 @@ Package: com.mwr.example.sieve
   Shared Libraries: [/system/framework/org.apache.http.legacy.boot.jar]
   Shared User ID: null
   Uses Permissions:
-  - android.permission.READ_EXTERNAL_STORAGE
-  - android.permission.WRITE_EXTERNAL_STORAGE
+  - android.permission.READ\_EXTERNAL\_STORAGE
+  - android.permission.WRITE\_EXTERNAL\_STORAGE
   - android.permission.INTERNET
   Defines Permissions:
-  - com.mwr.example.sieve.READ_KEYS
-  - com.mwr.example.sieve.WRITE_KEYS
+  - com.mwr.example.sieve.READ\_KEYS
+  - com.mwr.example.sieve.WRITE\_KEYS
 
 # finding attack surface
 dz&gt; run app.package.attacksurface com.mwr.example.sieve
@@ -125,17 +140,11 @@ dz&gt; run app.provider.download content://com.mwr.example.sieve.FileBackupProvi
 Written 4096 bytes
 ```
 
+### objection
 
-<b>Objection</b>
-<pre>
+It can be run without having to patch. I tried patching an app but it didn't run (maybe it was tamper-proof). You first need to be rooted, then transfer the frida-server binary to your android device and run it. Then on your PC:
 
-It can be run without having to patch. I tried patching an app but it didn't run (maybe it was tamper-proof).
-You first need to be rooted, then transfer the frida-server binary to your android device and run it.
-
-Then on your PC:
-```
-$ objection --gadget="org.telegram.messenger" explore
-```
+`$ objection --gadget="org.telegram.messenger" explore`
 
 Some useful objection commands:
 
@@ -146,8 +155,7 @@ Some useful objection commands:
 # android root disable
 ```
 
-
-<b>r2</b>
+### r2
 
 ```
 $ rafind2 -ZS permission AndroidManifest.xml
@@ -161,14 +169,15 @@ $ r2 classes.dex
 &gt; f~+verify  ; grep flags by "verify"
 &gt; s sym.method.blah ; seek to method
 &gt; pdf    ; print disassembly
+```
 
-r2frida
+#### r2frida
 
+```
 $ r2 frida://[PID]
 ```
 
-
-<b>Network Capture</b>
+### Network Capture
 
 First install <a href="https://www.androidtcpdump.com/">tcpdump</a> on your phone (see <a href="android3.html">here</a>).
 
@@ -178,16 +187,13 @@ $ adb forward tcp:11111 tcp:11111
 $ nc localhost 11111 | wireshark -k -S -i -
 ```
 
-
-<b>Java Version</b>
-
+### Java Version
 
 One of the most essentials tools are the Android SDK tools which can be
 found once you install <a href="https://developer.android.com/studio">Android Studio</a>. An important thing to keep in mind
 is Java versions, I won't go into depth here, but having the wrong version
 of Java for the wrong tool might mess things up. So it's good to know how
 to keep several Java versions and switch between them when required. 
-
 
 ```
 # choose java and javac version to use
@@ -199,18 +205,17 @@ export JAVA_HOME=/usr/lib/jvm/&lt;java-version&gt;
 export PATH=$PATH:/usr/lib/jvm/&lt;java-version&gt;/bin
 ```
 
-
-<b>Burp system-wide CA</b>
+### Burp system-wide CA
 In order to intercept HTTPS as well, we need a system-wide CA: <a href="https://blog.ropnop.com/configuring-burp-suite-with-android-nougat/#install-burp-ca-as-a-system-level-trusted-ca">link</a>, <a href="https://stackoverflow.com/questions/13089694/adb-remount-permission-denied-but-able-to-access-super-user-in-shell-android">link</a>. First download the burp CA and start the emulator as writable (always):
 
 ```
 # convert burp CA to work with android
 $ openssl x509 -inform DER -in cacert.der -out cacert.pem
-$ openssl x509 -inform PEM -subject_hash_old -in cacert.pem |head -1
+$ openssl x509 -inform PEM -subject\_hash\_old -in cacert.pem |head -1
 $ mv cacert.pem 9a5ba575.0
 
 # starting and applying the CA to emulator
-$ ./emulator -avd Nexus_S_API_28 -writable-system
+$ ./emulator -avd Nexus\_S\_API\_28 -writable-system
 
 $ adb root
 $ adb remount
@@ -221,8 +226,8 @@ $ adb push 9a5ba575.0 /sdcard
 9a5ba575.0: 1 file pushed. 0.0 MB/s (1375 bytes in 0.028s)
 
 $ adb shell
-generic_x86_arm:/ # mv /sdcard/9a5ba575.0 /system/etc/security/cacerts/
-generic_x86_arm:/ # chmod 644 /system/etc/security/cacerts/9a5ba575.0
+generic\_x86\_arm:/ # mv /sdcard/9a5ba575.0 /system/etc/security/cacerts/
+generic\_x86\_arm:/ # chmod 644 /system/etc/security/cacerts/9a5ba575.0
 
 $ adb reboot
 ```
@@ -232,9 +237,7 @@ traffic due to SSL pinning. In case neither of the above methods work, you
 can patch the app to make only HTTP requests, and then convert them into
 HTTPS requests while by intercepting them through a proxy.
 
-
-
-<b>Useful adb commands</b>
+#### Useful adb commands
 
 ```
 $ adb push /path/in/phone
@@ -256,9 +259,7 @@ $ adb shell screencap /sdcard/image.png
 $ adb pull /sdcard/image.png
 ```
 
-
-
-<b>Pulling and decompiling</b>
+### Pulling and decompiling
 
 You can either pull apps that you have installed on your phone or get them
 from various websites.
@@ -277,12 +278,10 @@ $ jadx-gui --deobf --deobf-min 3 base.apk
 
 Things to keep in mind:
 
-
 You can control click on most things to see their definitions.
 It is a good practice to save projects in jadx-gui.
 One of the useful features within the interface is the search functionality which you can use to check certain keywords in code.
 To find other places a method is used, right-click &gt; Find Usage.
-</ul>
 
 If jadx-gui fails to decompile any methods, we can always try other combinations such as <b>dex2jar</b> for DEX to JAR conversion and then decompile it using somthing like CFR.
 
@@ -295,9 +294,7 @@ $ java -jar cfr-0.149.jar classes-dex2jar.jar &gt; out
 $ jadx myapp.apk -d out
 ```
 
-
-
-<b>Using IntelliJ IDE</b>
+### Using IntelliJ IDE
 
 In order to debug the decompiled code, an IDE is helpful to create a
 smooth workflow. In this IDE, we can create a new Android project and fill
@@ -310,31 +307,26 @@ $ jadx -d out classes.dex
 $ cd out/sources
 ```
 
-
 Once we have the decompiled codes, create an Android project in the IDE
 and delete the com.example.app under java sources. then copy the above
 folder in its place that we have just cd'ed into. Furthermore, you may
 require adjustments to make the code work in harmony.
 
-
-<b>Native libraries</b>
+### Reversing native libraries
 
 List the Java native functions.
 
 ```
-...lib/x86_64	$ readelf -W -s libnative-lib.so | grep Java
-115: 00008de0    15 FUNC    GLOBAL DEFAULT   13 Java_com_r4hu1_snakefinals_SnakeEngine_integerFromJNI
-194: 00008df0   414 FUNC    GLOBAL DEFAULT   13 Java_com_r4hu1_snakefinals_SnakeEngine_stringFromJNI
+...lib/x86\_64	$ readelf -W -s libnative-lib.so | grep Java
+115: 00008de0    15 FUNC    GLOBAL DEFAULT   13 Java\_com\_r4hu1\_snakefinals\_SnakeEngine\_integerFromJNI
+194: 00008df0   414 FUNC    GLOBAL DEFAULT   13 Java\_com\_r4hu1\_snakefinals\_SnakeEngine\_stringFromJNI
 ```
 
 Then you can use IDA to decompile them. It is recommended to use 64 bit ones as you can decompile them using IDA's demo version.
 
-```
-$ ida libnative-lib.so
-```
+`$ ida libnative-lib.so`
 
-
-<b>Patching apps</b>
+### Patching apps
 
 Decompilation helps you understand the code, but sometimes you need to modify the smali code.
 
@@ -347,8 +339,8 @@ $ apktool d three.apk
 $ apktool b three
 
 # you can either sign and run the apk on your physical device
-keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore my_application.apk alias_name
+keytool -genkey -v -keystore my-release-key.keystore -alias alias\_name -keyalg RSA -keysize 2048 -validity 10000
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore my\_application.apk alias\_name
 
 # or you can run it on your emulator using android studio &gt; Generate Signed Bundle or APK
 # I kept running into errors in both approached therefore I shifted to uber-apk-signer
@@ -356,16 +348,14 @@ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.
 
 $ wget https://github.com/patrickfav/uber-apk-signer/releases/download/v1.1.0/uber-apk-signer-1.1.0.jar
 $ java -jar uber-apk-signer-1.1.0.jar --apks /home/abhay/Desktop/shared/ctfs/pico19/android/three/dist
-</pre>
-
+```
 
 Things to keep in mind:
 - Don't try to add certificates to apks which already have a certificate.
 - If you are having trouble installing app, uninstall the previous version from your phone.
 - Sometimes you might have to go to the settings and uninstall it for all users.
 
-
-<b>Running an emulator</b>
+### Running an emulator
 
 Running an avd from the command line:
 
@@ -383,8 +373,7 @@ emulator () {
 }
 ```
 
-
-<b>Setting up frida for dynamic analysis</b>
+### Setting up frida for dynamic analysis
 
 Remember to disable Magisk Hide in case you have it.
 First download frida client for your PC:
@@ -418,8 +407,7 @@ $ adb push frida_server /data/local/tmp
 $ adb shell /data/local/tmp/frida_server
 ```
 
-
-<b>Useful frida commands</b>
+### Useful frida commands
 
 ```
 $ frida-ps -U  # list of running processes (-U) use connected USB devices or emulator
@@ -428,8 +416,21 @@ $ frida-ps -Uai # get all apps (-a) currently installed (-i)
 # once you have started the app, type %resume to start the main thread
 $ frida-trace -U com.android.chrome -i "open" # start tracing low-level library calls (in this case, open)
 $ frida -U com.android.chrome # hooks into a process and gives you a command line interface
-$ frida -U -l <a href="myscript.js">myscript.js</a> com.android.chrome # load scripts, gets called when you reopen app
+$ frida -U -l myscript.js com.android.chrome # load scripts, gets called when you reopen app
 
+myscript.js
+
+```javascript
+Java.perform(function () {
+    var Activity = Java.use("android.app.Activity");
+    Activity.onResume.implementation = function () {
+        console.log("[*] onResume() got called!");
+        this.onResume();
+    };
+});
+```
+
+```
 # get your android version
 [Android Emulator 5554::com.twitter.android.lite]-&gt; Java.androidVersion
 "9"
@@ -445,27 +446,13 @@ Java.perform(function(){
 })
 ```
 
-<!--
-
-IMPORTANT:
-
-https://mobile-security.gitbook.io/mobile-security-testing-guide/android-testing-guide/0x05b-basic-security_testing
-
-working with instantiated objects
-reflection in java: view.class.getMethods();
-frida-bindings: Python, C, NodeJS, and Swift.
-
--->
-
-
-<b>Setting up a proxy</b>
+### Setting up a proxy
 
 For an AVD:
 
 ```
-$ emulator @Nexus_5X_API_23 -http-proxy 127.0.0.1:8080
+$ emulator @Nexus\_5X\_API\_23 -http-proxy 127.0.0.1:8080
 ```
-
 
 Connect your phone to your laptop over USB.
 
@@ -493,12 +480,11 @@ $ adb push burpca-cert-der.crt /data/local/tmp/cert-der.crt
 $ frida -U -f com.app.mobile -l frida-android-repinning.js --no-pause
 ```
 
-
 Busybox: it gives you a lot of linux tools that are not a part of android.
 It doesn't require rooting your phone. For example using text editors.
 
 ```
-# installing busybox
+# Installing busybox
 $ wget https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-armv8l
 $ adb push busybox-armv8l /data/local/tmp
 busybox-armv8l: 1 file pushed. 17.6 MB/s (1148524 bytes in 0.062s)
@@ -508,38 +494,9 @@ adb:/ $ cd /data/local/tmp
 adb:/data/local/tmp $ chmod 755 busybox-armv8l
 adb:/data/local/tmp $ export PATH=$PATH:/data/local/tmp # temporary, since not rooted
 
-# if you have root access
+# If you have root access
 adb:/data/local/tmp $ cp busybox-armv8l /system/xbin
 adb:/data/local/tmp $ cd /system/xbin
 adb:/system/xbin $ busybox-armv8l --install .
 ```
 
-
-<b>Ben Actis</b>
-https://www.youtube.com/watch?v=OLgmPxTHLuY
-
-39:51
-amateur hour mistakes:
-
-try `unzip -d` instead of `apktool d` you might find additional files.
-external storage: android.permission.WRITE_EXTERNAL_STORAGE, getExternal[Cache/Files/Storage/StoragePublic]Dir
-installing packages: application/vnd.android.package-archive
-detecting reads / writes to external storage: FileObserver, inotify
-remember ls -a
-
-web vulns:
-
-webview: needs internet permission
-setJavascriptEnable(true)
-plan of attack: detect js, other, id auth, enumerate apis
-webview options: [setXXX]  mobile application hacker's handbook
-ignored onReceiveSslError()
-addJavaScriptInterface() CVE-2012-6636
-
-ipc model:
-activity, service, intent receiver, content provider.
-CVE-2013-6271
-
-</pre>
-</body>
-</html>

@@ -132,14 +132,6 @@ Common-bugs
 + OAuth Grants/Redirect: grep "oauth" or "redirect_uri" and see if the
   redirection can change.
 
-
-Note
-~~~
-
-For more information on how to use certain tools and setting things up,
-visit <a href="../d/android/android.html">this</a> page.
-
-
 References
 ~~~
 
@@ -149,4 +141,4 @@ References
 [4] Wrapper on frida - <a href="https://github.com/sensepost/objection">objection</a>
 [5] <a href="https://book.hacktricks.xyz/mobile-apps-pentesting/android-app-pentesting/frida-tutorial/objection-tutorial">objection tutorial</a>
 
-</pre>
+

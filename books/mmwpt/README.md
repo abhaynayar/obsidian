@@ -10,7 +10,20 @@ Prakhar Prasad
 - Only a website with the same **origin** will be allowed to do that: *protocol, port number, and the hostname of the webpage*.
 - SOP is not only for JS but for cookies, AJAX, Flash, and so on. Data stored inside localStorage is also governed by this policy.
 - Example: `http://google.com/` and `http://www.google.com/` do not have the same origin since the hostname is different.
-- Run [this](code/sop.html) in your browser and take a look at the console.
+- Run this in your browser and take a look at the console.
+
+```html
+<iframe src="http://abhaynayar.com" name="demo"></iframe>
+<script>
+document.getElementsByName('demo')[0].onload = function() {
+    try {
+        console(frames[1].hostname)
+    } catch(e) {
+        console.log(e);
+    }
+}
+</script>
+```
 
 ### Switching origins
 
@@ -44,7 +57,16 @@ console.log('Received: ' + event.data,event);
 
 - Allows exchanging data with the server without reloading the page. Works by using the XMLHTTPRequest() method of JS.
 - But fetching or sending data to a server or URL which is at a different origin requires `Access-Control-Allow-Origin`
-- Example [code](code/ajax.html)
+
+```html
+<script>
+
+var xhttp = new XMLHttpRequest();
+xhttp.open("GET", "http://abhaynayar.com", true);
+xhttp.send();
+
+</script>
+```
 
 ### CORS
 
@@ -186,13 +208,13 @@ JSON
 
 PHP functions used for os command execution
 - system
-- shell_exec
+- shell\_exec
 - passthru
 - backticks
 - popen
 - exec
-- pcntl_exec
-- proc_open
+- pcntl\_exec
+- proc\_open
 
 JSP shell
 ```
@@ -427,7 +449,22 @@ Read case studies and reports.
 
 ### DOM Clobbering
 
-Run [this](code/dom-clobbering.html) code in your browser and take a look at the console.
+Run this code in your browser and take a look at the console.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>DOM Clobbering 2</title>
+</head>
+<body>
+<img src="https://prakharprasad.com/content/images/2014/12/1384127_10202574319665563_607846106_n-1.jpg" width="0px" height="0px" name="getElementsByTagName"/>
+<script type="text/javascript">
+    document.getElementsByTagName("body");
+</script>
+</body>
+</html>
+```
 
 ### Relative Path Overwrite
 
@@ -475,8 +512,8 @@ Authorization grant
 - scope
 ```
 
-2. after granting access through prompt you get redirected to `https://prakharprasad.com/redirect?code=af8SFAdas`
-3. this callback url then makes another request to the `token` endpoint:`https://www.example.com/oauth/token?client_id=2190698099&client_secret=adb12hge&grant_type=authorization_code&code=af8SFAdas&redirect_uri=https%3A%2F%2Fprakharprasad.com%2Ftoken`
+2. After granting access through prompt you get redirected to `https://prakharprasad.com/redirect?code=af8SFAdas`
+3. This callback url then makes another request to the `token` endpoint:`https://www.example.com/oauth/token?client_id=2190698099&client_secret=adb12hge&grant_type=authorization_code&code=af8SFAdas&redirect_uri=https%3A%2F%2Fprakharprasad.com%2Ftoken`
 
 ```
 - client_id
@@ -486,8 +523,8 @@ Authorization grant
 - code
 ```
 
-4. then `example.com` returns the auth token to `prakharprasad.com` using the parameters sent in the request: `Access Token = Auth Code + Client ID + Client Secret + Redirect URI`
-5. the auth flow ends here. now `prakharprasad.com` can send requests to `example.com` using `access_token` and get user's information.
+4. Then `example.com` returns the auth token to `prakharprasad.com` using the parameters sent in the request: `Access Token = Auth Code + Client ID + Client Secret + Redirect URI`
+5. The auth flow ends here. now `prakharprasad.com` can send requests to `example.com` using `access_token` and get user's information.
 
 
 Implicit grant
