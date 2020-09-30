@@ -1,3 +1,2 @@
 ## webhacking.kr solutions
-Look into the directory/file for the corresponding level under `py_sol` directory.
-
+Solution for level `XX` can be found in `XX.py`

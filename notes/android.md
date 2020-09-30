@@ -2,32 +2,32 @@
 
 ### Learn
 - Look into my other repository `https://github.com/abhaynayar/mobisec`
-- How to get started in android hacking `https://abhaynayar.com/blog/android.html`
-- How to get flags out of APKs using ```strings``` (InCTF Nationals 2019)
+- How to get started in android hacking [here](android/android.md)
+- How to get flags out of APKs using `strings` (InCTF Nationals 2019)
 
 ### adb
 
 Connect your Android device in debug mode (or use Genymotion).
 
-Installing an app ``` adb install asdf.apk ```
+Installing an app `adb install asdf.apk`
 
 _Sometimes installing an app might not work because of permissions_
 
-Uninstalling an app ``` adb uninstall com.abhay.asdf ```
+Uninstalling an app `adb uninstall com.abhay.asdf`
 
-View logs ``` adb logcat ```
+View logs `adb logcat`
 
-Copy files to device ``` adb push /machine /mobile ```
+Copy files to device `adb push /machine /mobile`
 
-List all packages on device ``` adb shell pm list packages ```
+List all packages on device `adb shell pm list packages`
 
-Copy files from device ``` adb pull /data/app/asdf.apk /machine ```
+Copy files from device `adb pull /data/app/asdf.apk /machine`
 
 ### apktool
 
-Disassemble an app ``` apktool d <apk-file> ```
+Disassemble an app `apktool d <apk-file>`
 
-Build a disassembled file ``` apktool b <decompiled-directory> ```
+Build a disassembled file `apktool b <decompiled-directory>`
 
 Sign the built app
 
@@ -38,8 +38,8 @@ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.
 
 ### jadx
 
-Decompile an app ``` jadx-gui <apk-file> ```
+Decompile an app `jadx-gui <apk-file>`
 
 ### Things to keep in mind
 
-- Check ```res/values/strings.xml```
+- Check `res/values/strings.xml`
