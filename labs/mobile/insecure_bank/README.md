@@ -1,5 +1,4 @@
-# Insecure Bank v2 solutions
-
+# Insecure Bank
 ## Setup
 
 ```

@@ -1,2 +1,2 @@
-## OverTheWire - natas solutions
+## OverTheWire Natas
 Solution for level `XX` can be found in `XX.py

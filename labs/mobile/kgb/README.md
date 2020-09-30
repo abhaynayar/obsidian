@@ -1,4 +1,4 @@
-# KGB messenger solutions
+# KGB messenger
 
 <https://github.com/tlamb96/kgb_messenger>
 

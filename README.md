@@ -13,12 +13,6 @@ Computer security knowledge base
 
 ## Labs
 
-Binary Exploitation
-
-- [247CTF](labs/pwn/247ctf)
-- [pwnable.kr](labs/pwn/pwnable.kr)
-- [ROP Emporium](labs/pwn/rop-emp)
-
 Android Application Hacking
 
 - [MOBISEC](https://github.com/abhaynayar/mobisec)
@@ -33,5 +27,7 @@ Web Application Hacking
 - [Google XSS game](labs/web/xss-game)
 - [OWASP Juice Shop](labs/web/juice-shop)
 - [OverTheWire Natas](labs/web/natas)
-- [pwnfunction XSS Game](labs/web/pwnfunction)
+- [pwnfunction XSS game](labs/web/pwnfunction)
 
+**NOTE:** the above listing contains only a select few entries,
+            for more you can look into the directories.

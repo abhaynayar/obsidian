@@ -1,4 +1,4 @@
-# Portswigger solutions
+# Portswigger
 ## Contents
 
 - [SQLi](#sqli)

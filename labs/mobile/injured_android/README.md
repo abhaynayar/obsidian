@@ -1,5 +1,4 @@
-# Injured Android solutions
-
+# Injured Android
 ## Setup
 
 `git clone https://github.com/B3nac/InjuredAndroid`

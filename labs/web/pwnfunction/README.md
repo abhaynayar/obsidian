@@ -1,4 +1,4 @@
-# pwnfunction xss solutions
+# pwnfunction XSS game
 
 ## Warmups
 
