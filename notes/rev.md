@@ -1,11 +1,54 @@
 ##  ► rev
+### How to be a full-stack reverse engineer
+https://www.youtube.com/watch?v=9vKG8-TnawY&app=desktop
+
+Year 1
+
+- Reversing by eldad-eilam
+- Learn assembly
+  - Hand decompile
+  - Floating point
+  - Vector code
+- Reverse a game
+  - 3D game, late 90s to mid 20s, custom engine
+  - Reverse data archive format and write an unpacker
+  - Reverse model format and write a renderer
+- Compilers by aho-et-al (related book)
+- Write a source-to-source compiler (scheme to python)
+- Consider making ur own source language (not that hard)
+- Write an assembler (no x86: pick mips, 32-bit arm, cil)
+
+Year 2
+
+- Write compiler to assembly (subset of C)
+- Reverse compilation techniques by sifia antes
+- Write a bytecode decompiler (dalvik or cil)
+  - Start with go-to based flows
+  - Reconstruct flow based on graph
+  - Transform to ssa for opt and clean
+- Write a machine code decompiler (ARM to pseudo-C)
+- Read the osdev wiki
+- Write a toy kernel
+  - C x86 protected
+  - Text, input, basic graphics
+- Read the osdev wiki
+- Rewrite your kernel (in rust)
+- Write a microkernel (L4)
+
+Year 3
+
+- Write an interpreting emulator (NES,SNES,Gameboy,PS)
+- Write a recompiling emulator
+- Write an emulator for a black box platform
+
 ### Debugging stripped binaries
 
 - `(gdb) info file`
 - `gef> entry`
 - `gef> disas _start`
 
-References
+Further reading
+
 - https://felix.abecassis.me/2012/08/gdb-debugging-stripped-binaries/
 
 ### Assembly
@@ -63,7 +106,7 @@ Datatypes
 
 - For `uint_` related datatypes you need to `#include <stdint.h>`
 
-## Radare2
+## radare2
 
 Frequently used:
 
@@ -179,7 +222,7 @@ Debugging
 > dr eax=33 ; set register value. eax = 33
 ```
 
-### Configuration
+Configuration
 
 - The core reads `~/.config/radare2/radare2rc` while starting.
 - To prevent radare2 from parsing this file at startup, pass it the `-N` option.
@@ -189,47 +232,3 @@ Debugging
 - In visual mode use the `R` key to randomize colors or choose the next theme in the list.
 - Get a list of configuration variables by entering `e` in your radare console: `e??~color`
 - To list all the environment variables that matter to know where it will be looking for files: `r2 -H`
-
-
-## How to be a full-stack reverse engineer
-https://www.youtube.com/watch?v=9vKG8-TnawY&app=desktop
-
-### Year 1
-
-- Reversing by eldad-eilam
-- Learn assembly
-  - Hand decompile
-  - Floating point
-  - Vector code
-- Reverse a game
-  - 3D game, late 90s to mid 20s, custom engine
-  - Reverse data archive format and write an unpacker
-  - Reverse model format and write a renderer
-- Compilers by aho-et-al (related book)
-- Write a source-to-source compiler (scheme to python)
-- Consider making ur own source language (not that hard)
-- Write an assembler (no x86: pick mips, 32-bit arm, cil)
-
-### Year 2
-
-- Write compiler to assembly (subset of C)
-- Reverse compilation techniques by sifia antes
-- Write a bytecode decompiler (dalvik or cil)
-  - Start with go-to based flows
-  - Reconstruct flow based on graph
-  - Transform to ssa for opt and clean
-- Write a machine code decompiler (ARM to pseudo-C)
-- Read the osdev wiki
-- Write a toy kernel
-  - C x86 protected
-  - Text, input, basic graphics
-- Read the osdev wiki
-- Rewrite your kernel (in rust)
-- Write a microkernel (L4)
-
-### Year 3
-
-- Write an interpreting emulator (NES,SNES,Gameboy,PS)
-- Write a recompiling emulator
-- Write an emulator for a black box platform
-

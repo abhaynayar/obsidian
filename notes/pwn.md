@@ -92,13 +92,13 @@ References
 
 Using format string attacks
 
-- http://abhaynayar.com/blog/asis.html
+- http://abhaynayar.com/ctf/asis.html
 - https://srikavin.me/blog/posts/5d87dbe86e58ed23d8620868-nactf-2019-loopy-0-1#Loopy--0-1 
 
 Leaking libc base
 
 - See pico2018/got-2-learn-libc
-- http://abhaynayar.com/blog/asis.html
+- http://abhaynayar.com/ctf/asis.html
 - First somehow get the address of puts during runtime.
 - One way to do that is to use puts itself to print its address by using a buffer overflow (+ROP chain).
 - Then subtract it from the puts offset from the given libc binary.
@@ -133,12 +133,6 @@ Writing to memory (in case you want "/bin/sh")
 2. Look for places to write to using `readelf -S <binary> ` or ` rabin2 -S <binary>` (don't forget to consider the size)
 3. Write the string to the address using the gadget found in step 1.
 4. Call `system` with address of the written string.
-
-### ret2csu
-
-```
-TBD
-```
 
 ### Heap exploitation
 #### Nightmare
@@ -242,12 +236,6 @@ Main arena
 +----------------+-------------------------+--------------------+
 ```
 
-Double free
-
-
-
-
-
 #### Max Kamper
 
 Chunks
@@ -339,7 +327,7 @@ Sources:
 
 ### Tools
 
-radare2
+#### radare2
 
 - Search for a string: `/ string_content`
 - Seek: `s 0xdeadbeef`
@@ -347,7 +335,7 @@ radare2
 - Change to write mode: `oo+`
 - Write bytes: `w hello, world`
 
-gdb/gef
+#### gdb/gef
 
 - To change register values `set $sp += 4`
 - To search for string in memory `gef> grep asdf`
@@ -378,7 +366,7 @@ gdb/gef
 - Ghidra decompilation in pwndbg: `ctx-ghidra sym.foo()`
 - Execute python in gdb: `(gdb) python print('asdf')`
 
-IDA
+#### IDA
 
 - Open strings window using `Shift + F12`. Can also open during debug mode.
 - Change between basic and graphic mode (space bar)
@@ -390,7 +378,7 @@ IDA
 - IDA-Options-General-auto comment
 - IDA-Options-General-opcode bytes 8 
 
-pwntools
+#### pwntools
 
 - Searching for strings: `payload += p64(next(libc.search(b'/bin/sh')))`
 - `flat(*args, preprocessor = None, length = None, filler = de_bruijn(), word_size = None, endianness = None, sign = None)` -> str. Strings are inserted directly while numbers are packed using the pack() function: `flat({32:'1337'})`
@@ -405,7 +393,7 @@ pwntools
 - Passing commandline arguments `io = process(['./crackme','blah'])`
 - Shell code `shellcode = asm(shellcraft.sh())`
 
-**Cyclic padding in pwntools**
+Cyclic padding in pwntools
 
 Using terminal
 
@@ -425,7 +413,7 @@ offset = cyclic_find(core.read(core.esp, x), n=x) #rsp for 64 bit
 offset -= x # wherever the sequence is found, we replace it
 ```
 
-**Return oriented programming in pwntools**
+ROP in pwntools
 
 ```python
 # finding gadgets
@@ -457,12 +445,6 @@ main_plt = elf.symbols['main']
 
 rop = offset + p64(pie+pop_rdi) + p64(pie+puts_got) + p64(pie+puts_plt) + p64(pie+main_plt)
 ```
-
-### Look into
-
-- angr framework
-- fmtstr pwntools
-- rop in pwntools
 
 ### Resources
 

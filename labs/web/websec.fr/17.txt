@@ -1,3 +1,0 @@
-change flag= in POST request to flag[]=
-WEBSEC{It_seems_that_php_could_use_a_stricter_typing_system}
-

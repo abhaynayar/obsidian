@@ -1,8 +1,9 @@
 ## ► crypto
 
 ### Learn
-- Cryptopals: <https://cryptopals.com/>
-- Crypton: <https://github.com/ashutosh1206/Crypton>
+- Crypton: https://github.com/ashutosh1206/Crypton
+- Cryptohack: https://cryptohack.org/
+- Cryptopals: https://cryptopals.com/
 
 ### Websites
 - [ciphers](https://www.dcode.fr)
@@ -12,13 +13,14 @@
 - [vignere cipher](https://www.mygeocachingprofile.com/codebreaker.vigenerecipher.aspx)
 
 ### RSA
-- if ```n``` is given, try checking if it is already factored at http://factordb.com
-- use Crypto.Util.number inverse to find modular inverse for RSA
-- use RsaCtfTool to perform known attacks against RSA
+- If `n` is given, try checking if it is already factored at http://factordb.com
+- Use Crypto.Util.number inverse to find modular inverse for RSA
+- Use RsaCtfTool to perform known attacks against RSA
 
 ### AES
-- use this tool to decrypt AES encrypted files: http://aes.online-domain-tools.com/
-- or use python
+- Use this tool to decrypt AES encrypted files: http://aes.online-domain-tools.com/
+- Or use python
+
 ```
 from Crypto.Cipher import AES
 
@@ -37,9 +39,11 @@ obj2.decrypt(ciphertext)
 
 XOR has a property that makes it important for crypto:
 
+```
 If   D = A^B
 Then A = D^B
 And  B = D^A
+```
 
 So we can produce a cryptographic scheme as follows:
 

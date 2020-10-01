@@ -1,10 +1,12 @@
 ## ► forensics
+### Resources
 
-### Learn
-- ghex / hexedit (pico18 hex-editor)
-- PIL
+- https://github.com/stuxnet999/MemLabs
+- https://stuxnet999.github.io/
+- https://www.13cubed.com/
 
 ### Initial checks
+
 - mediainfo
 - xxd
 - file
@@ -15,6 +17,7 @@
 - [cryptograms](https://quipqiup.com/)
 
 ### Steganography
+
 - exiftool
 - strings
 - steghide (try blank password) `$ steghide --extract -sf matryoshka.png`
@@ -28,11 +31,13 @@
 - tweakpng
 
 #### LSB steganography
+
 - lsb.py
 - jsteg (JPG LSB)
 - zsteg (PNG LSB)
 - <https://stylesuxx.github.io/steganography/>
 - NaCTF Phuzzy Photo
+
 ```
 from PIL import Image
 
@@ -42,35 +47,37 @@ op.putdata(list(ip.getdata())[::6])
 op.show()
 ```
 
-reverse image search: http://www.tineye.com, then ```compare chall.png maxresdefault.jpg  -compose src diff.png```
+Reverse image search: http://www.tineye.com, then `compare chall.png maxresdefault.jpg  -compose src diff.png`
 
-some string-fu:
-- ```strings chall.png```
-- ```strings -el chall.png```
-- ```strings chall.jpeg | awk 'length($0)>15' | sort -u```
+Some string-fu:
 
+- `strings chall.png`
+- `strings -el chall.png`
+- `strings chall.jpeg | awk 'length($0)>15' | sort -u`
 
 ### Audio
+
 - audacity
 - deepsound
 - sonic visualizer
 - [morse code](https://morsecode.scphillips.com/translator.html)
 
 ### Filesystems
+
 - fsck
-- foremost ``` animals.dd ``` 
+- foremost `animals.dd`
 - mount
 - testdisk
 - volatility
 - extundelete
 
 ### PCAP
+
 - wireshark
 - packettotal
 
-### PCAP tips
-- Somtimes you can get the flag by ``` $ strings file.pcap | grep picoCTF ```
+### Tips
 
-### When you have a deep tree of sub-directories ```riceteacatpanda19.treeeeeeee```
-
-```find ~/Downloads/ -type f -print0 | xargs -0 mv -t ~/Videos```
+- Somtimes you can get the flag by `$ strings file.pcap | grep picoCTF`
+- When you have a deep tree of sub-directories `riceteacatpanda19.treeeeeeee`
+- `find ~/Downloads/ -type f -print0 | xargs -0 mv -t ~/Videos`

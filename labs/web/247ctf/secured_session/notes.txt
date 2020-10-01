@@ -1,4 +1,0 @@
-looking into the cookies we find:
-eyJmbGFnIjp7IiBiIjoiTWpRM1ExUkdlMlJoT0RBM09UVm1PR0UxWTJGaU1tVXdNemRrTnpNNE5UZ3dOMkk1WVRreGZRPT0ifX0.Xqx_dQ.JhtgDf32bLD_uvvHIasSaikH7vs
-{"flag":{" b":"MjQ3Q1RGe2RhODA3OTVmOGE1Y2FiMmUwMzdkNzM4NTgwN2I5YTkxfQ=="}}
-247CTF{da80795f8a5cab2e037d7385807b9a91}

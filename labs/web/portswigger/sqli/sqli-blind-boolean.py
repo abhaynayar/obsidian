@@ -1,7 +1,8 @@
-import requests
 import string
+import requests
 
-url = 'https://ac751fda1f68ed5880244a8b00b300bb.web-security-academy.net/filter?category='
+uid = 'ac751fda1f68ed5880244a8b00b300bb'
+url = 'https://' + uid + '.web-security-academy.net/filter?category='
 
 # POSTGRESQL
 # SUBSTRING(str, pos, len) 

