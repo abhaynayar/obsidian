@@ -31,7 +31,7 @@ https://mobisec.reyammer.io
 #### app dev
 
 - [x] helloworld
-- [ ] [justlisten](challs/justlisten.md)
+- [x] [justlisten](challs/justlisten.md)
 - [x] [reachingout](challs/reachingout.md)
 - [ ] justask
 - [ ] filehasher

@@ -40,7 +40,38 @@ public class MyBroadcastListener extends BroadcastReceiver {
 }
 ```
 
-----
-
 So we need to learn how to handle it from API >= 26.
 
+----
+
+In the newer versions of Android, we need to use something called
+context-registered receivers. Here is the code I used to get the flag:
+
+MainActivity.java
+
+```java
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        BroadcastReceiver br = new MyBroadcastReceiver();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.mobisec.intent.action.FLAG_ANNOUNCEMENT");
+        this.registerReceiver(br, filter);
+    }
+}
+```
+
+MyBroadcastReceiver.java
+
+```java
+public class MyBroadcastReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Log.e("MOBISEC", intent.getStringExtra("flag"));
+    }
+}
+```
