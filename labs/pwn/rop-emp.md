@@ -1,11 +1,22 @@
 ## ROP Emporium solutions
 https://ropemporium.com/
 
+- [x] ret2win: [32](#32), [64](#64)
+- [x] split: [32](#32-1), [64](#64-1)
+- [x] callme: [32](#32-2), [64](#64-2)
+- [x] write4: [32](#32-4), [64](#64-3)
+- [x] badchars: [32](#32-4), [64](#64-4)
+- [ ] fluff
+- [ ] pivot
+- [ ] ret2csu
+
+----
+
 ### ret2win
 
 Change the function return address.
 
-32-bit
+#### 32
 
 ```python
 from pwn import *
@@ -16,7 +27,7 @@ io.sendline(cyclic(44) + p32(elf.sym['ret2win']))
 io.interactive()
 ```
 
-64-bit
+#### 64
 
 ```python
 from pwn import *
@@ -32,7 +43,7 @@ io.interactive()
 
 Call `system()` with `cat flag.txt`
 
-32-bit
+#### 32
 
 ```python
 from pwn import *
@@ -50,7 +61,7 @@ io.sendline(payload)
 print(io.recv())
 ```
 
-64-bit
+#### 64
 
 ```python
 from pwn import *
@@ -74,7 +85,7 @@ print(r.recv())
 
 Call three different functions with three different arguments.
 
-32-bit
+#### 32
 
 ```python
 from pwn import *
@@ -101,7 +112,7 @@ io.sendline(payload)
 print(io.recvall())
 ```
 
-64-bit
+#### 64
 
 ```python
 from pwn import *
@@ -133,7 +144,7 @@ io.interactive()
 
 Write string to memory and pass it to `system()`
 
-32-bit
+#### 32
 
 ```python
 from pwn import *
@@ -167,7 +178,7 @@ io.sendline(p)
 io.interactive()
 ```
 
-64-bit
+#### 64
 
 ```python
 from pwn import *
@@ -191,7 +202,7 @@ io.interactive()
 
 Some characters are not allowed (xor to store data, xor to get it back while in memory).
 
-64-bit
+#### 64
 
 ```python
 from pwn import *
@@ -227,7 +238,7 @@ io.sendline(payload)
 io.interactive()
 ```
 
-32-bit
+#### 32
 
 ```python
 from pwn import *
