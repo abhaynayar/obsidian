@@ -13,11 +13,16 @@ Computer security knowledge base
 
 ## Writeups
 
+2020
+
 - [prehistoric mario (ALLES! CTF)](https://abhaynayar.com/ctf/alles.html)
 - [Reverse-ing (TSG CTF)](https://abhaynayar.com/ctf/tsg.html)
 - [Full Protection (ASIS CTF Quals)](https://abhaynayar.com/ctf/asis.html)
 - [Tea Clicker (riceteacatpanda)](writeups/rtcp20/rtcp20.md)
 - [warmup/LowDeep (Insomni'hack)](writeups/insomnihack20/insomnihack20.md)
+
+2019
+
 - [InCTF Nationals 2019](https://abhaynayar.com/ctf/inctf.html)
 - [XXE Injection (Cisco CTF)](https://abhaynayar.com/ctf/cisco.html)
 - [Format String attacks (NaCTF)](https://abhaynayar.com/ctf/nactf.html)
