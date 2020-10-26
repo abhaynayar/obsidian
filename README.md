@@ -16,9 +16,9 @@ Computer security knowledge base
 
 Binary Exploitation
 
-- [247/CTF](labs/pwn/247ctf.md)
-- [pwnable.kr](labs/pwn/pwnable-kr.md)
 - [ROP Emporium](labs/pwn/rop-emp.md)
+- [pwnable.kr](labs/pwn/pwnable-kr.md)
+- [247/CTF](labs/pwn/247ctf.md)
 
 Android Application Hacking
 
@@ -32,12 +32,12 @@ Web Application Hacking
 - [Google XSS Game](labs/web/xss-game.md)
 - [Natas - OverTheWire](labs/web/natas)
 - [Web Security Academy](labs/web/portswigger)
+- [Pwnfunction XSS Game](labs/web/pwnfn.md)
 - [247/CTF](labs/web/247ctf.md)
 - [websec.fr](labs/web/websec-fr.md)
 - [Juice Shop](labs/web/juice-shop.md)
 - [webhacking.kr](labs/web/webhacking-kr)
 - [CTF Challenge](labs/web/ctfchall.md)
-- [Pwnfunction XSS Game](labs/web/pwnfn.md)
 
 
 ## Books
