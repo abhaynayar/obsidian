@@ -1,6 +1,6 @@
 # Obsidian
-Computer security knowledge base
 
+Computer security knowledge base
 
 ## Notes
 
@@ -11,6 +11,16 @@ Computer security knowledge base
 - [Digital Forensics](notes/forensics.md)
 - [Cryptography](notes/crypto.md)
 
+## Writeups
+
+- [prehistoric mario (ALLES! CTF)](https://abhaynayar.com/ctf/alles.html)
+- [Reverse-ing (TSG CTF)](https://abhaynayar.com/ctf/tsg.html)
+- [Full Protection (ASIS CTF Quals)](https://abhaynayar.com/ctf/asis.html)
+- [Tea Clicker (riceteacatpanda)](writeups/rtcp20/rtcp20.md)
+- [warmup/LowDeep (Insomni'hack)](writeups/insomnihack20/insomnihack20.md)
+- [InCTF Nationals 2019](https://abhaynayar.com/ctf/inctf.html)
+- [XXE Injection (Cisco CTF)](https://abhaynayar.com/ctf/cisco.html)
+- [Format String attacks (NaCTF)](https://abhaynayar.com/ctf/nactf.html)
 
 ## Labs
 
@@ -38,7 +48,6 @@ Web Application Hacking
 - [Juice Shop](labs/web/juice-shop.md)
 - [webhacking.kr](labs/web/webhacking-kr)
 - [CTF Challenge](labs/web/ctfchall.md)
-
 
 ## Books
 
