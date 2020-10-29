@@ -50,7 +50,18 @@ query = '?get=hehe'
 # response = requests.get(url+'forfor.php')
 # print(response.text)
 
-# look into ./33.php
+"""
+<?php
+$ip = '103.41.24.37';
+for($i=0;$i<=strlen($ip);$i++) $ip=str_replace($i,ord($i),$ip);
+$ip=str_replace(".","",$ip);
+$ip=substr($ip,0,10);
+$answer = $ip*2;
+$answer = $ip/2;
+$answer = str_replace(".","",$answer);
+print("answerip/{$answer}_{$ip}.php");
+?>
+"""
+
 response = requests.get(url+'answerip/2755377553_5510755106.php', cookies=cookies)
 print(response.text)
-
