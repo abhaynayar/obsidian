@@ -19,7 +19,7 @@ Computer security knowledge base
 - [prehistoric mario (ALLES! CTF)](https://abhaynayar.com/ctf/alles.html)
 - [Reverse-ing (TSG CTF)](https://abhaynayar.com/ctf/tsg.html)
 - [Full Protection (ASIS CTF Quals)](https://abhaynayar.com/ctf/asis.html)
-- [Tea Clicker (riceteacatpanda)](writeups/2020/rtcp/teaclicker.md)
+- [Tea Clicker (RiceTeaCatPanda)](writeups/2020/rtcp/teaclicker.md)
 - [warmup/LowDeep (Insomni'hack)](writeups/2020/insomnihack/main.md)
 
 2019

