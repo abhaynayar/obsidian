@@ -1,6 +1,11 @@
 # Obsidian
 
-Computer security knowledge base
+In this repository, you will find:
+
+- Notes made while hacking.
+- Writeups for past CTF challenges.
+- Writeups for vulnerable labs / wargames.
+- Notes on security books.
 
 ## Notes
 
