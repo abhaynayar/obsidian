@@ -1,8 +1,5 @@
-# riceteacatpanda 2020
-I ranked 108th in this CTF with a total of 4756 points.
-
-## Binary/Executable
-### Tea Clicker 150 pts.
+## riceteacatpanda 2020
+### Tea Clicker
 
 When you run the binary, you get a window on which there is a tea cup and
 a score, you have to click the tea-cup to increment the score and after
@@ -24,8 +21,8 @@ to no avail. It took me a while to figure out that the value type that I
 was suposed to search for was a double, while I was only checking for a
 4-byte integer.
 
-![](teaclicker.png)
+![](ce.png)
 
 After that it was just the task of modifying the variable to get the flag.
 
-`rtcp{w0w_ur_5uch_a_t2^_g^m3r}`
+Flag: `rtcp{w0w_ur_5uch_a_t2^_g^m3r}`

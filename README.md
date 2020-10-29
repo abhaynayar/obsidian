@@ -5,9 +5,9 @@ Computer security knowledge base
 ## Notes
 
 - [Reverse Engineering](notes/rev.md)
-- [Binary Exploitation](notes/pwn.md)
 - [Web Application Hacking](notes/web.md)
 - [Android Application Hacking](notes/android.md)
+- [Binary Exploitation](notes/pwn.md)
 - [Digital Forensics](notes/forensics.md)
 - [Cryptography](notes/crypto.md)
 
@@ -15,11 +15,12 @@ Computer security knowledge base
 
 2020
 
+- [x96 (Hack The Vote)](writeups/2020/hackthevote/x96.md)
 - [prehistoric mario (ALLES! CTF)](https://abhaynayar.com/ctf/alles.html)
 - [Reverse-ing (TSG CTF)](https://abhaynayar.com/ctf/tsg.html)
 - [Full Protection (ASIS CTF Quals)](https://abhaynayar.com/ctf/asis.html)
-- [Tea Clicker (riceteacatpanda)](writeups/rtcp20/rtcp20.md)
-- [warmup/LowDeep (Insomni'hack)](writeups/insomnihack20/insomnihack20.md)
+- [Tea Clicker (riceteacatpanda)](writeups/2020/rtcp/teaclicker.md)
+- [warmup/LowDeep (Insomni'hack)](writeups/2020/insomnihack/main.md)
 
 2019
 

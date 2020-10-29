@@ -1,5 +1,4 @@
-## ALLES! CTF
-
+## ALLES! 2020
 ### prehistoric mario
 
 In this challenge we are given a file `prehistoric-mario.apk`.  To know

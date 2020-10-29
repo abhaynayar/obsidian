@@ -1,55 +1,10 @@
 ##  ► rev
-### How to be a full-stack reverse engineer
-https://www.youtube.com/watch?v=9vKG8-TnawY&app=desktop
+### Tips
 
-Year 1
-
-- Reversing by eldad-eilam
-- Learn assembly
-  - Hand decompile
-  - Floating point
-  - Vector code
-- Reverse a game
-  - 3D game, late 90s to mid 20s, custom engine
-  - Reverse data archive format and write an unpacker
-  - Reverse model format and write a renderer
-- Compilers by aho-et-al (related book)
-- Write a source-to-source compiler (scheme to python)
-- Consider making ur own source language (not that hard)
-- Write an assembler (no x86: pick mips, 32-bit arm, cil)
-
-Year 2
-
-- Write compiler to assembly (subset of C)
-- Reverse compilation techniques by sifia antes
-- Write a bytecode decompiler (dalvik or cil)
-  - Start with go-to based flows
-  - Reconstruct flow based on graph
-  - Transform to ssa for opt and clean
-- Write a machine code decompiler (ARM to pseudo-C)
-- Read the osdev wiki
-- Write a toy kernel
-  - C x86 protected
-  - Text, input, basic graphics
-- Read the osdev wiki
-- Rewrite your kernel (in rust)
-- Write a microkernel (L4)
-
-Year 3
-
-- Write an interpreting emulator (NES,SNES,Gameboy,PS)
-- Write a recompiling emulator
-- Write an emulator for a black box platform
-
-### Debugging stripped binaries
-
-- `(gdb) info file`
-- `gef> entry`
-- `gef> disas _start`
-
-Further reading
-
-- https://felix.abecassis.me/2012/08/gdb-debugging-stripped-binaries/
+- When you see a lot of `dec eax` or similar instructions, it might be 64-bit code interpreted as 32-bit code.
+- We will see 32-bit code interpreted as 64-bit code when `cs` register is set to `0x33`:
+    - https://www.malwaretech.com/2014/02/the-0x33-segment-selector-heavens-gate.html
+    - http://scrammed.blogspot.com/2014/10/code-obfunscation-mixing-32-and-64-bit.html
 
 ### Assembly
 
@@ -232,3 +187,56 @@ Configuration
 - In visual mode use the `R` key to randomize colors or choose the next theme in the list.
 - Get a list of configuration variables by entering `e` in your radare console: `e??~color`
 - To list all the environment variables that matter to know where it will be looking for files: `r2 -H`
+
+### How to be a full-stack reverse engineer
+https://www.youtube.com/watch?v=9vKG8-TnawY&app=desktop
+
+Year 1
+
+- Reversing by eldad-eilam
+- Learn assembly
+  - Hand decompile
+  - Floating point
+  - Vector code
+- Reverse a game
+  - 3D game, late 90s to mid 20s, custom engine
+  - Reverse data archive format and write an unpacker
+  - Reverse model format and write a renderer
+- Compilers by aho-et-al (related book)
+- Write a source-to-source compiler (scheme to python)
+- Consider making ur own source language (not that hard)
+- Write an assembler (no x86: pick mips, 32-bit arm, cil)
+
+Year 2
+
+- Write compiler to assembly (subset of C)
+- Reverse compilation techniques by sifia antes
+- Write a bytecode decompiler (dalvik or cil)
+  - Start with go-to based flows
+  - Reconstruct flow based on graph
+  - Transform to ssa for opt and clean
+- Write a machine code decompiler (ARM to pseudo-C)
+- Read the osdev wiki
+- Write a toy kernel
+  - C x86 protected
+  - Text, input, basic graphics
+- Read the osdev wiki
+- Rewrite your kernel (in rust)
+- Write a microkernel (L4)
+
+Year 3
+
+- Write an interpreting emulator (NES,SNES,Gameboy,PS)
+- Write a recompiling emulator
+- Write an emulator for a black box platform
+
+### Debugging stripped binaries
+
+- `(gdb) info file`
+- `gef> entry`
+- `gef> disas _start`
+
+Further reading
+
+- https://felix.abecassis.me/2012/08/gdb-debugging-stripped-binaries/
+
