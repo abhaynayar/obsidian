@@ -35,6 +35,10 @@ In this repository, you will find:
 
 ## Labs
 
+Reverse Engineering
+
+- [247/CTF](labs/rev/247ctf.md)
+
 Binary Exploitation
 
 - [ROP Emporium](labs/pwn/rop-emp.md)
@@ -62,18 +66,13 @@ Web Application Hacking
 
 ## Books
 
+- [Mastering Modern Web Penetration Testing](books/mmwpt.md)
+- [The Art of Software Security Assesment](books/taossa.md)
+- [Attacking Network Protocols](books/anp.md)
+- [The Tangled Web](books/tangled.md)
+
 Reverse Engineering
 
 - [Reverse Engineering for Beginners](books/re4b.md)
 - [Practical Reverse Engineering](books/pre.md)
 - [Practical Malware Analysis](books/pma.md)
-
-Web Application Hacking
-
-- [Mastering Modern Web Penetration Testing](books/mmwpt.md)
-- [The Tangled Web](books/tangled.md)
-
-Other
-
-- [The Art of Software Security Assesment](books/taossa.md)
-- [Attacking Network Protocols](books/anp.md)
