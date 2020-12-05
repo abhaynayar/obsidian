@@ -13,6 +13,7 @@
 
 ### Tips
 
+- Don't forget to pass arguments to registers in 64-bit instead of the stack.
 - You may need to store the payload in some other section than stack, since stack is used by library functions.
 - View symbols in text section: `$ nm -a empty | grep " t\| T"`
 - **Make sure to point to `/bin/sh` and not the string value itself.**
@@ -41,9 +42,10 @@ Reading from an arbritrary address
 
 Writing to an arbritrary address
 
-```
-TBD
-```
+- CSI (VIT) CTF 2020 - global warming
+- NaCTF 2019 - format1
+- NaCTF 2020 - format
+
 
 ### GOT and PLT
 
@@ -88,6 +90,8 @@ References
 
 
 ### Leaking libc, functions, canaries
+
+- NaCTF 2020: dROPit
 
 **If you can leak any one function, look into the last three nibbles and search for it on https://libc.blukat.me**
 

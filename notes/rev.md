@@ -1,6 +1,7 @@
 ##  ► rev
 ### Tips
 
+- NaCTF 2020 reverse engineering challenges were really good.
 - When you see a lot of `dec eax` or similar instructions, it might be 64-bit code interpreted as 32-bit code.
 - We will see 32-bit code interpreted as 64-bit code when `cs` register is set to `0x33`:
     - https://www.malwaretech.com/2014/02/the-0x33-segment-selector-heavens-gate.html
@@ -210,7 +211,7 @@ Year 1
 Year 2
 
 - Write compiler to assembly (subset of C)
-- Reverse compilation techniques by sifia antes
+- Reverse Compilation Techniques by Cristina Cifuentes
 - Write a bytecode decompiler (dalvik or cil)
   - Start with go-to based flows
   - Reconstruct flow based on graph
