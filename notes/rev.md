@@ -189,6 +189,16 @@ Configuration
 - Get a list of configuration variables by entering `e` in your radare console: `e??~color`
 - To list all the environment variables that matter to know where it will be looking for files: `r2 -H`
 
+### Debugging stripped binaries
+
+- `(gdb) info file`
+- `gef> entry`
+- `gef> disas _start`
+
+Further reading
+
+- https://felix.abecassis.me/2012/08/gdb-debugging-stripped-binaries/
+
 ### How to be a full-stack reverse engineer
 https://www.youtube.com/watch?v=9vKG8-TnawY&app=desktop
 
@@ -230,14 +240,4 @@ Year 3
 - Write an interpreting emulator (NES,SNES,Gameboy,PS)
 - Write a recompiling emulator
 - Write an emulator for a black box platform
-
-### Debugging stripped binaries
-
-- `(gdb) info file`
-- `gef> entry`
-- `gef> disas _start`
-
-Further reading
-
-- https://felix.abecassis.me/2012/08/gdb-debugging-stripped-binaries/
 
