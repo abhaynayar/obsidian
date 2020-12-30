@@ -320,7 +320,7 @@ $ subfinder -d http://hackerone.com -silent | dnsprobe -silent -f domain | httpr
 - For time-based, first figure out the max time a request can take.
 - For faster blind-sqli execution, in the first pass check what characters `*i*` does the target string contain from `string.printable` and append it to a filtered list. Then in the second pass, from that filtered list of characters check the real order of the target string `i*`.
 - Remember to start `substring(str,pos,len)` from `1` not `0`.
-- Use `LIKE BINARY` for case-senstivie blind sqli matching.
+- Use `LIKE BINARY` for case-sensitive blind sqli matching.
 - For postgres time-based, `||pg_sleep(10)`
 - For postgres time-based conditions `'; SELECT CASE WHEN (condition) THEN pg_sleep(10) ELSE pg_sleep(0) END--`
 - To test for SQL injection: [source](https://twitter.com/pwntheweb/status/1253224265853198336)

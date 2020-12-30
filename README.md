@@ -20,16 +20,19 @@ In this repository, you will find:
 
 2020
 
-- [x96 (Hack The Vote)](writeups/2020/hackthevote/x96.md)
-- [prehistoric mario (ALLES! CTF)](https://abhaynayar.com/ctf/alles.html)
-- [Reverse-ing (TSG CTF)](https://abhaynayar.com/ctf/tsg.html)
-- [Full Protection (ASIS CTF Quals)](https://abhaynayar.com/ctf/asis.html)
-- [Tea Clicker (RiceTeaCatPanda)](writeups/2020/rtcp/teaclicker.md)
-- [warmup/LowDeep (Insomni'hack)](writeups/2020/insomnihack/main.md)
+- [Jimi Jam - Square CTF](https://abhaynayar.com/ctf/jimi-jam.html)
+- [x96 - Hack The Vote](writeups/2020/hackthevote/x96.md)
+- [prehistoric mario - ALLES! CTF](https://abhaynayar.com/ctf/alles.html)
+- [Reverse-ing - TSG CTF](https://abhaynayar.com/ctf/tsg.html)
+- [Full Protection - ASIS CTF Quals](https://abhaynayar.com/ctf/asis.html)
+- [Tea Clicker - RiceTeaCatPanda](writeups/2020/rtcp/teaclicker.md)
+- [warmup/LowDeep - Insomni'hack](writeups/2020/insomnihack/main.md)
+- [Writeups - InCTF Nationals 2019](writeups/inctfn19.md)
+- [fmt0 & fmt1 - NaCTF](https://abhaynayar.com/ctf/nactf.html)
 
 2019
 
-- [InCTF Nationals 2019](https://abhaynayar.com/ctf/inctf.html)
+- [InCTF Nationals 2019](https://abhaynayar.com/blog/inctf.html)
 - [XXE Injection (Cisco CTF)](https://abhaynayar.com/ctf/cisco.html)
 - [Format String attacks (NaCTF)](https://abhaynayar.com/ctf/nactf.html)
 

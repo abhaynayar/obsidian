@@ -14,7 +14,7 @@
 ### Tips
 
 - Don't forget to pass arguments to registers in 64-bit instead of the stack.
-- You may need to store the payload in some other section than stack, since stack is used by library functions.
+- You may need to store the payload in some other section than the stack, since stack is used by library functions.
 - View symbols in text section: `$ nm -a empty | grep " t\| T"`
 - **Make sure to point to `/bin/sh` and not the string value itself.**
 - **Make sure to set your file as executable before running your tools.**
