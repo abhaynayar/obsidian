@@ -79,3 +79,17 @@ Reverse Engineering
 - [Reverse Engineering for Beginners](books/re4b.md)
 - [Practical Reverse Engineering](books/pre.md)
 - [Practical Malware Analysis](books/pma.md)
+
+## Windows Hacking Resources
+
+- https://secret.club/
+- https://www.malvuln.com/
+- https://thenixuchallenge.com/c/
+- https://insider.windows.com/en-us/
+- https://github.com/leesh3288/WinPwn
+- https://github.com/zodiacon/windowsinternals
+- https://zaratec.github.io/awesome-windows-ctf/
+- https://windows-internals.com/pages/internals-blog/
+- https://en.wikipedia.org/wiki/Microsoft_Visual_C%2B%2B
+- https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.1
+- https://www.i.u-tokyo.ac.jp/edu/training/ss/lecture/new-documents/Lectures/19-CommonCodingErrors/CommonCodingErrors.pdf
