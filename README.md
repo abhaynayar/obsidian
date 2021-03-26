@@ -32,7 +32,7 @@ In this repository, you will find:
 
 2019
 
-- [InCTF Nationals 2019](https://abhaynayar.com/journal/inctf.html)
+- [InCTF Nationals 2019](https://abhaynayar.com/blog/inctf.html)
 - [XXE Injection (Cisco CTF)](https://abhaynayar.com/blog/cisco.html)
 - [Format String attacks (NaCTF)](https://abhaynayar.com/blog/nactf.html)
 
