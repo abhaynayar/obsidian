@@ -18,6 +18,10 @@ In this repository, you will find:
 
 ## Writeups
 
+2021
+
+- [UMass CTF](writeups/2021/umass.md)
+
 2020
 
 - [Jimi Jam - Square CTF](https://abhaynayar.com/blog/jimi-jam.html)
