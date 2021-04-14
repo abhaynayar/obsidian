@@ -30,7 +30,7 @@ From the prometheus docs `https://prometheus.io/docs/introduction/first_steps/` 
 - If you click the tweet button you see that text upto the first `#` is appearing, therefore we need to encode the `#` to `%23` so that the browser doesn't interpret it as a fragment.
 - Change `http://localhost:3000/assets/public/images/uploads/%F0%9F%98%BC-#zatschi-#whoneedsfourlegs-1572600969477.jpg` to `http://localhost:3000/assets/public/images/uploads/%F0%9F%98%BC-%23zatschi-%23whoneedsfourlegs-1572600969477.jpg`
 
-### Outdated Whitelist
+#### Outdated Whitelist
 
 - Add an item to your basket and go to payment page.
 - Go to sources tabs in your devtools.
@@ -63,5 +63,3 @@ Go to `http://localhost:3000/#/score-board`
 
 #### Five-Star Feedback
 - Go to the `administration` section and delete any five feedbacks that are present.
-
-
