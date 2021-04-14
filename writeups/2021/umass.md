@@ -167,7 +167,7 @@ print(s)
 
 Flag: `UMASS{m0m_100k_i_can_r3ad_ass3mb1y}`
 
-## forensices
+## forensics
 ### notes
 
 Here we get a memdump of some Windows machine. We determine the profile using

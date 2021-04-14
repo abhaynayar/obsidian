@@ -1,6 +1,4 @@
-# Obsidian
-
-Notes and writeups on CTFs.
+![](res/logo.png)
 
 ## Notes
 
@@ -13,25 +11,22 @@ Notes and writeups on CTFs.
 
 2021
 
-- [UMass CTF](writeups/2021/umass.md)
+- [UMass CTF](writeups/2021/umass.md) ![](res/web.png) ![](res/rev.png) ![](res/forensics.png)
 
 2020
 
-- [Jimi Jam - Square CTF](https://abhaynayar.com/writeups/square.html)
-- [x96 - Hack The Vote](writeups/2020/hackthevote/x96.md)
-- [prehistoric mario - ALLES! CTF](https://abhaynayar.com/writeups/alles.html)
-- [Reverse-ing - TSG CTF](https://abhaynayar.com/writeups/tsg.html)
-- [Full Protection - ASIS CTF Quals](https://abhaynayar.com/writeups/asis.html)
-- [Tea Clicker - RiceTeaCatPanda](writeups/2020/rtcp/teaclicker.md)
-- [warmup/LowDeep - Insomni'hack](writeups/2020/insomnihack/main.md)
-- [Writeups - InCTF Nationals 2019](writeups/inctfn19.md)
-- [fmt0 & fmt1 - NaCTF](https://abhaynayar.com/writeups/nactf.html)
+- [Jimi Jam - Square CTF](https://abhaynayar.com/writeups/square.html) ![](res/pwn.png)
+- [x96 - Hack The Vote](writeups/2020/hackthevote/x96.md) ![](res/rev.png)
+- [prehistoric mario - ALLES! CTF](https://abhaynayar.com/writeups/alles.html) ![](res/android.png)
+- [Reverse-ing - TSG CTF](https://abhaynayar.com/writeups/tsg.html) ![](res/rev.png)
+- [Full Protection - ASIS CTF Quals](https://abhaynayar.com/writeups/asis.html) ![](res/pwn.png)
+- [fmt0 & fmt1 - NaCTF](https://abhaynayar.com/writeups/nactf.html) ![](res/pwn.png)
 
 2019
 
-- [InCTF Nationals 2019](https://abhaynayar.com/writeups/inctf.html)
-- [XXE Injection (Cisco CTF)](https://abhaynayar.com/writeups/cisco.html)
-- [Format String attacks (NaCTF)](https://abhaynayar.com/writeups/nactf.html)
+- [InCTF Nationals 2019](https://abhaynayar.com/writeups/inctf.html) ![](res/rev.png) ![](res/web.png) ![](res/forensics.png) ![](res/android.png) ![](res/pwn.png)
+- [XXE Injection (Cisco CTF)](https://abhaynayar.com/writeups/cisco.html) ![](res/web.png)
+- [Format String attacks (NaCTF)](https://abhaynayar.com/writeups/nactf.html) ![](res/pwn.png)
 
 ## Labs
 
@@ -41,9 +36,9 @@ Reverse Engineering
 
 Binary Exploitation
 
-- [ROP Emporium](labs/pwn/rop-emp.md)
-- [pwnable.kr](labs/pwn/pwnable-kr.md)
 - [247/CTF](labs/pwn/247ctf.md)
+- [pwnable.kr](labs/pwn/pwnable-kr.md)
+- [ROP Emporium](labs/pwn/rop-emp.md)
 
 Android Application Hacking
 
@@ -53,11 +48,11 @@ Android Application Hacking
 
 Web Application Hacking
 
-- [Google XSS Game](labs/web/xss-game.md)
-- [Natas - OverTheWire](labs/web/natas)
-- [Web Security Academy](labs/web/portswigger)
-- [Pwnfunction XSS Game](labs/web/pwnfn.md)
 - [247/CTF](labs/web/247ctf.md)
 - [websec.fr](labs/web/websec-fr.md)
 - [Juice Shop](labs/web/juice-shop.md)
 - [webhacking.kr](labs/web/webhacking-kr)
+- [Google XSS Game](labs/web/xss-game.md)
+- [Natas - OverTheWire](labs/web/natas)
+- [Web Security Academy](labs/web/portswigger)
+- [Pwnfunction XSS Game](labs/web/pwnfn.md)
