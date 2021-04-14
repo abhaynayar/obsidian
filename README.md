@@ -1,13 +1,23 @@
-![](res/logo.png)
+<h1 align="center">
+  <br>
+  <a href="https://github.com/abhaynayar/obsidian"><img src="res/logo.png" alt="Arjun"></a>
+  <br>
+  Obsidian
+  <br>
+</h1>
 
-## Notes
+<h4 align="center">Notes and writeups on CTFs.</h4>
+
+<br>
+
+### Notes
 
 - [Binary Exploitation](notes/pwn.md)
 - [Reverse Engineering](notes/rev.md)
 - [Web Application Hacking](notes/web.md)
 - [Android Application Hacking](notes/android.md)
 
-## Writeups
+### Writeups
 
 2021
 
@@ -28,7 +38,7 @@
 - [XXE Injection (Cisco CTF)](https://abhaynayar.com/writeups/cisco.html) ![](res/web.png)
 - [Format String attacks (NaCTF)](https://abhaynayar.com/writeups/nactf.html) ![](res/pwn.png)
 
-## Labs
+### Labs
 
 Reverse Engineering
 
