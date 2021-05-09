@@ -25,7 +25,7 @@
 
 2020
 
-- [Jimi Jam - Square CTF](writeups/2020/square.md) ![](res/pwn.png)
+- [Jimi Jam - Square CTF](writeups/2020/square) ![](res/pwn.png)
 - [x96 - Hack The Vote](writeups/2020/hackthevote/x96.md) ![](res/rev.png)
 - [prehistoric mario - ALLES! CTF](https://abhaynayar.com/writeups/alles.html) ![](res/android.png)
 - [Reverse-ing - TSG CTF](https://abhaynayar.com/writeups/tsg.html) ![](res/rev.png)
