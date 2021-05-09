@@ -1,7 +1,7 @@
 ## ALLES! 2020
 ### prehistoric mario
 
-In this challenge we are given a file `prehistoric-mario.apk`.  To know
+In this challenge we are given an [APK](prehistoric-mario.apk). To know
 what the app does, we can install it on our phone/emulator using adb.
 
 ```
@@ -27,9 +27,9 @@ $ vi MyPlatformer.java
 
 In this file there are a few important methods that I have surmised below:
 
-- `create()`: sets up the stage for the game
-- `checkFlag()`: checks the state of each brick, if it matches the solution state, the game map changes to show the flag
-- `updateKoala()`: checks for user input and changes the state of the dino
+- `create()`: sets up the stage for the game.
+- `checkFlag()`: checks the state of each brick, if it matches the solution state, the game map changes to show the flag.
+- `updateKoala()`: checks for user input and changes the state of the dino.
 
 In order to get to `checkFlag()` we need to satisfy a certain condition in
 `updateKoala()`. That is, if we hit a certain brick whose "state" is 1337,
@@ -257,4 +257,3 @@ Once we have the tmx file, we can open it using
 ![](tiled.png)
 
 And we get the flag: `ALLES{1TS_A_DINO}`
-

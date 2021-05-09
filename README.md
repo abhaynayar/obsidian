@@ -1,9 +1,8 @@
 <h1 align="center">
-  <br>
-  <a href="https://github.com/abhaynayar/obsidian"><img src="res/logo.png" alt="Arjun"></a>
-  <br>
-  Obsidian
-  <br>
+<br>
+<a href="https://github.com/abhaynayar/obsidian">
+<img src="res/logo.png"></a>
+<br>Obsidian<br>
 </h1>
 
 <h4 align="center">Notes and writeups on CTFs.</h4>
@@ -26,17 +25,16 @@
 2020
 
 - [Jimi Jam - Square CTF](writeups/2020/square) ![](res/pwn.png)
-- [x96 - Hack The Vote](writeups/2020/hackthevote/x96.md) ![](res/rev.png)
-- [prehistoric mario - ALLES! CTF](https://abhaynayar.com/writeups/alles.html) ![](res/android.png)
-- [Reverse-ing - TSG CTF](https://abhaynayar.com/writeups/tsg.html) ![](res/rev.png)
-- [Full Protection - ASIS CTF Quals](https://abhaynayar.com/writeups/asis.html) ![](res/pwn.png)
-- [fmt0 & fmt1 - NaCTF](https://abhaynayar.com/writeups/nactf.html) ![](res/pwn.png)
+- [x96 - Hack The Vote](writeups/2020/hackthevote) ![](res/rev.png)
+- [prehistoric mario - ALLES! CTF](writeups/2020/alles) ![](res/android.png)
+- [Reverse-ing - TSG CTF](writeups/2020/tsg) ![](res/rev.png)
+- [Full Protection - ASIS CTF Quals](writeups/2020/asis) ![](res/pwn.png)
 
 2019
 
-- [InCTF Nationals 2019](https://abhaynayar.com/writeups/inctf.html) ![](res/rev.png) ![](res/web.png) ![](res/forensics.png) ![](res/android.png) ![](res/pwn.png)
-- [XXE Injection (Cisco CTF)](https://abhaynayar.com/writeups/cisco.html) ![](res/web.png)
-- [Format String attacks (NaCTF)](https://abhaynayar.com/writeups/nactf.html) ![](res/pwn.png)
+- [InCTF Nationals 2019](writeups/2019/inctf) ![](res/rev.png) ![](res/web.png) ![](res/forensics.png) ![](res/android.png) ![](res/pwn.png)
+- [Autograph - Cisco CTF](writeups/2019/cisco) ![](res/web.png)
+- [fmt0 & fmt1 - NaCTF](writeups/2019/nactf) ![](res/pwn.png)
 
 ### Labs
 
