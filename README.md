@@ -20,7 +20,8 @@
 
 2021
 
-- [UMass CTF](writeups/2021/umass.md) ![](res/web.png) ![](res/rev.png) ![](res/forensics.png)
+- [BuckeyeCTF](writeups/2021/buckeye) ![](res/rev.png) ![](res/pwn.png)
+- [UMass CTF](writeups/2021/umass) ![](res/web.png) ![](res/rev.png) ![](res/forensics.png)
 
 2020
 
