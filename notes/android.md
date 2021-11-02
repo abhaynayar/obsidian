@@ -1,5 +1,5 @@
-## ► android
-### Common bugs
+# ► android
+## Common bugs
 
 - Attack surface: Look at the manifest for any exported activities.
 - Storage: Look into resources.asrc/res/strings.xml, /res/raw, /assets.
@@ -28,7 +28,7 @@
   redirection can change.
 
 
-### Static analysis
+## Static analysis
 
 To perform static analysis, you first need to decompile the APK. There are
 several ways to do this, I personally prefer apkx since it allows you to
@@ -50,7 +50,7 @@ or setContentView(R.layout.xyz).
 Learn through vulnerable apps, disclosed reports, courses.
 Make sure to diff APKs for new functionalities.
 
-### adb
+## adb
 
 - Connect your Android device in debug mode (or use Genymotion).
 - Installing an app `adb install asdf.apk`
@@ -94,7 +94,7 @@ $ nc localhost 11111 | wireshark -k -S -i -
 ```
 
 
-### apktool
+## apktool
 
 - Disassemble an app `apktool d <apk-file>`
 - Build a disassembled file `apktool b <decompiled-directory>`
@@ -135,7 +135,7 @@ Things to keep in mind:
 - Sometimes you might have to go to the settings and uninstall it for all users.
 
 
-### frida
+## frida
 
 
 
@@ -212,7 +212,7 @@ Java.perform(function(){
 })
 ```
 
-### objection
+## objection
 
 Wrapper on frida for ease of use.
 
@@ -259,7 +259,7 @@ com.example.app on (motorola: 10) [usb] #
 
 
 
-### r2
+## r2
 
 ```
 $ rafind2 -ZS permission AndroidManifest.xml
@@ -275,14 +275,14 @@ $ r2 classes.dex
 &gt; pdf    ; print disassembly
 ```
 
-### r2frida
+## r2frida
 
 ```
 $ r2 frida://[PID]
 ```
 
 
-### Burp system-wide CA
+## Burp system-wide CA
 In order to intercept HTTPS as well, we need a system-wide CA: [link](https://blog.ropnop.com/configuring-burp-suite-with-android-nougat/#install-burp-ca-as-a-system-level-trusted-ca), [link](https://stackoverflow.com/questions/13089694/adb-remount-permission-denied-but-able-to-access-super-user-in-shell-android). First download the Burp CA and start the emulator as writable (always):
 
 ```
@@ -314,7 +314,7 @@ traffic due to SSL pinning. In case neither of the above methods work, you
 can patch the app to make only HTTP requests, and then convert them into
 HTTPS requests while by intercepting them through a proxy.
 
-### Pulling and decompiling
+## Pulling and decompiling
 
 You can either pull apps that you have installed on your phone or get them
 from various websites.
@@ -349,7 +349,7 @@ $ java -jar cfr-0.149.jar classes-dex2jar.jar &gt; out
 $ jadx myapp.apk -d out
 ```
 
-### Reversing native libraries
+## Reversing native libraries
 
 List the Java native functions.
 
@@ -365,7 +365,7 @@ ones as you can decompile them using IDA's demo version.
 `$ ida libnative-lib.so`
 
 
-### Running an emulator
+## Running an emulator
 
 Running an avd from the command line:
 
@@ -383,7 +383,7 @@ emulator () {
 }
 ```
 
-### Setting up a proxy
+## Setting up a proxy
 
 For an AVD:
 
@@ -437,7 +437,7 @@ adb:/data/local/tmp $ cd /system/xbin
 adb:/system/xbin $ busybox-armv8l --install .
 ```
 
-### Using jdb for debugging
+## Using jdb for debugging
 
 First get the target app PID.
 
@@ -466,7 +466,7 @@ Some useful jdb commands:
 &gt; locals
 ```
 
-### drozer
+## drozer
 
 Here is the [manual](https://labs.f-secure.com/assets/BlogFiles/mwri-drozer-user-guide-2015-03-23.pdf). Here is the GitHub [repo](https://github.com/FSecureLABS/drozer). First we need to install Java 6 using this [link](https://gist.github.com/senthil245/6093389).
 
@@ -512,7 +512,7 @@ Processing mwrlabs.develop... Done.
 Successfully installed 1 modules, 0 already installed.
 ```
 
-### Hacking with drozer
+## Hacking with drozer
 
 You can then download [sieve](https://github.com/mwrlabs/drozer/releases/download/2.3.4/sieve.apk") (an intentionally vulnerable password manager) and start practicing. I recommend you use the app and get around it by creating some data. It will help you when you are hacking content ids.
 
@@ -578,7 +578,7 @@ dz> run app.provider.download content://com.mwr.example.sieve.FileBackupProvider
 Written 4096 bytes
 ```
 
-### Java Version
+## Java Version
 
 One of the most essentials tools are the Android SDK tools which can be
 found once you install <a href="https://developer.android.com/studio">Android Studio</a>. An important thing to keep in mind
@@ -597,7 +597,7 @@ export PATH=$PATH:/usr/lib/jvm/java-version/bin
 ```
 
 
-### Using IntelliJ IDE
+## Using IntelliJ IDE
 
 In order to debug the decompiled code, an IDE is helpful to create a
 smooth workflow. In this IDE, we can create a new Android project and fill
