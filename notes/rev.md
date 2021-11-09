@@ -3,53 +3,60 @@
 ## Tools:
 
 - [Ghidra](https://ghidra-sre.org/)
-- [Radare2](https://rada.re/n/)
 - [IDA Pro](https://hex-rays.com/ida-pro/)
+- [Radare2](https://rada.re/n/)
 
-## Some good CTF problems
-- NaCTF 2020 reversing challenges
+## Basics:
+Translation process:
 
-## How to be a full-stack reverse engineer \[[1](https://www.youtube.com/watch?v=9vKG8-TnawY&app=desktop)\]
+We often have multiple high-level source files to compile into a single
+program, so we first compile each file into an object file and then we link
+them using a linker.
 
-Year 1:
+To see the various steps in the compilation process, you can use certain
+flags in gcc.
 
-- [Reversing by Eldad-Eilam](https://www.amazon.in/dp/B07MMX3K3W/)
-- Learn assembly:
-  - Hand decompile
-  - Floating point
-  - Vector code
-- Reverse a game:
-  - 3D game, late 90s to mid 20s, custom engine.
-  - Reverse data archive format and write an unpacker.
-  - Reverse model format and write a renderer.
-- [Compilers by Aho-et-al](https://www.amazon.in/dp/B0756XFTTW/)
-- Write a source-to-source compiler. (Scheme to Python)
-- Consider making ur own source language. (not that hard)
-- Write an assembler. (not x86: pick mips, 32-bit ARM, CIL)
+- To see the preprocessor stage: `gcc -E main.c`
+- To see the assembly stage: `gcc -s main.c`
+- To see the object stage: `gcc -c main.c`
 
-Year 2:
+When you compile a C file into an object file, the object file you get has
+machine-level executable code. However, it needs to be linked first. So you
+will see that such files are “relocatable” since the code itself is there
+but it needs to be linked.
 
-- Write compiler to assembly. (subset of C)
-- [Reverse Compilation Techniques by Cristina
-  Cifuentes](https://yurichev.com/mirrors/DCC_decompilation_thesis.pdf)
-- Write a bytecode decompiler. (Dalvik or CIL)
-  - Start with go-to based flows.
-  - Reconstruct flow based on graph.
-  - Transform to SSA for opt and clean.
-- Write a machine code decompiler. (ARM to pseudo-C)
-- Read the [osdev wiki](https://wiki.osdev.org/).
-- Write a toy kernel.
-  - C x86 protected.
-  - Text, input, basic graphics.
-- Read the osdev wiki.
-- Rewrite your kernel. (in rust)
-- Write a microkernel. (L4)
+Linking:
 
-Year 3
+Once these objects files are created, we use a linker to link them all into
+a single executable. We may also link libraries that we have not coded
+ourselves. These can be static libraries (.a), or they can be dynamic
+libraries (.so) which still have unresolved symbols.
 
-- Write an interpreting emulator. (NES,SNES,Gameboy,PS)
-- Write a recompiling emulator.
-- Write an emulator for a black box platform.
+In the case of objects, you can check things to be relocated using:
+
+```
+$ readelf --relocs main.o
+```
+
+Symbols:
+
+- ELF has DWARF. (in the binary)
+- PE has PDB. (separate file)
+
+Interpreter:
+
+- Mapped into process's virtual memory.
+- Performs relocations. (Lazy bindings)
+- `ld-linux.so` and `ntdll.dll`
+
+
+----
+
+## ELF:
+
+```
+TODO
+```
 
 ## Assembly
 
@@ -129,3 +136,44 @@ Further reading:
 - We will see 32-bit code interpreted as 64-bit code when `cs` register is set to `0x33`:
     - https://www.malwaretech.com/2014/02/the-0x33-segment-selector-heavens-gate.html
     - http://scrammed.blogspot.com/2014/10/code-obfunscation-mixing-32-and-64-bit.html
+
+## How to be a full-stack reverse engineer \[[1](https://www.youtube.com/watch?v=9vKG8-TnawY&app=desktop)\]
+
+_Year 1:_
+
+- [Reversing by Eldad-Eilam](https://www.amazon.in/dp/B07MMX3K3W/)
+- Learn assembly:
+  - Hand decompile
+  - Floating point
+  - Vector code
+- Reverse a game:
+  - 3D game, late 90s to mid 20s, custom engine.
+  - Reverse data archive format and write an unpacker.
+  - Reverse model format and write a renderer.
+- [Compilers by Aho-et-al](https://www.amazon.in/dp/B0756XFTTW/)
+- Write a source-to-source compiler. (Scheme to Python)
+- Consider making ur own source language. (not that hard)
+- Write an assembler. (not x86: pick mips, 32-bit ARM, CIL)
+
+_Year 2:_
+
+- Write compiler to assembly. (subset of C)
+- [Reverse Compilation Techniques by Cristina Cifuentes](https://yurichev.com/mirrors/DCC_decompilation_thesis.pdf)
+- Write a bytecode decompiler. (Dalvik or CIL)
+  - Start with go-to based flows.
+  - Reconstruct flow based on graph.
+  - Transform to SSA for opt and clean.
+- Write a machine code decompiler. (ARM to pseudo-C)
+- Read the [osdev wiki](https://wiki.osdev.org/).
+- Write a toy kernel.
+  - C x86 protected.
+  - Text, input, basic graphics.
+- Read the osdev wiki.
+- Rewrite your kernel. (in rust)
+- Write a microkernel. (L4)
+
+_Year 3:_
+
+- Write an interpreting emulator. (NES,SNES,Gameboy,PS)
+- Write a recompiling emulator.
+- Write an emulator for a black box platform.
