@@ -1,12 +1,13 @@
 #  ► rev
 
-## Tools:
+## Tools
 
 - [Ghidra](https://ghidra-sre.org/)
 - [IDA Pro](https://hex-rays.com/ida-pro/)
 - [Radare2](https://rada.re/n/)
 
-## Basics:
+## Basics
+
 Translation process:
 
 We often have multiple high-level source files to compile into a single
@@ -52,11 +53,23 @@ Interpreter:
 
 ----
 
-## ELF:
+## ELF
 
-```
-TODO
-```
+Used for:
+- Executables
+- Objects
+- Shared libraries
+- Core dumps
+
+Components:
+- Executable header
+- Program headers
+- Sections
+- Section headers
+
+Executable header:
+- struct can be found in `/usr/include/elf.h`
+- Parse it using: `readelf -h a.out`
 
 ## Assembly
 
