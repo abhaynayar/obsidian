@@ -50,9 +50,6 @@ Interpreter:
 - Performs relocations. (Lazy bindings)
 - `ld-linux.so` and `ntdll.dll`
 
-
-----
-
 ## ELF
 
 Used for:
@@ -71,7 +68,70 @@ Executable header:
 - struct can be found in `/usr/include/elf.h`
 - Parse it using: `readelf -h a.out`
 
-## Assembly
+## ARM assembly
+
+Compile ARM assembly using this:
+
+```
+aarch64-linux-gnu-gcc -static -c chall_1.S
+```
+
+### Addressing modes
+
+1. Immediate
+
+```
+MOV R0, #0x0C
+MOV R0, #12
+```
+
+2. Direct
+
+```
+LDR R0, MEM
+```
+
+3. Register direct
+
+```
+MOV R0, R1
+```
+
+4. Register indirect
+
+```
+LDR R0, [R1]
+```
+
+5. Pre-indexed
+
+```
+LDR R0, [R1, #4]
+```
+
+- Loads R0 with the word pointed at by R1+4.
+
+6. Pre-indexed with write-back
+
+```
+LDR R0, [R1, #4]!
+```
+
+- Loads R0 with the word pointed at by R1+4.
+- Then updates the pointer by adding 4 to R1.
+
+
+7. Post-indexed
+
+```
+LDR R0, [R1], #4
+```
+
+- Loads R0 with the word pointed at by R1.
+- Then updates the pointer by adding 4 to R1.
+
+
+## x86 Assembly
 
 Basics:
 
@@ -149,6 +209,8 @@ Further reading:
 - We will see 32-bit code interpreted as 64-bit code when `cs` register is set to `0x33`:
     - https://www.malwaretech.com/2014/02/the-0x33-segment-selector-heavens-gate.html
     - http://scrammed.blogspot.com/2014/10/code-obfunscation-mixing-32-and-64-bit.html
+
+----
 
 ## How to be a full-stack reverse engineer \[[1](https://www.youtube.com/watch?v=9vKG8-TnawY&app=desktop)\]
 
