@@ -1,5 +1,14 @@
 #  ► rev
 
+## Writeups by topics
+
+Get the flag by solving for constraints using z3:
+- babymix: https://ctftime.org/task/14688
+
+Reverse engineering VM-based obfuscation:
+- Recurso: https://ctftime.org/task/18030
+- Rasm: https://ctftime.org/writeup/31386
+
 ## Tools
 
 - [Ghidra](https://ghidra-sre.org/)
