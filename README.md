@@ -1,8 +1,15 @@
 <h1 align="center">
+
 <br>
+
 <a href="https://github.com/abhaynayar/obsidian">
-<img src="res/logo.png"></a>
-<br>Obsidian<br>
+<img src="https://user-images.githubusercontent.com/7112131/143230475-a992de4b-99cb-4d84-9548-9684c4d683b9.png">
+</a>
+
+<br>
+Obsidian
+<br>
+
 </h1>
 
 <h4 align="center">Notes and writeups on CTFs.</h4>
