@@ -3,17 +3,19 @@ Michael Sikorski and Andrew Honig
 
 ### Chapter 0 - Malware Analysis Primer
 
-The goals of malware analysis
+The goals of malware analysis:
 
-1. Host-based signatures: indicators used to detect malicious code on victim computers.
-2. Network signatures: used to detect malicious code by monitoring network traffic.
+1. Host-based signatures: indicators used to detect malicious code on
+   victim computers.
+2. Network signatures: used to detect malicious code by monitoring network
+   traffic.
 
-Malware analysis techniques
+Malware analysis techniques:
 
 1. Static analysis
 2. Dynamic analysis
 
-Types of malware
+Types of malware:
 
 - Backdoor
 - Botnet
@@ -27,45 +29,55 @@ Types of malware
 
 ### Chapter 1 - Basic Static Techniques
 
-Techniques
+Techniques:
 
 - Antivirus Scanning: http://www.virustotal.com/
 - Hashing: see if the file has already been identified
 - Strings: get hints about functionality
 
-Packed and obfuscated malware
+Packed and obfuscated malware:
 
-- Obfuscated programs are ones whose execution the malware author has attempted to hide.
-- Packed programs are a subset of obfuscated programs in which the malicious program is compressed and cannot be analyzed.
-- Packed and obfuscated code will often include LoadLibrary and GetProcAddress
+- Obfuscated programs are ones whose execution the malware author has
+  attempted to hide.
+- Packed programs are a subset of obfuscated programs in which the
+  malicious program is compressed and cannot be analyzed.
+- Packed and obfuscated code will often include LoadLibrary and
+  GetProcAddress
 - Packed programs are run using wrappers that unpack and run the program.
 - When doing a static analysis, only the wrapper portion can be analysed.
-- You can detect packers using a software called [PEiD](https://www.aldeid.com/wiki/PEiD).
+- You can detect packers using a software called
+  [PEiD](https://www.aldeid.com/wiki/PEiD).
 - Many PEiD plug-ins will run the malware executable without warning!
 
-Portable Executable Format
+Portable Executable Format:
 
 - File format used by Windows executables, object code, and DLLs.
-- It is a data structure that contains the information necessary for the Windows OS loader to manage the wrapped executable code.
+- It is a data structure that contains the information necessary for the
+  Windows OS loader to manage the wrapped executable code.
 
-Linked Libraries and Functions
+Linked Libraries and Functions:
 
-- Imports are functions used by one program that are actually stored in a different program.
+- Imports are functions used by one program that are actually stored in a
+  different program.
 - Code libraries can be connected to the main executable by linking.
-- Code libraries can be linked statically, dynamically (program start) or during runtime.
+- Code libraries can be linked statically, dynamically (program start) or
+  during runtime.
 
 Types of linking
 
 - Static linking is popular in UNIX and linux but not so much in malware.
-- Runtime linking is commonly used in malware (packed or obfuscated) these are not listed in file header.
-- Dynamic linking is the most common. PE header stores info about libraries and functions to be called.
+- Runtime linking is commonly used in malware (packed or obfuscated) these
+  are not listed in file header.
+- Dynamic linking is the most common. PE header stores info about libraries
+  and functions to be called.
 
-PE header
+PE header:
 
-- We can see dynamically linked functions using [Dependency Walker](http://www.dependencywalker.com).
+- We can see dynamically linked functions using
+  [Dependency Walker](http://www.dependencywalker.com).
 - Executables can also import functions by ordinal instead of a name.
 
-Common DLLs
+Common DLLs:
 
 - Kernel32.dll
 - Advapi32.dll
@@ -75,58 +87,69 @@ Common DLLs
 - WSock32.dll and Ws2\_32.dl
 - Wininet.dll
 
-Function naming conventions
+Function naming conventions:
 
 - NewFunction = OldFunction + "Ex"
 - FunctionA = ASCII string as parameter
 - FunctionW = Wide character string as parameter
 
-Imported and exported functions
+Imported and exported functions:
 
-- Look into documentation for the Windows API through the Microsoft Developer Network (MSDN) library.
-- DLLs and EXEs also export functions. They can be found in the PE file (usually DLLs export not EXEs).
+- Look into documentation for the Windows API through the Microsoft
+  Developer Network (MSDN) library.
+- DLLs and EXEs also export functions. They can be found in the PE file
+  (usually DLLs export not EXEs).
 
-Static analysis in practice
+Static analysis in practice:
 
-Kernel32.dll
+Kernel32.dll:
 
 - Manipulate processes: OpenProcess, GetCurrentProcess and GetProcessHeap
 - Manipulate files: ReadFile, CreateFile, and WriteFile
 - Search through directories: FindFirstFile and FindNextFile
 
-User32.dll
+User32.dll:
 
 - GUI manipulation: RegisterClassEx, SetWindowText, and ShowWindow
 - SetWindowsHookEx: for capturing key strokes (used in spyware).
 - RegisterHotKey: a key combination that notifies the application.
 
-PE file headers and sections
+PE file headers and sections:
 
 - .text: instructions that the CPU executes
 - .rdata: import and export information, sometimes (i/e)
 - .data: global data that can be accessed from anywhere
 - .rsrc: resources such as icons, menus, images and strings
-- .pdata: present only in 64-bit executables and stores exception-handling information
+- .pdata: present only in 64-bit executables and stores exception-handling
+  information
 - .reloc: contains information for relocation of library files
 
-Examining using [PEView](https://www.aldeid.com/wiki/PEView)
+Examining using [PEView](https://www.aldeid.com/wiki/PEView):
 
-- `IMAGE_NT_HEADERS` > `IMAGE_FILE_HEADERS` > Time Date Stamp: the time when this executable was compiled (can be faked / Delphi programs use a compile time of June 19, 1992).
-- `IMAGE_NT_HEADERS` > `IMAGE_OPTIONAL_HEADER` > Console programs have the value `IMAGE_SUBSYSTEM_WINDOWS_CUI` and run inside a command window. GUI programs have the value `IMAGE_SUBSYSTEM_WINDOWS_GUI` and run within the Windows system.
-- `IMAGE_SECTION_HEADER`: Virtual size should be equal to size of raw data. In .text if it is more, it may be packed.
+- `IMAGE_NT_HEADERS` > `IMAGE_FILE_HEADERS` > Time Date Stamp: the time
+  when this executable was compiled (can be faked / Delphi programs use a
+  compile time of June 19, 1992).
+- `IMAGE_NT_HEADERS` > `IMAGE_OPTIONAL_HEADER` > Console programs have the
+  value `IMAGE_SUBSYSTEM_WINDOWS_CUI` and run inside a command window. GUI
+  programs have the value `IMAGE_SUBSYSTEM_WINDOWS_GUI` and run within the
+  Windows system.
+- `IMAGE_SECTION_HEADER`: Virtual size should be equal to size of raw data.
+  In .text if it is more, it may be packed.
 
-We can also view the resources (.rsrc) using [Resource Hacker](http://www.angusj.com/)
+We can also view the resources (.rsrc) using [Resource
+Hacker](http://www.angusj.com/)
 
 ## Chapter 2 - Malware Analysis in Virtual Machines
 
-Just read through most of the chapter... here are some steps given at the end:
+Just read through most of the chapter... here are some steps given at the
+end:
 
 1. Start with a clean snapshot with no malware running on it.
 2. Transfer the malware to the virtual machine.
 3. Conduct your analysis on the virtual machine.
-4. Take your notes, screenshots, and data from the virtual machine and transfer it to the physical machine.
+4. Take your notes, screenshots, and data from the virtual machine and
+   transfer it to the physical machine.
 5. Revert the virtual machine to the clean snapshot.
-
 
 ## Chapter 3 - Basic Dynamic Analysis
 
@@ -134,33 +157,46 @@ Just read through most of the chapter... here are some steps given at the end:
 C:\>rundll32.exe DLLname, Export arguments
 ```
 
-- Sometimes Windows doesn't know how to run dlls automatically, for that we use the above command.
-- Wherein export arguments specifies the function name to be run inside the dll.
+- Sometimes Windows doesn't know how to run dlls automatically, for that we
+  use the above command.
+- Wherein export arguments specifies the function name to be run inside the
+  dll.
 - We can use PEview or PE Explorer to see all the exported functions.
-- Instead of function names, we can also have ordinals which should be prepending by a `#`.
-- You can even turn a DLL into an executable by modifying the PE header and changing its extension
+- Instead of function names, we can also have ordinals which should be
+  prepending by a `#`.
+- You can even turn a DLL into an executable by modifying the PE header and
+  changing its extension
 
-Process monitor
+Process monitor:
 
-- Monitor certain registry, file system, network, process, and thread activity.
+- Monitor certain registry, file system, network, process, and thread
+  activity.
 - To stop procmon from capturing events, choose File > Capture Events.
-- Clear all currently captured events to remove irrelevant data by choosing Edit > Clear Display.
-- Usually you will have a lot of events in procmon, to focus, use Filter > Filter.
-- You can also find some common filters as buttons in the toolbar: registry, file-system, network, process.
+- Clear all currently captured events to remove irrelevant data by choosing
+  Edit > Clear Display.
+- Usually you will have a lot of events in procmon, to focus, use Filter >
+  Filter.
+- You can also find some common filters as buttons in the toolbar:
+  registry, file-system, network, process.
 
-Process explorer
+Process explorer:
 
-- You can double-click a process on the left panel and hit verify to check the digital signature.
-- In this properties window, you can also go to the strings tab to check the strings in the process.
-- Both the procmon and procexp can be launched directly through `live.sysinternals.com`.
-- You can analyzing malicious processes by right clicking and launching dependency walker.
-
-
+- You can double-click a process on the left panel and hit verify to check
+  the digital signature.
+- In this properties window, you can also go to the strings tab to check
+  the strings in the process.
+- Both the procmon and procexp can be launched directly through
+  `live.sysinternals.com`.
+- You can analyzing malicious processes by right clicking and launching
+  dependency walker.
 
 ### Chapter 8 - Advanced Dynamic Analysis
 
-- When you step over a function that never returns, it is good to use the record and replay using VMware.
-- If an application doesn't handle an exception (first chance) it is given to the debugger as second chance.
-- Malwares usually cause first chance exceptions unless they are in environments they don't like.
-- Single stepping is implemented as an exception in the OS level by setting the trap flag.
-
+- When you step over a function that never returns, it is good to use the
+  record and replay using VMware.
+- If an application doesn't handle an exception (first chance) it is given
+  to the debugger as second chance.
+- Malwares usually cause first chance exceptions unless they are in
+  environments they don't like.
+- Single stepping is implemented as an exception in the OS level by setting
+  the trap flag.

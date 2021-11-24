@@ -1,11 +1,11 @@
-## ► forensics
-### Resources
+# ► forensics
+## Resources
 
 - https://github.com/stuxnet999/MemLabs
 - https://stuxnet999.github.io/
 - https://www.13cubed.com/
 
-### Initial checks
+## Initial checks
 
 - mediainfo
 - xxd
@@ -16,7 +16,7 @@
 - johntheripper
 - [cryptograms](https://quipqiup.com/)
 
-### Steganography
+## Steganography
 
 - exiftool
 - strings
@@ -30,7 +30,7 @@
 - Stegsolve
 - tweakpng
 
-#### LSB steganography
+### LSB steganography
 
 - lsb.py
 - jsteg (JPG LSB)
@@ -55,14 +55,14 @@ Some string-fu:
 - `strings -el chall.png`
 - `strings chall.jpeg | awk 'length($0)>15' | sort -u`
 
-### Audio
+## Audio
 
 - audacity
 - deepsound
 - sonic visualizer
 - [morse code](https://morsecode.scphillips.com/translator.html)
 
-### Filesystems
+## Filesystems
 
 - fsck
 - foremost `animals.dd`
@@ -71,12 +71,12 @@ Some string-fu:
 - volatility
 - extundelete
 
-### PCAP
+## PCAP
 
 - wireshark
 - packettotal
 
-### Tips
+## Tips
 
 - Somtimes you can get the flag by `$ strings file.pcap | grep picoCTF`
 - When you have a deep tree of sub-directories `riceteacatpanda19.treeeeeeee`

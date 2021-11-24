@@ -1,6 +1,5 @@
-#  ► rev
-
-## Writeups by topics
+# ► rev
+## Writeups by topic
 
 Get the flag by solving for constraints using z3:
 - babymix: https://ctftime.org/task/14688
@@ -8,6 +7,34 @@ Get the flag by solving for constraints using z3:
 Reverse engineering VM-based obfuscation:
 - Recurso: https://ctftime.org/task/18030
 - Rasm: https://ctftime.org/writeup/31386
+
+## Resources
+
+- ARM reversing - Azeria
+- RE101 - Malware Unicorn
+- [Ultimate guide to reversing](https://medium.com/@vignesh4303/reverse-engineering-resources-beginners-to-intermediate-guide-links-f64c207505ed)
+
+## Books
+
+- Reverse Engineering for Beginners
+- Practical Reverse Engineering
+- Practical Malware Analysis
+- Linux Device Drivers
+- Windows Internals
+
+## Recon
+
+Run these commands on the given binary.
+
+1. file
+2. strings
+3. **readelf**
+4. md5sum
+5. objdump
+6. checksec
+7. ghex (patching,diffing)
+8. ltrace (library calls)
+9. strace (system calls)
 
 ## Tools
 

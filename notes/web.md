@@ -1,4 +1,4 @@
-#  ► web
+# ► web
 ## Resources
 ### Courses
 

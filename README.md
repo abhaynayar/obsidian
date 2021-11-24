@@ -20,22 +20,39 @@
 
 2021
 
-- [BuckeyeCTF](writeups/2021/buckeye) ![](res/rev.png) ![](res/pwn.png)
-- [UMass CTF](writeups/2021/umass) ![](res/web.png) ![](res/rev.png) ![](res/forensics.png)
+- [BuckeyeCTF](writeups/2021/buckeye)
+  ![](https://badgen.net/badge/icon/rev?icon=codacy&label)
+  ![](https://badgen.net/badge/icon/pwn?icon=terminal&label)
+- [UMass CTF](writeups/2021/umass)
+  ![](https://badgen.net/badge/icon/web?icon=firefox&label)
+  ![](https://badgen.net/badge/icon/rev?icon=codacy&label)
+  ![](https://badgen.net/badge/icon/forensics?icon=now&label)
 
 2020
 
-- [Jimi Jam - Square CTF](writeups/2020/square) ![](res/pwn.png)
-- [x96 - Hack The Vote](writeups/2020/hackthevote) ![](res/rev.png)
-- [prehistoric mario - ALLES! CTF](writeups/2020/alles) ![](res/android.png)
-- [Reverse-ing - TSG CTF](writeups/2020/tsg) ![](res/rev.png)
-- [Full Protection - ASIS CTF Quals](writeups/2020/asis) ![](res/pwn.png)
+- [Jimi Jam - Square CTF](writeups/2020/square)
+  ![](https://badgen.net/badge/icon/pwn?icon=terminal&label)
+- [x96 - Hack The Vote](writeups/2020/hackthevote)
+  ![](https://badgen.net/badge/icon/rev?icon=codacy&label)
+- [prehistoric mario - ALLES! CTF](writeups/2020/alles)
+  ![](https://badgen.net/badge/icon/android?icon=googleplay&label)
+- [Reverse-ing - TSG CTF](writeups/2020/tsg)
+  ![](https://badgen.net/badge/icon/rev?icon=codacy&label)
+- [Full Protection - ASIS CTF Quals](writeups/2020/asis)
+  ![](https://badgen.net/badge/icon/pwn?icon=terminal&label)
 
 2019
 
-- [InCTF Nationals 2019](writeups/2019/inctf) ![](res/rev.png) ![](res/web.png) ![](res/forensics.png) ![](res/android.png) ![](res/pwn.png)
-- [Autograph - Cisco CTF](writeups/2019/cisco) ![](res/web.png)
-- [fmt0 & fmt1 - NaCTF](writeups/2019/nactf) ![](res/pwn.png)
+- [InCTF Nationals 2019](writeups/2019/inctf)
+  ![](https://badgen.net/badge/icon/rev?icon=codacy&label)
+  ![](https://badgen.net/badge/icon/web?icon=firefox&label)
+  ![](https://badgen.net/badge/icon/forensics?icon=now&label)
+  ![](https://badgen.net/badge/icon/android?icon=googleplay&label)
+  ![](https://badgen.net/badge/icon/pwn?icon=terminal&label)
+- [Autograph - Cisco CTF](writeups/2019/cisco)
+  ![](https://badgen.net/badge/icon/web?icon=firefox&label)
+- [fmt0 & fmt1 - NaCTF](writeups/2019/nactf)
+  ![](https://badgen.net/badge/icon/pwn?icon=terminal&label)
 
 ### Labs
 

@@ -598,4 +598,3 @@ Methodology:
 Further reading:
 - http://philippeharewood.com/
 - https://pranavhivarekar.in/
-

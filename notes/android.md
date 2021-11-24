@@ -36,18 +36,19 @@ choose between several compilers and once you provide it with the path to
 a given APK file, it does everything automatically for you.
 
 Once you have a decompiled output, you can view the files in any text
-editor of your choice. IDEs that are oriented towards Java, such as
-Android Studio and IntelliJ IDEA can help you further by providing
-features such as usage detection and refactoring. Refactoring is an
-important part of any reverse engineer's methodology, as it helps you
-slowly gain a deeper understanding of what the app is trying to achieve.
+editor of your choice. IDEs that are oriented towards Java, such as Android
+Studio and IntelliJ IDEA can help you further by providing features such as
+usage detection and refactoring. Refactoring is an important part of any
+reverse engineer's methodology, as it helps you slowly gain a deeper
+understanding of what the app is trying to achieve.
 
-In order to proceed with the dynamic analysis, you need information such
-as activity names and strings. You can also identify strings or layouts on
-your physical device and see if those things can be found in strings.xml
-or setContentView(R.layout.xyz).
+In order to proceed with the dynamic analysis, you need information such as
+activity names and strings. You can also identify strings or layouts on
+your physical device and see if those things can be found in strings.xml or
+setContentView(R.layout.xyz).
 
 Learn through vulnerable apps, disclosed reports, courses.
+
 Make sure to diff APKs for new functionalities.
 
 ## adb
@@ -93,7 +94,6 @@ $ adb forward tcp:11111 tcp:11111
 $ nc localhost 11111 | wireshark -k -S -i -
 ```
 
-
 ## apktool
 
 - Disassemble an app `apktool d <apk-file>`
@@ -134,14 +134,12 @@ Things to keep in mind:
 - If you are having trouble installing app, uninstall the previous version from your phone.
 - Sometimes you might have to go to the settings and uninstall it for all users.
 
-
 ## frida
-
-
 
 Setting up frida for dynamic analysis
 
 Remember to disable Magisk Hide in case you have it.
+
 First download frida client for your PC:
 
 ```
@@ -150,14 +148,17 @@ $ frida --version
 12.8.11
 ```
 
-Then download the frida-server for your device. It can be found [here](https://github.com/frida/frida/releases). To know your own ABI issue the following command:
+Then download the frida-server for your device. It can be found
+[here](https://github.com/frida/frida/releases). To know your own ABI issue
+the following command:
 
 ```
 $ adb shell getprop ro.product.cpu.abi
 ```
 
-If you're using an AVD, download one which doesn't have the "Play Services" icon (required for root).
-Rooting is important for frida injection, emulators are mostly rooted by default.
+If you're using an AVD, download one which doesn't have the "Play Services"
+icon (required for root). Rooting is important for frida injection,
+emulators are mostly rooted by default.
 
 ```
 # rooting emulated device
@@ -218,8 +219,8 @@ Wrapper on frida for ease of use.
 
 It can be run without having to patch. I tried patching an app but it
 didn't run (maybe it was tamper-proof). You first need to be rooted, then
-transfer the frida-server binary to your android device and run it. Then
-on your PC:
+transfer the frida-server binary to your android device and run it. Then on
+your PC:
 
 ```
 $ objection --gadget='com.example.app' explore`
@@ -257,8 +258,6 @@ com.example.app on (motorola: 10) [usb] # android heap search instances {{class\
 com.example.app on (motorola: 10) [usb] #
 ```
 
-
-
 ## r2
 
 ```
@@ -266,13 +265,13 @@ $ rafind2 -ZS permission AndroidManifest.xml
 $ rabin2 -I classes.dex
 $ r2 classes.dex
 
-&gt; izq    ; rabin2 print string quietly
-&gt; izj~{} ; json formatted prettyprint
-&gt; ic     ; class names and their methods
-&gt; ii     ; imported methods
-&gt; f~+verify  ; grep flags by "verify"
-&gt; s sym.method.blah ; seek to method
-&gt; pdf    ; print disassembly
+> izq    ; rabin2 print string quietly
+> izj~{} ; json formatted prettyprint
+> ic     ; class names and their methods
+> ii     ; imported methods
+> f~+verify  ; grep flags by "verify"
+> s sym.method.blah ; seek to method
+> pdf    ; print disassembly
 ```
 
 ## r2frida
@@ -283,7 +282,10 @@ $ r2 frida://[PID]
 
 
 ## Burp system-wide CA
-In order to intercept HTTPS as well, we need a system-wide CA: [link](https://blog.ropnop.com/configuring-burp-suite-with-android-nougat/#install-burp-ca-as-a-system-level-trusted-ca), [link](https://stackoverflow.com/questions/13089694/adb-remount-permission-denied-but-able-to-access-super-user-in-shell-android). First download the Burp CA and start the emulator as writable (always):
+In order to intercept HTTPS as well, we need a system-wide CA:
+[link](https://blog.ropnop.com/configuring-burp-suite-with-android-nougat/#install-burp-ca-as-a-system-level-trusted-ca),
+[link](https://stackoverflow.com/questions/13089694/adb-remount-permission-denied-but-able-to-access-super-user-in-shell-android).
+First download the Burp CA and start the emulator as writable (always):
 
 ```
 # convert burp CA to work with Android
@@ -335,10 +337,13 @@ Things to keep in mind:
 
 - You can control click on most things to see their definitions.
 - It is a good practice to save projects in jadx-gui.
-- One of the useful features within the interface is the search functionality which you can use to check certain keywords in code.
+- One of the useful features within the interface is the search
+  functionality which you can use to check certain keywords in code.
 - To find other places a method is used, right-click &gt; Find Usage.
 
-If jadx-gui fails to decompile any methods, we can always try other combinations such as **dex2jar** for DEX to JAR conversion and then decompile it using somthing like CFR.
+If jadx-gui fails to decompile any methods, we can always try other
+combinations such as **dex2jar** for DEX to JAR conversion and then
+decompile it using somthing like CFR.
 
 ```
 $ unzip myapp.apk
@@ -486,23 +491,23 @@ $ adb forward tcp:31415 tcp:31415
 $ drozer console connect
 
 # a few useful drozer commands
-dz&gt; list/ls package # to see all modules
-dz&gt; run app.package.list -f revels
+dz> list/ls package # to see all modules
+dz> run app.package.list -f revels
 
 # list attack surface
-dz&gt; run app.package.attacksurface com.mit.mitrevels20
+dz> run app.package.attacksurface com.mit.mitrevels20
 
 # list debuggable apps
-dz&gt; run app.package.debuggable
+dz> run app.package.debuggable
 
 # installing modules
-dz&gt; module search -d # search (show module descriptions)
-dz&gt; module install keyword # https://github.com/FSecureLABS/drozer-modules
-dz&gt; shell # launch shell in context of the current app
-dz&gt; run app.activity.info -a com.hacker101.level13 -i -u
-dz&gt; run app.package.manifest com.hacker101.level13 
+dz> module search -d # search (show module descriptions)
+dz> module install keyword # https://github.com/FSecureLABS/drozer-modules
+dz> shell # launch shell in context of the current app
+dz> run app.activity.info -a com.hacker101.level13 -i -u
+dz> run app.package.manifest com.hacker101.level13 
 
-dz&gt;  module install mwrlabs.develop
+dz>  module install mwrlabs.develop
 You do not have a drozer Module Repository.
 Would you like to create one? [yn] y
 Path to new repository: /home/abhay/Desktop/tools/android/drozer
@@ -514,7 +519,11 @@ Successfully installed 1 modules, 0 already installed.
 
 ## Hacking with drozer
 
-You can then download [sieve](https://github.com/mwrlabs/drozer/releases/download/2.3.4/sieve.apk") (an intentionally vulnerable password manager) and start practicing. I recommend you use the app and get around it by creating some data. It will help you when you are hacking content ids.
+You can then download
+[sieve](https://github.com/mwrlabs/drozer/releases/download/2.3.4/sieve.apk")
+(an intentionally vulnerable password manager) and start practicing. I
+recommend you use the app and get around it by creating some data. It will
+help you when you are hacking content ids.
 
 ```
 # install app on phone
@@ -581,10 +590,12 @@ Written 4096 bytes
 ## Java Version
 
 One of the most essentials tools are the Android SDK tools which can be
-found once you install <a href="https://developer.android.com/studio">Android Studio</a>. An important thing to keep in mind
-is Java versions, I won't go into depth here, but having the wrong version
-of Java for the wrong tool might mess things up. So it's good to know how
-to keep several Java versions and switch between them when required.
+found once you install <a
+href="https://developer.android.com/studio">Android Studio</a>. An
+important thing to keep in mind is Java versions, I won't go into depth
+here, but having the wrong version of Java for the wrong tool might mess
+things up. So it's good to know how to keep several Java versions and
+switch between them when required.
 
 ```
 # choose java and javac version to use
@@ -599,9 +610,9 @@ export PATH=$PATH:/usr/lib/jvm/java-version/bin
 
 ## Using IntelliJ IDE
 
-In order to debug the decompiled code, an IDE is helpful to create a
-smooth workflow. In this IDE, we can create a new Android project and fill
-it with our decompiled code. So first, we will unzip and decompile our APK.
+In order to debug the decompiled code, an IDE is helpful to create a smooth
+workflow. In this IDE, we can create a new Android project and fill it with
+our decompiled code. So first, we will unzip and decompile our APK.
 
 ```
 $ unzip snake.apk -d snake
@@ -610,7 +621,7 @@ $ jadx -d out classes.dex
 $ cd out/sources
 ```
 
-Once we have the decompiled codes, create an Android project in the IDE
-and delete the com.example.app under java sources. then copy the above
-folder in its place that we have just cd'ed into. Furthermore, you may
-require adjustments to make the code work in harmony.
+Once we have the decompiled codes, create an Android project in the IDE and
+delete the com.example.app under java sources. then copy the above folder
+in its place that we have just cd'ed into. Furthermore, you may require
+adjustments to make the code work in harmony.

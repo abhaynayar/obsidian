@@ -1,29 +1,16 @@
-#  ► pwn
+# ► pwn
+## Writeups by topic
+
+Leaking libc:
+- dROPit: https://ctftime.org/task/13818
+- loopy: https://ctftime.org/task/9312
+
 ## Resources
 
 Courses:
-
-- ARM reversing - Azeria
-- RE101 - Malware Unicorn
-- [Ultimate guide to reversing](https://medium.com/@vignesh4303/reverse-engineering-resources-beginners-to-intermediate-guide-links-f64c207505ed)
 - https://ropemporium.com/
 - https://sidsbits.com/Path/
 - https://overthewire.org/wargames/narnia
-
-Books:
-
-- Reverse Engineering for Beginners
-- Practical Reverse Engineering
-- Practical Malware Analysis
-- Linux Device Drivers
-- Windows Internals
-
-Tools:
-
-- Debugging with GDB
-- The IDA Pro Book
-- Radare2 Book
-- Ghidra Book
 
 ## Recon
 
@@ -39,131 +26,30 @@ Run these commands on the given binary.
 8. ltrace (library calls)
 9. strace (system calls)
 
-## Tools
-### radare2
+## Tips
 
-- Search for a string: `/ string_content`
-- Seek: `s 0xdeadbeef`
-- Print in hex: `px`
-- Change to write mode: `oo+`
-- Write bytes: `w hello, world`
-
-### gdb/gef
-
-- To change register values `set $sp += 4`
-- To search for string in memory `gef> grep asdf`
-- https://sourceware.org/gdb/onlinedocs/gdb/Hooks.html
-- To calculate stuff inside gdb `p 1+2`
-- Delete all breakpoints using `d`
-- Delete breakpoint by number using `d 1`
-- `jump +1` jumps to the next line line i.e. skipping the current line. Can be used when stuck in `rep`
-- `tbreak +1` to set a temporary breakpoint at the jump target.
-- `step` steps into subroutines, but `next` will step over subroutines.
-- `step` and `stepi` (and the `next` and `nexti`) are distinguishing by "line" or "instruction" increments.
-- In most of my use-cases I need `nexti` (short `ni`)
-- To find address of a variable: `(gdb) p &var`
-- While printing variables if it is an unknown type use `(gdb) p (int)var`
-- Break at an offset from function `(gdb) b*main+128`
-- To get out of current function use `(gdb) finish`
-- To list all functions `(gdb) info functions regex`
-- To learn the relationship between higher level code and assembly better, use the -ggdb option while compilint. 
-- When GDB opens via debug(), it will initially be stopped on the very first instruction of the dynamic linker (ld.so) for dynamically-linked binaries.
-- To view the source (and provide more debugging info) use -ggdb flag while compiling with `gcc`
-- How to set ASLR on on gdb (turns off every instance): `set disable-randomization off`
-- How to print strings when you have their name (symbol)?: `p str` then `x/s`
-- Examine general format: `x/nfu addr`
-- To examine a double word (giant): `x/xg addr`
-- Changing variable values `set var <variable_name>=<value>`
-- Disable SIGALRM `handle SIGALRM ignore`
-- Disassemble function from the command line: `$ gdb -batch -ex 'file /bin/ls' -ex 'disassemble main'` or `gdb -q ./a.out 'disass main'`
-- Ghidra decompilation in pwndbg: `ctx-ghidra sym.foo()`
-- Execute python in gdb: `(gdb) python print('asdf')`
-
-### IDA
-
-- Open strings window using `Shift + F12`. Can also open during debug mode.
-- Change between basic and graphic mode (space bar)
-- Rename variables: (n)
-- Comment –Side: (:), (;) –Above/below: (ins)
-- Convert const formats: (right-click)
-- Cross-reference: (x)
-- Change to array: (a)
-- IDA-Options-General-auto comment
-- IDA-Options-General-opcode bytes 8 
-
-### pwntools
-
-- Searching for strings: `payload += p64(next(libc.search(b'/bin/sh')))`
-- `flat(*args, preprocessor = None, length = None, filler = de_bruijn(), word_size = None, endianness = None, sign = None)` -> str. Strings are inserted directly while numbers are packed using the pack() function: `flat({32:'1337'})`
-- To only see error logs: `context.log_level = 'error'`
-- Need to use `io.interactive` or `io.wait` (?)
-- Use `recv()` to receive everything up till that point.
-- While writing your exploit script keep `io.interactive()` at the end and keep adding sends and receives before it.
-- Sometimes remote connection might be close due to an error in your python code (such as bytes != strings).
-- For passing args: `io = process(['./chall','AAAA'])` or `io = gdb.debug(['./chall','AAAA'], 'b main')`
-- Creating a template `pwn template ./<binary> --host 127.0.0.1 --port 1337`
-- Debugging with gdb `io = gdb.debug('./<binary>', 'b main')`
-- Passing commandline arguments `io = process(['./crackme','blah'])`
-- Shell code `shellcode = asm(shellcraft.sh())`
-
-Cyclic padding in pwntools:
-
-Using terminal:
-
-```
-$pwn cyclic 200
-pwn cyclic -l 0xdeadbeef
-```
-
-Using python:
-
-```python
-x = 4 #x=8 for 64-bit
-io.sendline(cyclic(200, n=x))
-io.wait()
-core = io.corefile
-offset = cyclic_find(core.read(core.esp, x), n=x) #rsp for 64 bit
-offset -= x # wherever the sequence is found, we replace it
-```
-
-ROP in pwntools:
-
-```python
-# finding gadgets
-pop_rdi = (rop.find_gadget(['pop rdi', 'ret']))[0]
-```
-
-```python
-# leaking libc
-elf = ELF('./vuln', checksec=False)
-rop = ROP(elf)
-
-#rop.raw(0)
-#rop.raw(unpack(b'abcd'))
-#rop.raw(2)
-
-#rop.call('read',[4,5,6])
-#rop.exit()
-
-#rop.write(7,8,9)
-#print(rop.dump())
-
-#rop.call('execve', ['/bin/sh', [['/bin/sh'], ['-p'], ['-c'], ['ls']], 0])
-#print(rop.chain())
-
-pop_rdi = (rop.find_gadget(['pop rdi', 'ret']))[0]
-puts_got = elf.got['puts']
-puts_plt = elf.plt['puts']
-main_plt = elf.symbols['main']
-
-rop = offset + p64(pie+pop_rdi) + p64(pie+puts_got) + p64(pie+puts_plt) + p64(pie+main_plt)
-```
+- Don't forget to pass arguments to registers in 64-bit instead of the
+  stack.
+- You may need to store the payload in some other section than the stack,
+  since stack is used by library functions.
+- View symbols in text section: `$ nm -a empty | grep " t\| T"`
+- **Make sure to point to `/bin/sh` and not the string value itself.**
+- **Make sure to set your file as executable before running your tools.**
+- Newline is required at the end of your payload to cause the binary to
+  process your input.
+- `fgets` means you can use null bytes in your payload but not newlines.
+- `gets` ends at newline or EOF, while `strlen` stops at null byte.
+- `nm <binary> | grep ' t '`
+- `pwndbg> info functions`
+- `dmesg | tail`
+- `pwn cyclic`
 
 ## Format String Attacks
 **Offset notation: `%6$x`**
 
 **Learn about fmtstr in pwntools to automate format string exploits**
-- *read-where* primitive: `%s` (for example, `AAAA%7$s` would return the value at the address 0x41414141).
+- *read-where* primitive: `%s` (for example, `AAAA%7$s` would return the
+  value at the address 0x41414141).
 - *write-what-where* primitive: `%n`
 - write one byte at a time: `%hhn` 
 
@@ -222,13 +108,6 @@ References:
 
 ## Leaking libc, functions, canaries
 
-Example CTF problem:
-- NaCTF 2020: dROPit
-
-Using format string attacks:
-- https://srikavin.me/blog/posts/5d87dbe86e58ed23d8620868-nactf-2019-loopy-0-1#Loopy--0-1 
-
-
 Leaking libc base:
 
 - See pico2018/got-2-learn-libc
@@ -252,38 +131,30 @@ Leaking functions:
 
 **If you can leak any one function, look into the last three nibbles and search for it on https://libc.blukat.me**
 
-## Return oriented programming
+## Return-oriented programming
 
 Getting a shell:
 
 - Use a call to `system` by passing shell command as the only argument.
-- **Make sure to `call system` not simply jump to it.** (update: you don't need to call system, we need to align the stack so use an extra `ret` gadget).
-- If you want to directly jump to it, make sure to append a dummy return address and a parameter after it: `payload="A"*offset + system + "AAAA" + binsh`
+- **Make sure to `call system` not simply jump to it.** (update: you don't
+  need to call system, we need to align the stack so use an extra `ret`
+  gadget).
+- If you want to directly jump to it, make sure to append a dummy return
+  address and a parameter after it: `payload="A"*offset + system + "AAAA" +
+  binsh`
 - Use `syscall(x)`to call to`execve('/bin/sh', NULL,NULL)`
 - exec syscall on 32bit: 0x0b, exec syscall on 64bit: 0x3b.
-- find "x" from: `https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64`
+- find "x" from:
+  `https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64`
 
 Writing to memory: (in case you want "/bin/sh")
 
-1. Look for gadgets like `mov [reg], reg ` (alternatively use something like`fgets`)
-2. Look for places to write to using `readelf -S <binary> ` or ` rabin2 -S <binary>` (don't forget to consider the size)
+1. Look for gadgets like `mov [reg], reg ` (alternatively use something
+   like`fgets`)
+2. Look for places to write to using `readelf -S <binary> ` or ` rabin2 -S
+   <binary>` (don't forget to consider the size)
 3. Write the string to the address using the gadget found in step 1.
 4. Call `system` with address of the written string.
-
-## Tips
-
-- Don't forget to pass arguments to registers in 64-bit instead of the stack.
-- You may need to store the payload in some other section than the stack, since stack is used by library functions.
-- View symbols in text section: `$ nm -a empty | grep " t\| T"`
-- **Make sure to point to `/bin/sh` and not the string value itself.**
-- **Make sure to set your file as executable before running your tools.**
--  newline is required at the end of your payload to cause the binary to process your input.
-- `fgets` means you can use null bytes in your payload but not newlines.
-- `gets` ends at newline or EOF, while `strlen` stops at null byte.
-- `nm <binary> | grep ' t '`
-- `pwndbg> info functions`
-- `dmesg | tail`
-- `pwn cyclic`
 
 ## Fuzzing
 
@@ -293,190 +164,148 @@ Writing to memory: (in case you want "/bin/sh")
 ## ARM exploitation
 
 - ARM mode has 4 byte instruction alignment.
-    - Can’t jump in the middle of instructions.
+  - Can’t jump in the middle of instructions.
 - THUMB mode has 2 byte instruction alignment.
-    - When ROPing there’s usually more THUMB gadgets that will be of use due to the 2 byte alignment.
-- Because of 2 & 4 byte instruction alignment, the lowest bit of the program counter (eg r15) will never be set.
-- This bit is re-purposed to tell the processor if we are in THUMB mode or ARM mode.
+  - When ROPing there’s usually more THUMB gadgets that will be of use due
+    to the 2 byte alignment.
+- Because of 2 & 4 byte instruction alignment, the lowest bit of the
+  program counter (eg r15) will never be set.
+- This bit is re-purposed to tell the processor if we are in THUMB mode or
+  ARM mode.
 
-Sources:
+## Tools
+### radare2
 
-- RPISEC MBE
+- Search for a string: `/ string_content`
+- Seek: `s 0xdeadbeef`
+- Print in hex: `px`
+- Change to write mode: `oo+`
+- Write bytes: `w hello, world`
 
-## Windows Exploitation
+### gdb/gef
 
-- The executable format on Windows is .EXE instead of Linux ELF’s
-- Libraries are .DLL, like Linux .so (eg: MSVCRT.dll is like libc)
-- If you’re going to get rolling on Windows, try to pick up skills debugging with WinDbg **EARLY**.
-- Raw syscalls are virtually never seen in native windows applications or libraries.
-- So instead of using syscalls,  an exploit will almost always use existing imported functions.
-- ntdll.dll – the 'Native API' wraps all the syscalls for the given version of Windows, is pretty low level stuff (the only process that must be loaded).
-- kernel32.dll – the 'Win32 API' more familiar high level stuff OpenFile(), ReadFile(), CreateProcess(), LoadLibrary(), GetProcAddress().
+- To change register values `set $sp += 4`
+- To search for string in memory `gef> grep asdf`
+- https://sourceware.org/gdb/onlinedocs/gdb/Hooks.html
+- To calculate stuff inside gdb `p 1+2`
+- Delete all breakpoints using `d`
+- Delete breakpoint by number using `d 1`
+- `jump +1` jumps to the next line line i.e. skipping the current line. Can
+  be used when stuck in `rep`
+- `tbreak +1` to set a temporary breakpoint at the jump target.
+- `step` steps into subroutines, but `next` will step over subroutines.
+- `step` and `stepi` (and the `next` and `nexti`) are distinguishing by
+  "line" or "instruction" increments.
+- In most of my use-cases I need `nexti` (short `ni`)
+- To find address of a variable: `(gdb) p &var`
+- While printing variables if it is an unknown type use `(gdb) p (int)var`
+- Break at an offset from function `(gdb) b*main+128`
+- To get out of current function use `(gdb) finish`
+- To list all functions `(gdb) info functions regex`
+- To learn the relationship between higher level code and assembly better,
+  use the -ggdb option while compilint. 
+- When GDB opens via debug(), it will initially be stopped on the very
+  first instruction of the dynamic linker (ld.so) for dynamically-linked
+  binaries.
+- To view the source (and provide more debugging info) use -ggdb flag while
+  compiling with `gcc`
+- How to set ASLR on on gdb (turns off every instance): `set
+  disable-randomization off`
+- How to print strings when you have their name (symbol)?: `p str` then
+  `x/s`
+- Examine general format: `x/nfu addr`
+- To examine a double word (giant): `x/xg addr`
+- Changing variable values `set var <variable_name>=<value>`
+- Disable SIGALRM `handle SIGALRM ignore`
+- Disassemble function from the command line: `$ gdb -batch -ex 'file
+  /bin/ls' -ex 'disassemble main'` or `gdb -q ./a.out 'disass main'`
+- Ghidra decompilation in pwndbg: `ctx-ghidra sym.foo()`
+- Execute python in gdb: `(gdb) python print('asdf')`
 
-Sources:
+### IDA
 
-- RPISEC MBE
+- Open strings window using `Shift + F12`. Can also open during debug mode.
+- Change between basic and graphic mode (space bar)
+- Rename variables: (n)
+- Comment –Side: (:), (;) –Above/below: (ins)
+- Convert const formats: (right-click)
+- Cross-reference: (x)
+- Change to array: (a)
+- IDA-Options-General-auto comment
+- IDA-Options-General-opcode bytes 8 
 
-## Heap exploitation
+### pwntools
 
-Made the below notes while learning heap exploitation. I still don't
-understand heap exploitation. Got uninterested and stopped learning.
+- Searching for strings: `payload += p64(next(libc.search(b'/bin/sh')))`
+- `flat(*args, preprocessor = None, length = None, filler = de_bruijn(),
+  word_size = None, endianness = None, sign = None)` -> str. Strings are
+  inserted directly while numbers are packed using the pack() function:
+  `flat({32:'1337'})`
+- To only see error logs: `context.log_level = 'error'`
+- Need to use `io.interactive` or `io.wait` (?)
+- Use `recv()` to receive everything up till that point.
+- While writing your exploit script keep `io.interactive()` at the end and
+  keep adding sends and receives before it.
+- Sometimes remote connection might be close due to an error in your python
+  code (such as bytes != strings).
+- For passing args: `io = process(['./chall','AAAA'])` or `io =
+  gdb.debug(['./chall','AAAA'], 'b main')`
+- Creating a template `pwn template ./<binary> --host 127.0.0.1 --port
+  1337`
+- Debugging with gdb `io = gdb.debug('./<binary>', 'b main')`
+- Passing commandline arguments `io = process(['./crackme','blah'])`
+- Shell code `shellcode = asm(shellcraft.sh())`
 
-### Nightmare
+Cyclic padding in pwntools:
 
-Glibc version:
-
-- When you are working on a heap challenge, make sure you are using the right libc file using `LD_PRELOAD`
-- When you attempt to use `LD_PRELOAD` to have a binary use a specific libc file, you might find an issue if the linker's are not compatible.
-
-Chunks:
-
-```
-gef> heap chunks
-```
-
-- Every chunk has a heap header/metadata
-- For x64: 0x10 bytes (2x64 bits) before chunk start
-- For x86: 0x08 bytes (2x32 bits) before chunk start
-- The first word contains previous chunk size (zero if not set).
-- The second word contains current chunk size (including heap header/metadata and rounding up for better binning).
-- For the current size word, we have the 3 LSBs as flags:
-    - 0x1: previous chunk in use
-    - 0x2: chunk obtained through mmap()
-    - 0x4: chunk obtained from outside main area
-
-Bins:
-
-```
-gef> heap bins
-```
-
-- When chunks are freed they are added to bin lists.
-- These chunks can be used later, for performance benefits.
-
-Fastbins:
-
-- 7 "linked lists" indexed by `idx`
-- x64 sized range from 0x20 to 0x80
-- Points to the next chunk in list.
-- Chunks are inserted into the fast bin head first (LIFO).
-
-Tcachebins:
-
-- New type of binning mechanism introduced in libc version 2.26
-- Tcache is specific to each thread, so each thread has its own tcache.
-- Speeds up performance as malloc won't have to lock the bin to edit it.
-- Stored like a Fast Bin - LIFO linked list.
-- Can only hold 7 chunks per list at a time.
-- There are a total of 64 tcache lists, with idx values ranging from 0-63, for chunk sizes between 0x20-0x410.
-- It's the fast bin with less checks (and can take in somewhat larger chunks).
-
-Unsorted, large and small bins:
-
-- Their lists live together in the same array using the following indexes:
-    - Unsorted bins: 1 (0x01) (0x00 is not used)
-    - Small bins: 62 (0x02 to 0x3f)
-    - Large Bin: 63 (0x40 to 0x7e)
-- Chunks that are not inserted into fastbins or tcachebins are first inserted into unsorted bins.
-- Chunks will remain there until they are sorted. This happens when another call is made to malloc. It will then check through the Unsorted Bin for any possible chunks that can meet the allocation.
-- It will check if there are chunks that belong in one of the small / large bin lists. If there are it will move those chunks to the appropriate bins.
-- Small bins on x64 consists of chunk sizes under 0x400 (1024 bytes), and on x86 consists of chunk sizes under 0x200 (512 bytes)
-- Large bins consists of values above those of small bins.
-- All three chunks have two pointers `fwd` and `bk` as the first thing in the content section because they are doubly linked lists.
-- The large chunk has two more pointers `fwd_nextsize` and `bk_nextsize` to point to next chunk of *different* size. It's kind of like a skip list.
-- Chunks in the large bin are stored largest to smallest.
-
-Consolidation:
-
-- Heap is fragmented into a lot of smaller pieces.
-- malloc tries to allocate a large chunk of space.
-- Will have to use different memory for it, and effectively waste space.
-- Consolidation tries to fix this by merging adjacent freed chunks together, into larger freed chunks.
-
-Top chunk:
-
-- A large heap chunk that holds currently unallocated data.
-- Allocating large chunks of memory from the kernel, and managing memory allocations from that memory is a lot more efficient than requesting memory from the kernel each time.
-- malloc first looks into the bins, then into the top chunk.
-
-Top chunk consolidation:
-
-- A lot of heap attacks target a bin list.
-- For that we need freed chunks in the bins lists.
-- Consolidation with the top chunk can prevent that.
-- Allocate a small chunk between freed chunks and top chunk.
-
-Main arena:
-
-- Data structure used for managing heap memory.
-- Contains the head pointers for the bin lists.
+Using terminal:
 
 ```
-+----------------+-------------------------+--------------------+
-| Bug            | Bin attack              | House              |
-+----------------+-------------------------+--------------------+
-| Double free    | Fastbin attack          | House of Spirit    |
-| Heap overflow  | tcache attack           | House of Lore      |
-| Use after free | Unsorted bin attack     | House of Force     |
-|                | Small/Large bin attack  | House of Einherjar |
-|                | Unsafe unlink (?)       | House of Orange    |
-+----------------+-------------------------+--------------------+
+$pwn cyclic 200
+pwn cyclic -l 0xdeadbeef
 ```
 
-### Max Kamper
+Using Python:
 
-Chunks:
-
-- Chunks are aligned by 8 bytes in memory.
-- Fields in a chunk:
-    1. prev\_size: used only if previous chunk is free, otherwise both chunks use the same size variable as if merged.
-    2. size: contains the size of the current chunk.
-    3. \*fd: pointer to the next chunk.
-    4. \*bk: pointer to the previous chunk.
-
-Top chunk:
-
-- At the beginning, there’s only one big chunk (top) in the arena (called wilderness).
-- Every time `malloc` is called it first checks if a same size chunk can be found in the bins.
-- If not, it will take a bite out of the top chunk and return the pointer.
-
-Flags:
-
-- There is no flag to tell whether the current chunk is allocated or not.
-- Therefore they are eight bytes aligned and the last three bits of the size field are used as flags.
-- The flags are (LSB to MSB): PREV\_INUSE (if previous chunk is allocated), IS\_MMAPPED (if mmap used), NON\_MAIN\_ARENA (if not stored in main arena).
-- To know whether a chunk is free or not, we need to add size to the pointer of the current chunk and see the PREV\_INUSE flag of the next chunk.
-
-Bins:
-
-- There is also an array of pointers called bins.
-- They point to doubly linked lists of chunks.
-- These are chunks that were allocated and then freed.
-
-Using gdb wrappers for heap:
-
-- Use `vmmap` to see heap region.
-- Heap will only come up once `malloc` has been used.
-- Use `heap chunks` in gef or `vis_heap_chunks` in pwndbg to see the chunks in heap.
-
-```
-+-----------------+
-|   stack         |
-+-----------------+
-|   libraries     |
-+-----------------+
-|   heap          |
-+-----------------+
-|   application   |
-+-----------------+
+```python
+x = 4 #x=8 for 64-bit
+io.sendline(cyclic(200, n=x))
+io.wait()
+core = io.corefile
+offset = cyclic_find(core.read(core.esp, x), n=x) #rsp for 64 bit
+offset -= x # wherever the sequence is found, we replace it
 ```
 
-### Gynvael Coldwind
+ROP in pwntools:
 
-- User mode programs can ask for one page of memory from the kernel mode.
-- `printf` requests a page using mmap because standard output is buffered.
-- Towards the end of an elf file is a section used as heap and `brk` is used to extend it.
-- `mmap` is used to get virtual memory pages from the OS (on windows it's called virtual alloc).
-- This is why we need heap, since we don't want to waste an entire page everytime we need something.
-- When malloc-ing a lot of stuff, if the pages of allocation change it means a new heap is created (?).
+```python
+# finding gadgets
+pop_rdi = (rop.find_gadget(['pop rdi', 'ret']))[0]
+```
 
+```python
+# leaking libc
+elf = ELF('./vuln', checksec=False)
+rop = ROP(elf)
+
+#rop.raw(0)
+#rop.raw(unpack(b'abcd'))
+#rop.raw(2)
+
+#rop.call('read',[4,5,6])
+#rop.exit()
+
+#rop.write(7,8,9)
+#print(rop.dump())
+
+#rop.call('execve', ['/bin/sh', [['/bin/sh'], ['-p'], ['-c'], ['ls']], 0])
+#print(rop.chain())
+
+pop_rdi = (rop.find_gadget(['pop rdi', 'ret']))[0]
+puts_got = elf.got['puts']
+puts_plt = elf.plt['puts']
+main_plt = elf.symbols['main']
+
+rop = offset + p64(pie+pop_rdi) + p64(pie+puts_got) + p64(pie+puts_plt) +
+p64(pie+main_plt)
+```
