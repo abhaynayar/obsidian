@@ -2,8 +2,18 @@
 ## Writeups by topic
 
 Leaking libc:
-- dROPit: https://ctftime.org/task/13818
-- loopy: https://ctftime.org/task/9312
+- [loopy - NaCTF 2021](https://ctftime.org/task/9312)
+- [dROPit - NaCTF 2020](https://ctftime.org/task/13818)
+- Full Protection - ASIS CTF Quals 2020
+- got-2-learn-libc - Pico CTF 2018
+
+Format string attacks (Writing to an arbritrary address):
+- global warming - CSI (VIT) CTF 2020
+- format1 - NaCTF 2019
+- format - NaCTF 2020
+
+GOT overwrite:
+- echo-back - Pico CTF 2018
 
 ## Resources
 
@@ -14,11 +24,11 @@ Courses:
 
 ## Recon
 
-Run these commands on the given binary.
+Run these commands on the given binary:
 
 1. file
 2. strings
-3. **readelf**
+3. readelf
 4. md5sum
 5. objdump
 6. checksec
@@ -47,42 +57,48 @@ Run these commands on the given binary.
 ## Format String Attacks
 **Offset notation: `%6$x`**
 
-**Learn about fmtstr in pwntools to automate format string exploits**
-- *read-where* primitive: `%s` (for example, `AAAA%7$s` would return the
-  value at the address 0x41414141).
+- *read-where* primitive: `%s`
+- for example, `AAAA%7$s` would return the value at address: `0x41414141`
 - *write-what-where* primitive: `%n`
 - write one byte at a time: `%hhn` 
 
 Reading from an arbritrary address:
 
 1. Get address of string to be read. `rabin2 -z <binary>`
-2. Find the offset from the stack where the input is stored: `%x.`then `%x.%x.` then `%x.%x.%x.` and so on until you see the ascii values`25782e`
-3. Once you know the offset, store the address to be read at that offset by typing it in as the first thing in the buffer and then use the offset you found out to go read in that address: `python -c 'print "\xef\xbe\xad\xde%6$s"' | ./<binary>`
-
-Writing to an arbritrary address:
-
-- CSI (VIT) CTF 2020 - global warming
-- NaCTF 2019 - format1
-- NaCTF 2020 - format
+2. Find the offset from the stack where the input is stored: `%x.`then
+   `%x.%x.` then `%x.%x.%x.` and so on until you see the ascii
+   values`25782e`
+3. Once you know the offset, store the address to be read at that offset by
+   typing it in as the first thing in the buffer and then use the offset
+   you found out to go read in that address: `python -c 'print
+   "\xef\xbe\xad\xde%6$s"' | ./<binary>`
 
 ## GOT and PLT
 
-- The first time you make a call to a function like `printf` that resides in a dynamic library, it calls `printf@plt`
-- Within `printf@plt` it jumps into `printf@got.plt` that is we jump to whatever address is stored in the GOT.
-- From there we go to `_dl_runtime_resolve` which is in the dynamic linker `ld.so` which helps set up external references to libc.
+- The first time you make a call to a function like `printf` that resides
+  in a dynamic library, it calls `printf@plt`
+- Within `printf@plt` it jumps into `printf@got.plt` that is we jump to
+  whatever address is stored in the GOT.
+- From there we go to `_dl_runtime_resolve` which is in the dynamic linker
+  `ld.so` which helps set up external references to libc.
 - Next time onwards we directly jump to `printf` from the GOT.
-- Since dynamically linked libraries update and also due to ASLR, we cannot hardcode addresses of functions that are run through the libraries.
-- So we use relocation which is done by the dynamic linker called `ld-linux.so` run before any code from libc or your program.
+- Since dynamically linked libraries update and also due to ASLR, we cannot
+  hardcode addresses of functions that are run through the libraries.
+- So we use relocation which is done by the dynamic linker called
+  `ld-linux.so` run before any code from libc or your program.
 
 Sections required by relocation:
 
 1. `.got`: table of offsets filled by the linker for external tables.
-2. `.plt`: stubs to look up addresses in .got section (jump to the right address or ask the linker to resolve it).
+2. `.plt`: stubs to look up addresses in .got section (jump to the right
+   address or ask the linker to resolve it).
 
 How relocation happens:
 
-1. When you call a library function for the first time, it calls the `.plt` section function within your binary.
-2. In the `.plt` we have jump to an address in `.got` which has been filled by the linker with the address of the given function in libc.
+1. When you call a library function for the first time, it calls the `.plt`
+   section function within your binary.
+2. In the `.plt` we have jump to an address in `.got` which has been filled
+   by the linker with the address of the given function in libc.
 
 Lazy binding:
 
@@ -91,11 +107,11 @@ Lazy binding:
 
 GOT overwrite:
 
-- **Look into pico18/echo-back**
 - https://www.youtube.com/watch?v=kUk5pw4w0h4
 - https://nuc13us.wordpress.com/2015/09/04/format-string-exploit-overwrite-got/
 - Find the address of GOT entry of a function that is going to be called.
-- Use arbritrary write primitive to change that to some other function's got address.
+- Use arbritrary write primitive to change that to some other function's
+  GOT address.
 
 References:
 
@@ -110,12 +126,12 @@ References:
 
 Leaking libc base:
 
-- See pico2018/got-2-learn-libc
-- http://abhaynayar.com/ctf/asis.html
 - First somehow get the address of puts during runtime.
-- One way to do that is to use puts itself to print its address by using a buffer overflow (+ROP chain).
+- One way to do that is to use puts itself to print its address by using a
+  buffer overflow (+ROP chain).
 - Then subtract it from the puts offset from the given libc binary.
-- **Remember to use given library / your library depending on where you're testing.**
+- **Remember to use given library / your library depending on where you're
+  testing.**
 - libc.address = puts\_runtime - libc.symbols['puts']
 
 Leaking functions:
@@ -127,9 +143,11 @@ Leaking functions:
 - Get the address of `system` using `(gdb) system`
 - Get the offset between them.
 - Get the address of `puts` while running the program.
-- Now, you can call `system` using address of `puts` minus the offset you calculated earlier.
+- Now, you can call `system` using address of `puts` minus the offset you
+  calculated earlier.
 
-**If you can leak any one function, look into the last three nibbles and search for it on https://libc.blukat.me**
+**If you can leak any one function, look into the last three nibbles and
+search for it on https://libc.blukat.me**
 
 ## Return-oriented programming
 

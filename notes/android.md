@@ -121,9 +121,9 @@ $ apktool b three
 keytool -genkey -v -keystore my-release-key.keystore -alias alias\_name -keyalg RSA -keysize 2048 -validity 10000
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore my\_application.apk alias\_name
 
-# or you can run it on your emulator using android studio &gt; Generate Signed Bundle or APK
+# or you can run it on your emulator using android studio > Generate Signed Bundle or APK
 # I kept running into errors in both approached therefore I shifted to uber-apk-signer
-# need to have jdk version &gt; 8
+# need to have jdk version > 8
 
 $ wget https://github.com/patrickfav/uber-apk-signer/releases/download/v1.1.0/uber-apk-signer-1.1.0.jar
 $ java -jar uber-apk-signer-1.1.0.jar --apks /home/abhay/Desktop/shared/ctfs/pico19/android/three/dist
@@ -199,11 +199,11 @@ Java.perform(function () {
 
 ```
 # get your Android version
-[Android Emulator 5554::com.twitter.android.lite]-&gt; Java.androidVersion
+[Android Emulator 5554::com.twitter.android.lite]-> Java.androidVersion
 "9"
 
 # list all classes
-[Android Emulator 5554::com.twitter.android.lite]-&gt;
+[Android Emulator 5554::com.twitter.android.lite]->
 Java.perform(function(){
 	Java.enumerateLoadedClasses({
 		"onMatch":function(className){
@@ -339,7 +339,7 @@ Things to keep in mind:
 - It is a good practice to save projects in jadx-gui.
 - One of the useful features within the interface is the search
   functionality which you can use to check certain keywords in code.
-- To find other places a method is used, right-click &gt; Find Usage.
+- To find other places a method is used, right-click > Find Usage.
 
 If jadx-gui fails to decompile any methods, we can always try other
 combinations such as **dex2jar** for DEX to JAR conversion and then
@@ -348,7 +348,7 @@ decompile it using somthing like CFR.
 ```
 $ unzip myapp.apk
 $ sh d2j-dex2jar.sh classes.dex
-$ java -jar cfr-0.149.jar classes-dex2jar.jar &gt; out
+$ java -jar cfr-0.149.jar classes-dex2jar.jar > out
 
 # or use jadx
 $ jadx myapp.apk -d out
@@ -404,7 +404,7 @@ Connect to a WiFi network even if you don't have internet conenction.
 $ adb reverse tcp:8080 tcp:8081
 ```
 
-Within Burp in your computer, under Proxy &gt; Options: add a new listener
+Within Burp in your computer, under Proxy > Options: add a new listener
 on **all interfaces** on an unused port such as **8081**.
 
 Change your WiFi proxy settings to point to localhost:8080, which will
@@ -465,10 +465,10 @@ $ { echo "suspend"; cat; } | jdb -attach localhost:1337
 Some useful jdb commands:
 
 ```
-&gt; classes
-&gt; methods com.app.package.class
-&gt; stop in com.app.class.method
-&gt; locals
+> classes
+> methods com.app.package.class
+> stop in com.app.class.method
+> locals
 ```
 
 ## drozer

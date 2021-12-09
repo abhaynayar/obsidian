@@ -1,17 +1,24 @@
 # ► rev
 ## Writeups by topic
 
-Get the flag by solving for constraints using z3:
-- babymix: https://ctftime.org/task/14688
+Constraint solving:
+- [babymix - DiceCTF 2021](https://ctftime.org/task/14688)
+- [Run of the Mill - Dragon CTF 2021](https://ctftime.org/task/18153)
 
 Reverse engineering VM-based obfuscation:
-- Recurso: https://ctftime.org/task/18030
-- Rasm: https://ctftime.org/writeup/31386
+- [Rasm - K3RN3LCTF 2021](https://ctftime.org/writeup/31386)
+- [Recurso - K3RN3LCTF 2021](https://ctftime.org/task/18030)
+
+## TODO
+
+- Binary Loaders
+- Dynamic Instrumentation
+- Dynamic Taint Analysis
 
 ## Resources
 
-- ARM reversing - Azeria
 - RE101 - Malware Unicorn
+- ARM reversing - Azeria
 - [Ultimate guide to reversing](https://medium.com/@vignesh4303/reverse-engineering-resources-beginners-to-intermediate-guide-links-f64c207505ed)
 
 ## Books
@@ -24,15 +31,15 @@ Reverse engineering VM-based obfuscation:
 
 ## Recon
 
-Run these commands on the given binary.
+Run these commands on the given binary:
 
 1. file
 2. strings
-3. **readelf**
+3. readelf
 4. md5sum
 5. objdump
 6. checksec
-7. ghex (patching,diffing)
+7. ghex (patching, diffing)
 8. ltrace (library calls)
 9. strace (system calls)
 
