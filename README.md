@@ -12,7 +12,7 @@ Obsidian
 
 </h1>
 
-<h4 align="center">Notes and writeups on CTFs.</h4>
+<h4 align="center">Writeups for CTF challenges.</h4>
 
 <br>
 

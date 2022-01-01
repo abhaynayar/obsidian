@@ -9,12 +9,6 @@ Reverse engineering VM-based obfuscation:
 - [Rasm - K3RN3LCTF 2021](https://ctftime.org/writeup/31386)
 - [Recurso - K3RN3LCTF 2021](https://ctftime.org/task/18030)
 
-## TODO
-
-- Binary Loaders
-- Dynamic Instrumentation
-- Dynamic Taint Analysis
-
 ## Resources
 
 - RE101 - Malware Unicorn
@@ -252,6 +246,32 @@ Further reading:
 - We will see 32-bit code interpreted as 64-bit code when `cs` register is set to `0x33`:
     - https://www.malwaretech.com/2014/02/the-0x33-segment-selector-heavens-gate.html
     - http://scrammed.blogspot.com/2014/10/code-obfunscation-mixing-32-and-64-bit.html
+
+----
+
+## TODO
+
+- Known constants while reversing.
+- Idek CTF 2021: {lights out, exponential}
+
+## Binary Analysis
+
+- Binary Loaders
+- Dynamic Instrumentation
+- Dynamic Taint Analysis
+
+## Code coverage
+
+Download and run [DynamoRIO](https://dynamorio.org/) on your binary:
+
+```
+$ ./drrun -t drcov -dump_text -- ~/Desktop/ctf/dragon21/runofthemill
+```
+
+Install [Dragon Dance](https://github.com/0ffffffffh/dragondance):
+
+You will need to follow build instructions from the README since the last
+release is not compatible with the latest version of Ghidra.
 
 ----
 
