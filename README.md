@@ -63,6 +63,8 @@ Obsidian
 
 ### Labs
 
+[PentesterLab Pro Solutions](https://github.com/abhaynayar/ptlabsols)
+
 Reverse Engineering
 
 - [247/CTF](labs/rev/247ctf.md)
